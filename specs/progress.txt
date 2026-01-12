@@ -9,6 +9,8 @@
 - Pattern: Use .npmrc with `engine-strict=true` and `node-linker=hoisted` for pnpm configuration
 - Pattern: All npm scripts in package.json should be organized by category (dev, testing, quality, builds)
 - Pattern: Always run format before committing to ensure code consistency
+- Pattern: Use `React.JSX.Element` instead of `JSX.Element` for component return types to avoid ESLint deprecation warnings
+- Pattern: Use `npx pnpm add` to install dependencies when pnpm is configured (not `npx expo install`)
 
 ---
 
@@ -61,5 +63,29 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - The package.json packageManager field should specify exact pnpm version (e.g., pnpm@8.15.0)
 - Format check should be run alongside type-check and lint as part of quality gates
 - npm scripts should be logically grouped: development (dev/web/ios/android), testing (test/test:watch), quality (type-check/lint/format), builds (build:web/ios/android)
+
+---
+
+## [Tue Jan 13 06:00:15 AM +07 2026] - Card #45
+
+- Installed expo-router and required dependencies (react-native-safe-area-context, react-native-screens, expo-linking, expo-constants, expo-status-bar)
+- Created app/_layout.tsx with Stack navigation layout and headerShown: false
+- Created app/index.tsx with basic "Language Den" title screen using React Native components
+- Verified app.json already had expo-router plugin, scheme, and typedRoutes experiment configured
+- All quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+- package.json (updated) - Added expo-router and dependencies
+- app/_layout.tsx (created) - Root layout with Stack navigation
+- app/index.tsx (created) - Root route with title screen
+- AGENTS.md (updated) - Added expo-router setup patterns
+
+**Learnings for future iterations:**
+- Use `npx pnpm add` to install packages when pnpm is configured via .npmrc, not `npx expo install` which fails to find pnpm
+- Component return types should use `React.JSX.Element` instead of `JSX.Element` to avoid ESLint deprecation warnings
+- expo-router requires specific dependencies: react-native-safe-area-context, react-native-screens, expo-linking, expo-constants, expo-status-bar
+- The app/_layout.tsx file is the root layout and uses Stack from expo-router for navigation
+- Set `screenOptions={{ headerShown: false }}` to hide navigation headers by default
+- app.json configuration for expo-router was already done in Card #47 (plugins, scheme, typedRoutes)
 
 ---

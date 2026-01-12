@@ -46,3 +46,29 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Use `expo start` for dev server with platform-specific flags (--web, --ios, --android)
 - Pattern: Include both `format` (write) and `format:check` (CI-friendly) scripts
 - Pattern: EAS build commands reference `eas build --platform <platform>`
+
+## expo-router Setup
+
+### Dependencies
+
+- Pattern: Install expo-router and required dependencies: `expo-router`, `react-native-safe-area-context`, `react-native-screens`, `expo-linking`, `expo-constants`, `expo-status-bar`
+- Pattern: Use `npx pnpm add` to install dependencies (not `npx expo install` which fails when pnpm is configured)
+- Pattern: Use version ranges that match Expo SDK version (e.g., `expo-router@~4.0.22` for Expo SDK 52)
+
+### File Structure
+
+- Pattern: Create `app/_layout.tsx` as the root layout component
+- Pattern: Use `<Stack>` from expo-router for basic navigation layout
+- Pattern: Set `screenOptions={{ headerShown: false }}` to hide headers by default
+- Pattern: Create `app/index.tsx` as the root route
+
+### TypeScript Return Types
+
+- Pattern: Use `React.JSX.Element` instead of `JSX.Element` for component return types
+- Note: ESLint will flag `JSX.Element` as deprecated in favor of `React.JSX.Element`
+
+### app.json Configuration
+
+- Pattern: Add `"plugins": ["expo-router"]` to enable expo-router
+- Pattern: Set `"scheme": "language-den"` for deep linking
+- Pattern: Enable typed routes with `"experiments": { "typedRoutes": true }`
