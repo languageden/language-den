@@ -1,0 +1,37 @@
+# Fizzy Ralph Progress Log
+
+## Codebase Patterns
+
+- Pattern: EAS Build configuration uses three profiles: development (with simulator support), preview (internal distribution), and production (store-ready builds)
+- Pattern: iOS and Android use consistent bundle identifier: `com.languageden.app`
+- Pattern: app.json must include expo-router plugin and enable typed routes experiment
+- Pattern: EAS CLI is available via npx, no need to install as dependency
+
+---
+
+Board ID: 03fe112po6gokbkt0pzn2sft2
+Started: Tue Jan 13 05:44:38 AM +07 2026
+
+---
+
+## [Mon Jan 13 05:45:00 AM +07 2026] - Card #47
+
+- Created app.json with Expo configuration including iOS bundle identifier and Android package name
+- Created eas.json with three build profiles (development, preview, production)
+- Verified EAS CLI is available via npx
+- Confirmed type checking and linting pass
+
+**Files changed:**
+- app.json (created) - Expo configuration with platform-specific settings
+- eas.json (created) - EAS Build profiles for all platforms
+- AGENTS.md (created) - Documentation of EAS Build patterns
+
+**Learnings for future iterations:**
+- EAS Build requires app.json with platform-specific identifiers (bundleIdentifier for iOS, package for Android)
+- eas.json build profiles support different configurations per environment (dev, preview, prod)
+- Development builds can target simulators/emulators, but production builds cannot
+- Android development uses APK format for faster iteration; production uses AAB for Play Store
+- EAS CLI is available globally via npx - no need to add as project dependency
+- Quality gates at this stage: type-check and lint (tests not yet configured)
+
+---
