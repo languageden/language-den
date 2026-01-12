@@ -6,6 +6,9 @@
 - Pattern: iOS and Android use consistent bundle identifier: `com.languageden.app`
 - Pattern: app.json must include expo-router plugin and enable typed routes experiment
 - Pattern: EAS CLI is available via npx, no need to install as dependency
+- Pattern: Use .npmrc with `engine-strict=true` and `node-linker=hoisted` for pnpm configuration
+- Pattern: All npm scripts in package.json should be organized by category (dev, testing, quality, builds)
+- Pattern: Always run format before committing to ensure code consistency
 
 ---
 
@@ -33,5 +36,30 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Android development uses APK format for faster iteration; production uses AAB for Play Store
 - EAS CLI is available globally via npx - no need to add as project dependency
 - Quality gates at this stage: type-check and lint (tests not yet configured)
+
+---
+
+## [Tue Jan 13 05:54:30 AM +07 2026] - Card #46
+
+- Created .npmrc configuration file to enforce pnpm as the package manager
+- Configured node-linker=hoisted for React Native Metro bundler compatibility
+- Verified all npm scripts were already present in package.json (dev, test, type-check, lint, format, build commands)
+- Ran format to ensure code consistency across the project
+- Confirmed all quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+
+- .npmrc (created) - pnpm configuration with engine enforcement and hoisted node linking
+- AGENTS.md (updated) - Added package manager configuration patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+
+- React Native Metro bundler requires pnpm to use hoisted node-linker to properly resolve dependencies
+- Setting engine-strict=true in .npmrc enforces the package manager specified in package.json
+- When running pnpm via npx, npm warnings about unknown pnpm-specific config keys are expected and harmless
+- The package.json packageManager field should specify exact pnpm version (e.g., pnpm@8.15.0)
+- Format check should be run alongside type-check and lint as part of quality gates
+- npm scripts should be logically grouped: development (dev/web/ios/android), testing (test/test:watch), quality (type-check/lint/format), builds (build:web/ios/android)
 
 ---
