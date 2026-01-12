@@ -19,6 +19,9 @@
 - Pattern: Expo web builds use Metro bundler when `"bundler": "metro"` is set in app.json web config
 - Pattern: Create metro.config.js at project root using getDefaultConfig from expo/metro-config
 - Pattern: Web builds output static SPA to dist/ folder, deployable to any static hosting
+- Pattern: Supabase environment variables must be prefixed with `EXPO_PUBLIC_` for client-side access
+- Pattern: Use .env.example (committed) as template and .env (gitignored) for actual credentials
+- Pattern: .env files should include comments explaining where to get credentials
 
 ---
 
@@ -167,3 +170,26 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 ---
 
 **Reached max iterations with 14 card(s) remaining**
+
+## [Tue Jan 13 06:15:35 AM +07 2026] - Card #53
+
+- Created .env.example with Supabase environment variable template (EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY)
+- Created .env with placeholder values for local development
+- Verified .env is properly gitignored to prevent credential leaks
+- All quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+- .env.example (created) - Template for Supabase environment variables with instructions
+- .env (created) - Local environment variables file with placeholder values
+- AGENTS.md (updated) - Added Supabase configuration patterns for environment variables
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- Environment variables for Expo must be prefixed with `EXPO_PUBLIC_` to be accessible in client-side code
+- The Supabase anon/public key is safe to use in client-side code - it's designed for public access with Row Level Security protecting data
+- Always create both .env.example (committed template) and .env (gitignored actual values) for clarity
+- .env was already in .gitignore from the initial project setup, which is correct
+- Include helpful comments in .env files pointing developers to where they can get credentials (Supabase Dashboard → Project Settings → API)
+- This card establishes the foundation for all Supabase integration - other cards (Auth, Client, Edge Functions) depend on these environment variables being configured
+
+---

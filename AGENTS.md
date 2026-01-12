@@ -129,3 +129,20 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: The dist folder can be deployed to any static hosting (Vercel, Netlify, GitHub Pages, etc.)
 - Pattern: Build produces a single JavaScript bundle with hash for cache busting
 - Note: Missing favicon warning is expected if assets haven't been created yet
+
+## Supabase Configuration
+
+### Environment Variables
+
+- Pattern: Use `.env.example` as a template file (committed to git) with placeholder values
+- Pattern: Create `.env` file (gitignored) with actual credentials for local development
+- Pattern: Prefix all environment variables with `EXPO_PUBLIC_` to make them accessible in client-side code
+- Pattern: Required variables: `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+- Pattern: Include comments in .env files explaining where to get credentials (Supabase Dashboard → Project Settings → API)
+- Note: The anon/public key is safe to use in client-side code - it's designed for public access with Row Level Security
+
+### .gitignore Configuration
+
+- Pattern: `.env` and `.env.local` files must be in .gitignore to prevent credential leaks
+- Pattern: `.env.example` is committed to git as a template for other developers
+- Note: Ensure .env is gitignored before adding real credentials
