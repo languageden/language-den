@@ -1,22 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { YStack, H1 } from 'tamagui';
 
 export default function Index(): React.JSX.Element {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Language Den</Text>
-    </View>
+    <YStack flex={1} items="center" justify="center" bg="$background">
+      <H1>Language Den</H1>
+    </YStack>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-});

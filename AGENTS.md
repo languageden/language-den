@@ -99,3 +99,11 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: The v4 default config includes complete token system (colors, spacing, sizes, fonts, etc.)
 - Pattern: Tokens are accessible in components via `$tokenName` syntax
 - Pattern: Themes support light/dark mode out of the box with v4 config
+
+### Shorthands and Component Props
+
+- Pattern: v4 config has `onlyAllowShorthands: true` - must use shorthand props for styled components
+- Pattern: Use `items` for `alignItems`, `justify` for `justifyContent`, `bg` for `backgroundColor`
+- Pattern: `flex` prop works directly (not a shorthand in v4)
+- Pattern: Import components like `YStack` and `H1` from `tamagui` package
+- Pattern: Use `$tokenName` syntax for token-based values (e.g., `bg="$background"`)
