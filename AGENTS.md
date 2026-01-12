@@ -72,3 +72,30 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Add `"plugins": ["expo-router"]` to enable expo-router
 - Pattern: Set `"scheme": "language-den"` for deep linking
 - Pattern: Enable typed routes with `"experiments": { "typedRoutes": true }`
+
+## Tamagui Setup
+
+### Dependencies
+
+- Pattern: Install Tamagui with `tamagui` and `@tamagui/config` packages
+- Pattern: Use `@tamagui/config/v4` for the default v4 configuration
+- Pattern: Import `defaultConfig` from `@tamagui/config/v4` (not `config`)
+
+### Configuration File
+
+- Pattern: Create `tamagui.config.ts` at project root using `createTamagui(defaultConfig)`
+- Pattern: Export AppConfig type for type safety: `export type AppConfig = typeof tamaguiConfig`
+- Pattern: Extend TamaguiCustomConfig module to make types available globally
+- Pattern: Add eslint-disable comment for no-empty-object-type rule on TamaguiCustomConfig interface
+
+### Provider Setup
+
+- Pattern: Wrap the root layout with `<TamaguiProvider config={config}>`
+- Pattern: Import tamagui.config with relative path: `import config from '../tamagui.config'`
+- Pattern: Place TamaguiProvider as the outermost provider in app/\_layout.tsx
+
+### Token System
+
+- Pattern: The v4 default config includes complete token system (colors, spacing, sizes, fonts, etc.)
+- Pattern: Tokens are accessible in components via `$tokenName` syntax
+- Pattern: Themes support light/dark mode out of the box with v4 config

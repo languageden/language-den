@@ -11,6 +11,9 @@
 - Pattern: Always run format before committing to ensure code consistency
 - Pattern: Use `React.JSX.Element` instead of `JSX.Element` for component return types to avoid ESLint deprecation warnings
 - Pattern: Use `npx pnpm add` to install dependencies when pnpm is configured (not `npx expo install`)
+- Pattern: Tamagui configuration uses `defaultConfig` from `@tamagui/config/v4` (not `config`)
+- Pattern: TamaguiProvider wraps the root layout to provide theme and tokens globally
+- Pattern: Add eslint-disable comment for no-empty-object-type on TamaguiCustomConfig interface
 
 ---
 
@@ -89,3 +92,29 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - app.json configuration for expo-router was already done in Card #47 (plugins, scheme, typedRoutes)
 
 ---
+
+## [Tue Jan 13 06:06:00 AM +07 2026] - Card #50
+
+- Installed Tamagui dependencies (`tamagui` and `@tamagui/config`)
+- Created tamagui.config.ts using v4 defaultConfig with type declarations
+- Updated app/_layout.tsx to wrap app with TamaguiProvider
+- All quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+- package.json (updated) - Added Tamagui dependencies
+- tamagui.config.ts (created) - Tamagui configuration with v4 defaultConfig
+- app/_layout.tsx (updated) - Wrapped with TamaguiProvider
+- AGENTS.md (updated) - Added Tamagui setup patterns
+
+**Learnings for future iterations:**
+- Use `defaultConfig` from `@tamagui/config/v4`, not `config` (which doesn't exist)
+- The v4 config provides complete token system out of the box (colors, spacing, sizes, fonts, themes)
+- TamaguiProvider must wrap the root layout to make tokens/themes available globally
+- Add `eslint-disable-next-line @typescript-eslint/no-empty-object-type` comment on TamaguiCustomConfig interface to avoid ESLint errors
+- Module augmentation pattern is required: `declare module 'tamagui' { interface TamaguiCustomConfig extends AppConfig {} }`
+- Import tamagui.config from relative path in app/_layout.tsx: `import config from '../tamagui.config'`
+
+---
+---
+
+**Reached max iterations with 14 card(s) remaining**

@@ -1,5 +1,11 @@
 import { Stack } from 'expo-router';
+import { TamaguiProvider } from 'tamagui';
+import config from '../tamagui.config';
 
 export default function RootLayout(): React.JSX.Element {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <TamaguiProvider config={config}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </TamaguiProvider>
+  );
 }
