@@ -16,6 +16,9 @@
 - Pattern: Add eslint-disable comment for no-empty-object-type on TamaguiCustomConfig interface
 - Pattern: Tamagui v4 has `onlyAllowShorthands: true` - use `items`, `justify`, `bg` instead of full prop names
 - Pattern: Tamagui components (YStack, H1) should be used instead of React Native primitives for cross-platform consistency
+- Pattern: Expo web builds use Metro bundler when `"bundler": "metro"` is set in app.json web config
+- Pattern: Create metro.config.js at project root using getDefaultConfig from expo/metro-config
+- Pattern: Web builds output static SPA to dist/ folder, deployable to any static hosting
 
 ---
 
@@ -135,6 +138,30 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Tamagui components (YStack, H1, etc.) should be preferred over React Native primitives (View, Text) for cross-platform consistency
 - Token-based values use `$` prefix (e.g., `bg="$background"`)
 - The shorthands are defined in `@tamagui/config/v4` and can be found in the defaultConfig
+
+---
+
+## [Tue Jan 13 06:13:14 AM +07 2026] - Card #52
+
+- Verified app.json already had web configuration with Metro bundler
+- Created metro.config.js at project root using getDefaultConfig pattern from Expo
+- Tested web build successfully - produces static SPA in dist/ folder
+- All quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+- metro.config.js (created) - Metro bundler configuration using Expo defaults
+- AGENTS.md (updated) - Added Expo Web configuration patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- app.json already had `"bundler": "metro"` in the web section - web support was mostly configured
+- metro.config.js should use `getDefaultConfig(__dirname)` from `expo/metro-config`
+- The default Metro config works out of the box for Expo projects without customization
+- `expo export --platform web` creates a static site in `dist/` folder with index.html and bundled JavaScript
+- The dist folder output is a complete SPA that can be deployed to any static hosting service
+- Build generates a single JavaScript bundle with content hash for cache busting (e.g., entry-[hash].js)
+- Missing favicon warning is expected when assets haven't been created yet, doesn't block the build
+- Web builds complete in seconds and produce ~1.6MB minified bundle with all dependencies
 
 ---
 ---

@@ -107,3 +107,25 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: `flex` prop works directly (not a shorthand in v4)
 - Pattern: Import components like `YStack` and `H1` from `tamagui` package
 - Pattern: Use `$tokenName` syntax for token-based values (e.g., `bg="$background"`)
+
+## Expo Web Configuration
+
+### app.json Web Settings
+
+- Pattern: Add `"web"` section to expo config with `"bundler": "metro"` for consistent bundling across platforms
+- Pattern: Include `"favicon"` path in web config (e.g., `"./assets/favicon.png"`)
+- Pattern: Web builds are SPA (Single Page Application) - no server-side rendering
+
+### metro.config.js
+
+- Pattern: Create `metro.config.js` at project root using `getDefaultConfig` from `expo/metro-config`
+- Pattern: The default config works out of the box for most Expo projects
+- Pattern: Metro is used for web bundling when `"bundler": "metro"` is set in app.json
+
+### Web Build Output
+
+- Pattern: `expo export --platform web` creates a static site in `dist/` folder
+- Pattern: Output includes `index.html`, bundled JavaScript in `_expo/static/js/web/`, and assets
+- Pattern: The dist folder can be deployed to any static hosting (Vercel, Netlify, GitHub Pages, etc.)
+- Pattern: Build produces a single JavaScript bundle with hash for cache busting
+- Note: Missing favicon warning is expected if assets haven't been created yet
