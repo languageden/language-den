@@ -424,3 +424,17 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Provide decision tree for where to put new code (screen → app/, component → src/ui/, logic → src/domain/, etc.)
 - Pattern: List gitignored directories and explain why they should not be committed
 - Pattern: Cross-reference other documentation files (architecture.md, deployment.md, environment-setup.md)
+
+### Environment Setup Documentation
+
+- Pattern: Create step-by-step environment setup guides in docs/environment-setup.md
+- Pattern: Include Table of Contents for easy navigation in long documentation files
+- Pattern: Document both cloud and local development setup options (Supabase cloud and local with Docker)
+- Pattern: Provide clear instructions for obtaining credentials from third-party services (Supabase Dashboard → Settings → API)
+- Pattern: Document all required environment variables in a table with descriptions and sources
+- Pattern: Include troubleshooting section addressing common setup issues
+- Pattern: Explain security concepts (why anon key is safe for client-side, importance of .gitignore)
+- Pattern: Cross-reference related documentation (architecture.md, folder-structure.md, deployment.md)
+- Pattern: Provide "Next Steps" section linking to relevant documentation after setup
+- Pattern: Include verification steps so developers can confirm setup worked correctly
+- Pattern: Always run Prettier after creating markdown documentation files

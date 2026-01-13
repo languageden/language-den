@@ -59,6 +59,9 @@
 - Pattern: Folder structure documentation should provide decision trees for where to put new code
 - Pattern: Documentation files in docs/ should cross-reference each other (architecture.md, folder-structure.md, etc.)
 - Pattern: Include both good and bad examples in architecture docs to illustrate anti-patterns
+- Pattern: Environment setup documentation should include both cloud and local development options
+- Pattern: Always include troubleshooting section in setup guides to prevent common issues from blocking developers
+- Pattern: Document where to obtain third-party credentials with step-by-step instructions
 
 ---
 
@@ -494,5 +497,39 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Testing strategy documentation should explain why each layer uses different test approaches
 - Always run Prettier after creating markdown files to ensure consistent formatting
 - Documentation should be comprehensive enough that a new developer can onboard without asking questions
+
+---
+
+## [Tue Jan 13 11:56:20 AM +07 2026] - Card #63
+
+- Created comprehensive environment setup guide in docs/environment-setup.md
+- Documented Supabase project creation process with step-by-step instructions
+- Documented how to obtain and configure Supabase credentials
+- Included table of required environment variables with descriptions and sources
+- Documented both cloud Supabase and local Supabase (Docker) setup options
+- Added verification steps to confirm setup is working correctly
+- Included comprehensive troubleshooting section for common setup issues
+- Cross-referenced related documentation (architecture.md, folder-structure.md, deployment.md)
+- Formatted documentation with Prettier for consistency
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+
+- docs/environment-setup.md (created) - Comprehensive environment setup guide
+- AGENTS.md (updated) - Added environment setup documentation patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+
+- Environment setup documentation should be one of the first docs created - developers need it before they can work on anything else
+- Include both cloud and local development options even if local is marked "optional" - some developers prefer local-first workflows
+- Troubleshooting section is critical - anticipate common issues (missing .env, wrong variable names, expired keys, paused projects)
+- Table format for environment variables is clearer than lists - easier to scan and find what you need
+- Security notes help developers understand why certain practices matter (anon key is safe, .gitignore protects secrets)
+- Verification steps give developers confidence that setup worked - no guessing if they did it right
+- Cross-referencing other docs creates a cohesive documentation system and guides developers through the next steps
+- "Next Steps" section at the end helps developers know what to do after setup (read architecture, folder structure, start coding)
+- Prerequisite section at the top sets clear expectations about what's needed before starting setup
+- Link to external resources (Supabase docs, Expo docs) provides additional help for developers who need more detail
 
 ---
