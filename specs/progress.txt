@@ -45,6 +45,11 @@
 - Pattern: Edge Functions use Deno runtime - import from https URLs (e.g., 'https://deno.land/std@0.168.0/http/server.ts')
 - Pattern: Exclude supabase/ directory from TypeScript compilation (tsconfig.json exclude array) and ESLint (eslint.config.mjs ignores array)
 - Pattern: Edge Functions cannot be tested with Vitest (Deno runtime vs Node.js) - test via HTTP invocation after deployment
+- Pattern: GitHub Actions CI workflow lives in .github/workflows/test.yml and runs on push/PR to main/master branches
+- Pattern: CI installs pnpm with exact version from package.json using pnpm/action-setup@v4
+- Pattern: All quality gates must pass in CI: type-check, lint, format:check, test (in that order)
+- Pattern: Use --frozen-lockfile with pnpm install in CI to ensure reproducible builds
+- Pattern: Test against multiple Node.js versions (18.x, 20.x) using matrix strategy for compatibility
 
 ---
 
@@ -376,5 +381,35 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Edge Functions cannot be unit-tested with Vitest - they run in Deno, not Node.js
 - Each Edge Function gets its own subdirectory under supabase/functions/
 - The main function code goes in index.ts within the function's directory
+
+---
+
+## [Tue Jan 13 11:44:11 AM +07 2026] - Card #59
+
+- Created .github/workflows/test.yml with GitHub Actions CI workflow
+- Configured workflow to run on push to main/master branches and on all pull requests
+- Set up matrix strategy to test against Node.js 18.x and 20.x for compatibility
+- Configured all quality gates: type-check, lint, format:check, test
+- Used pnpm with frozen-lockfile for reproducible builds
+- Enabled pnpm caching to speed up CI runs
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+- .github/workflows/test.yml (created) - GitHub Actions CI workflow with quality checks
+- AGENTS.md (updated) - Added comprehensive CI/CD patterns and best practices
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- GitHub Actions workflows live in .github/workflows/ directory and use YAML format
+- Use pnpm/action-setup@v4 to install pnpm in CI with exact version matching package.json
+- actions/setup-node@v4 supports pnpm caching via the 'cache' parameter for faster builds
+- --frozen-lockfile flag prevents pnpm from modifying pnpm-lock.yaml during CI runs
+- Matrix strategy allows testing against multiple Node.js versions simultaneously
+- All four quality gates (type-check, lint, format:check, test) must pass for CI success
+- Upload artifacts with if: always() to capture test results even when tests fail
+- Use if-no-files-found: ignore for optional artifacts like coverage reports
+- CI workflow file requires no code changes in src/ - it's purely infrastructure
+- Fast feedback is critical - entire CI run should complete in under 2 minutes
+- Node.js 18.x is the minimum version (from package.json engines), 20.x tests future compatibility
 
 ---

@@ -344,3 +344,39 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Test Edge Functions by invoking them with HTTP requests (curl, fetch, etc.)
 - Pattern: For the scaffold, ensure the code exists and has correct structure
 - Pattern: Full testing happens at integration level after deployment
+
+## Continuous Integration (GitHub Actions)
+
+### CI Workflow Structure
+
+- Pattern: Create CI workflow in `.github/workflows/test.yml` for automated quality checks
+- Pattern: Workflow triggers on push to main/master branches and on all pull requests
+- Pattern: Use matrix strategy to test against multiple Node.js versions (18.x, 20.x)
+- Pattern: Name the job descriptively (e.g., "Run Tests and Quality Checks")
+- Note: CI ensures code quality standards are met before merging changes
+
+### Required CI Steps
+
+- Pattern: Install pnpm using `pnpm/action-setup@v4` with exact version from package.json (8.15.0)
+- Pattern: Setup Node.js with `actions/setup-node@v4` and enable pnpm cache
+- Pattern: Install dependencies with `pnpm install --frozen-lockfile` to ensure reproducible builds
+- Pattern: Run all quality gates in order: type-check, lint, format:check, test
+- Pattern: Upload test artifacts (coverage) using `actions/upload-artifact@v4` if available
+- Note: Each quality gate must pass for the workflow to succeed
+
+### Quality Gates in CI
+
+- Pattern: TypeScript type check with `pnpm type-check` catches compilation errors
+- Pattern: ESLint with `pnpm lint` enforces code style and catches potential bugs
+- Pattern: Prettier format check with `pnpm format:check` ensures consistent formatting
+- Pattern: Vitest with `pnpm test` runs all unit and component tests
+- Note: All four quality gates must pass for CI to pass - no exceptions
+
+### CI Best Practices
+
+- Pattern: Use `--frozen-lockfile` with pnpm to prevent dependency changes during CI
+- Pattern: Enable caching for pnpm store to speed up dependency installation
+- Pattern: Test against multiple Node.js versions to ensure compatibility
+- Pattern: Use `if: always()` for artifact upload to capture results even if tests fail
+- Pattern: Set `if-no-files-found: ignore` for coverage upload since coverage is optional
+- Note: Fast CI feedback loop is critical - tests should complete in seconds, not minutes
