@@ -438,3 +438,31 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Provide "Next Steps" section linking to relevant documentation after setup
 - Pattern: Include verification steps so developers can confirm setup worked correctly
 - Pattern: Always run Prettier after creating markdown documentation files
+
+## Tamagui Custom Color Tokens
+
+### Adding Custom Colors to Tamagui Config
+
+- Pattern: Import `createTokens` from `tamagui` package (not `@tamagui/config/v4`)
+- Pattern: Define custom colors as a const object with descriptive names (e.g., `primary50`, `primary500`, `neutral900`)
+- Pattern: Use semantic color scales with shades from 50 (lightest) to 950 (darkest) following standard design system conventions
+- Pattern: Use `createTokens()` to merge `defaultConfig.tokens` with custom colors under the `color` key
+- Pattern: Pass the custom tokens object to `createTamagui()` to override default tokens
+- Note: The `defaultConfig.tokens` object from v4 includes `radius`, `zIndex`, `space`, and `size` but NOT `color`
+- Note: Colors should be added to the tokens object, not directly to themes (themes reference token colors)
+
+### Color System Organization
+
+- Pattern: Group colors by semantic purpose with clear comments: primary, success, warning, error, neutral
+- Pattern: Use standard color scale increments: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950
+- Pattern: Document the main color of each scale with inline comments (e.g., `primary500: '#0ea5e9', // Main primary color`)
+- Pattern: Include usage context in comments (e.g., "Primary brand color - used for main CTAs, links, and key interactive elements")
+- Pattern: Choose accessible color values that work well in both light and dark modes
+- Note: The 500 shade is typically the "main" color of each scale (e.g., `primary500`, `success500`)
+
+### TypeScript Configuration
+
+- Pattern: Export `AppConfig` type from tamagui.config.ts for type safety across the app
+- Pattern: Extend `TamaguiCustomConfig` interface with the exported config type in a module declaration
+- Pattern: Custom color tokens are automatically typed and available via autocomplete in components
+- Note: No additional type declarations needed for custom colors - they're inferred from the tokens object
