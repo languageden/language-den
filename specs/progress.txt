@@ -48,6 +48,8 @@
 - Use `flex` property (not shorthand `f`) for flex layout properties
 - Tamagui v4 has `onlyAllowShorthands: true` which restricts available inline properties
 - When creating function components that wrap Tamagui primitives, avoid dynamic style props that TypeScript rejects
+- Text-based styled components (like Button) don't support: `textAlign`, `lineHeight`, `borderRadius` (use variants), `userSelect`
+- Use `aria-label` and `role` for accessibility instead of deprecated `accessibilityLabel` and `accessibilityHint`
 
 ---
 
@@ -195,5 +197,31 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Function components wrapping Tamagui primitives should avoid dynamic style props that TypeScript cannot validate
 - MetricCard test pattern: verify all props render correctly, test optional props independently, test combined props
 - Component should use semantic color tokens ($primary, $success, $error) rather than hardcoded colors
+
+---
+
+## [Tue Jan 13 10:33:00 PM +0700 2026] - Card #87
+
+- Created Button component in src/ui/Button.tsx using Tamagui's styled(Text)
+- Button provides accessible, cross-platform button with primary styling and press feedback
+- Implemented interactive states: hoverStyle, pressStyle, and focusStyle for accessibility
+- Used variants system for borderRadius styling (must be in variants, not base config)
+- Shadow properties work cross-platform: shadowColor, shadowOffset, shadowOpacity, shadowRadius + elevation
+- Created comprehensive tests in src/ui/Button.test.tsx (15 tests)
+- All quality gates pass: type-check, lint, and test (69 tests passing)
+- Files changed: src/ui/Button.tsx, src/ui/Button.test.tsx, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Text-based styled components have more restrictions than YStack/XStack components
+- Properties that don't work on styled(Text): textAlign, lineHeight, borderRadius (base), userSelect
+- borderRadius must be defined in variants for Text-based components, just like YStack/XStack
+- Button components work well when styled from Text with proper padding, background, and interactive states
+- Use aria-label instead of deprecated accessibilityLabel for accessibility support
+- Use role prop instead of deprecated accessibilityHint for accessibility
+- Text components automatically handle typography styling (fontSize, fontWeight, color)
+- cursor: 'pointer' is allowed on Text components for proper web cursor behavior
+- Scale transform in pressStyle (scale: 0.98) provides nice tactile feedback on press
+- All styled components (Text, YStack, XStack) share the same pattern: variants with defaultVariants
 
 ---

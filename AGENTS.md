@@ -609,3 +609,12 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: When creating complex styled components with borderRadius, define it in variants: `variants: { rounded: { true: { borderRadius: '$2' } } }`
 - Note: If borderRadius is needed dynamically, consider creating a styled component wrapper with variants instead of inline props
 - Pattern: For simple icon containers without rounded corners, omit borderRadius entirely to avoid TypeScript errors
+
+### Styling Text Components with Tamagui
+
+- Pattern: When styling Text components with `styled(Text, {...})`, several properties are not supported and will cause TypeScript errors
+- Note: Properties that don't work on styled Text: `textAlign`, `lineHeight`, `borderRadius`, `userSelect`
+- Pattern: Use `borderRadius` in variants instead of base styles for Text-based components like buttons
+- Pattern: Text components work well for button-like components with proper padding, background, and interactive states
+- Note: Use `aria-label` instead of deprecated `accessibilityLabel`, and `role` instead of `accessibilityHint`
+- Pattern: Button components styled from Text should define `rounded` variant with default true for rounded corners
