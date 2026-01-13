@@ -35,6 +35,12 @@
 - Pattern: Install jsdom and react-test-renderer (matching React version) for component testing
 - Pattern: Use server.deps.inline in vitest.config.ts to force transformation of problematic node_modules
 - Pattern: Simple React components can be tested with React.createElement without full Testing Library setup
+- Pattern: Supabase Auth configuration includes autoRefreshToken, persistSession, and custom storage adapter
+- Pattern: Use expo-secure-store for encrypted token storage on native platforms, localStorage on web
+- Pattern: Auth storage adapter detects platform with Platform.OS and provides async getItem/setItem/removeItem interface
+- Pattern: Auth helper functions return Promise<{success, error?}> instead of throwing exceptions
+- Pattern: Use `import type` for Supabase types (Session, User) to avoid ESLint consistent-type-imports errors
+- Pattern: Modules using React Native Platform API may not be unit-testable in Vitest due to Flow syntax parsing issues
 
 ---
 
@@ -300,5 +306,41 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Domain layer tests should explicitly opt into 'node' environment when default changes to 'jsdom'
 - Testing strategy: pure TypeScript (domain) in node environment, React components in jsdom environment
 - For complex library testing issues, document limitations and test at integration/E2E level instead
+
+---
+
+## [Tue Jan 13 11:37:35 AM +07 2026] - Card #54
+
+- Installed expo-secure-store package for secure token storage on native platforms
+- Created src/services/auth-storage.ts with custom storage adapter for Supabase Auth
+- Updated src/services/supabase.ts to include auth configuration with storage adapter
+- Created src/services/auth-types.ts with TypeScript interfaces for auth operations
+- Created src/services/auth-helpers.ts with utility functions (signUp, signIn, signOut, getCurrentSession, getCurrentUser)
+- Updated vitest.config.ts to include /expo-secure-store/ in server.deps.inline array
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+- package.json (updated) - Added expo-secure-store dependency
+- src/services/auth-storage.ts (created) - Custom storage adapter using expo-secure-store for native, localStorage for web
+- src/services/supabase.ts (updated) - Added auth configuration with storage, autoRefreshToken, persistSession settings
+- src/services/auth-types.ts (created) - TypeScript types for AuthState, SignUpCredentials, SignInCredentials, AuthError
+- src/services/auth-helpers.ts (created) - Helper functions for auth operations with error handling
+- vitest.config.ts (updated) - Added /expo-secure-store/ to server.deps.inline array
+- AGENTS.md (updated) - Added comprehensive Supabase Auth configuration patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- expo-secure-store provides encrypted storage on iOS/Android and must be installed separately from Expo core
+- Auth storage adapter should implement async getItem/setItem/removeItem interface matching Supabase expectations
+- Platform.OS check distinguishes native platforms (ios/android) from web for storage fallback
+- Supabase auth configuration is passed as third parameter to createClient with auth options object
+- Auth helper functions should return {success, error?} objects instead of throwing exceptions for better error handling
+- All auth operations should be wrapped in try-catch to handle network and API errors gracefully
+- Use `import type` for Session and User types from @supabase/supabase-js to satisfy ESLint consistent-type-imports rule
+- Explicit return types are required on all exported functions to satisfy @typescript-eslint/explicit-function-return-type
+- React Native uses Flow type syntax (`import typeof`) which causes parse failures in Vitest/Rollup
+- Modules that depend on React Native Platform API cannot be easily unit-tested in Vitest - skip tests or test at integration level
+- Auth storage adapter functionality is tested by Supabase and Expo libraries themselves - integration tests are more appropriate
+- server.deps.inline in vitest.config.ts must include problematic modules like /expo-secure-store/ for transformation
 
 ---

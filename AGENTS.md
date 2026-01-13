@@ -221,7 +221,7 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Change `test.environment` from `'node'` to `'jsdom'` to support React component rendering
 - Pattern: Pure TypeScript tests can opt-out with `@vitest-environment node` comment at top of file
 - Pattern: Configure `server.deps.inline` with regex patterns for modules needing transformation
-- Pattern: Add patterns like `/tamagui/`, `/@tamagui/`, `/react-native/` to inline array
+- Pattern: Add patterns like `/tamagui/`, `/@tamagui/`, `/react-native/`, `/expo-secure-store/` to inline array
 - Note: Some complex UI libraries (Tamagui) may have transformation issues with Vitest
 
 ### Test File Structure
@@ -244,5 +244,62 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 
 - Note: @testing-library/react-native may have compatibility issues with certain UI libraries in Vitest
 - Note: Tamagui and other libraries using advanced TypeScript features may cause "Unexpected token 'typeof'" errors
+- Note: React Native uses Flow type syntax (`import typeof`) which cannot be parsed by Vitest/Rollup
 - Note: When hitting transformation issues, consider testing at a higher level or mocking the UI library
 - Note: Basic React component testing works well; full React Native Testing Library integration is optional
+- Note: Modules that depend heavily on React Native Platform API may not be unit-testable in Vitest
+
+## Supabase Auth Configuration
+
+### Dependencies
+
+- Pattern: Install `expo-secure-store` for secure, encrypted token storage on native platforms
+- Pattern: Use `@supabase/supabase-js` v2.x for Supabase client library
+- Note: expo-secure-store provides encrypted storage on iOS/Android, falls back to localStorage on web
+
+### Auth Storage Adapter
+
+- Pattern: Create custom storage adapter in `src/services/auth-storage.ts` implementing getItem/setItem/removeItem
+- Pattern: Use `expo-secure-store` for native platforms (iOS/Android) with SecureStore.getItemAsync/setItemAsync/deleteItemAsync
+- Pattern: Fall back to localStorage for web platform using `Platform.OS === 'web'` check
+- Pattern: Import Platform from `react-native` to detect the current platform
+- Pattern: Wrap all storage operations in try-catch blocks and handle errors gracefully
+- Pattern: Log errors to console.error for debugging but don't throw exceptions
+- Note: Storage adapter should be async (return Promises) to match Supabase auth storage interface
+
+### Supabase Client Auth Configuration
+
+- Pattern: Configure Supabase client with auth options object as third parameter to createClient
+- Pattern: Set `auth.storage` to custom authStorage adapter for secure token persistence
+- Pattern: Enable `auth.autoRefreshToken: true` to automatically refresh expired sessions
+- Pattern: Enable `auth.persistSession: true` to save session to storage for auto-login
+- Pattern: Set `auth.detectSessionInUrl: false` for mobile apps (not needed without URL-based auth flows)
+- Pattern: Import authStorage from relative path: `import { authStorage } from './auth-storage'`
+
+### Auth Types
+
+- Pattern: Create auth types in `src/services/auth-types.ts` with interfaces for credentials and state
+- Pattern: Define SignUpCredentials with email, password, and optional metadata object
+- Pattern: Define SignInCredentials with email and password
+- Pattern: Define AuthState with user, session, and loading properties
+- Pattern: Define AuthError with message and optional originalError for error handling
+- Pattern: Use `import type` to import User and Session types from @supabase/supabase-js
+
+### Auth Helper Functions
+
+- Pattern: Create auth helpers in `src/services/auth-helpers.ts` with utility functions for common operations
+- Pattern: Export async functions: signUp, signIn, signOut, getCurrentSession, getCurrentUser
+- Pattern: All auth functions should return Promise with success/error status (not throw exceptions)
+- Pattern: Use consistent return type: `Promise<{ success: boolean; error?: AuthError }>`
+- Pattern: Wrap Supabase auth calls in try-catch and convert to error objects
+- Pattern: Include JSDoc comments with @param, @returns, and @example tags
+- Pattern: Use `import type` for Session and User types at the top of the file
+- Pattern: Use explicit return types on all exported functions to satisfy ESLint rules
+
+### Testing Auth Code
+
+- Note: Auth storage adapter that uses React Native Platform API cannot be easily unit-tested in Vitest
+- Note: React Native's Flow type syntax causes parse errors in Vitest/Rollup
+- Note: Auth helper functions can be tested with mocked Supabase client at integration level
+- Pattern: Skip unit tests for modules with heavy React Native dependencies that cause parsing errors
+- Pattern: Test auth helpers indirectly through integration tests or E2E tests

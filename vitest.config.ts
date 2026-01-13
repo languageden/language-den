@@ -34,7 +34,7 @@ export default defineConfig({
     server: {
       deps: {
         // Inline modules that need transformation
-        inline: [/tamagui/, /@tamagui/, /react-native/],
+        inline: [/tamagui/, /@tamagui/, /react-native/, /expo-secure-store/],
       },
     },
   },
