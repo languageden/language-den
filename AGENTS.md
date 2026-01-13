@@ -399,3 +399,28 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Reference additional documentation files in docs/ directory
 - Note: README should enable a new developer to get the project running without any other documentation
 - Note: Use Prettier to format README after creation - ensures consistent markdown formatting
+
+### Architecture Documentation
+
+- Pattern: Create detailed architecture.md in docs/ directory explaining the three-layer architecture
+- Pattern: Document domain layer (pure TypeScript), UI layer (React components), and services layer (external integrations)
+- Pattern: Include ASCII diagrams showing dependency direction and layer relationships
+- Pattern: Explain what belongs in each layer with concrete examples
+- Pattern: Document testing strategy for each layer (unit tests for domain, component tests for UI, integration tests for services)
+- Pattern: Include common patterns section showing good vs bad examples (UI calls domain, not vice versa)
+- Pattern: Document benefits of the architecture (fast tests, easy refactoring, scalability)
+- Pattern: Include migration strategy explaining how to decide where new code belongs
+- Pattern: Always run Prettier after creating markdown documentation files
+
+### Folder Structure Documentation
+
+- Pattern: Create detailed folder-structure.md in docs/ directory explaining every directory
+- Pattern: Document what belongs in each directory and what does NOT belong there
+- Pattern: Include example file structures showing realistic directory hierarchies
+- Pattern: Provide code examples for each directory showing typical file contents
+- Pattern: Document file naming conventions (PascalCase for React components, kebab-case for utilities)
+- Pattern: Include import conventions (relative imports for now, path aliases as future enhancement)
+- Pattern: Document configuration files (app.json, eas.json, tsconfig.json, etc.) with key settings explained
+- Pattern: Provide decision tree for where to put new code (screen → app/, component → src/ui/, logic → src/domain/, etc.)
+- Pattern: List gitignored directories and explain why they should not be committed
+- Pattern: Cross-reference other documentation files (architecture.md, deployment.md, environment-setup.md)

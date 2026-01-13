@@ -54,6 +54,11 @@
 - Pattern: Always run Prettier format after creating markdown files to ensure consistent formatting
 - Pattern: Document all npm scripts in README with clear categories (development, testing, quality, building)
 - Pattern: Include acceptance criteria in README to define project success
+- Pattern: Architecture documentation should include ASCII diagrams showing layer dependencies and data flow
+- Pattern: Document what belongs and does NOT belong in each architectural layer with examples
+- Pattern: Folder structure documentation should provide decision trees for where to put new code
+- Pattern: Documentation files in docs/ should cross-reference each other (architecture.md, folder-structure.md, etc.)
+- Pattern: Include both good and bad examples in architecture docs to illustrate anti-patterns
 
 ---
 
@@ -456,5 +461,38 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - README should enable a new developer to get the project running without asking questions
 - Reference additional documentation files (docs/architecture.md, docs/deployment.md) but don't depend on them
 - npm warnings about "node-linker" config are expected when running pnpm via npx - can be ignored
+
+---
+
+## [Tue Jan 13 11:52:56 AM +07 2026] - Card #61
+
+- Created docs/architecture.md with comprehensive architecture documentation
+- Created docs/folder-structure.md with detailed folder structure explanation
+- Documented three-layer architecture (domain, UI, services) with ASCII diagrams
+- Explained what belongs in each layer with concrete code examples
+- Documented testing strategy for each layer
+- Included common patterns section showing good vs bad examples
+- Provided decision tree for where to put new code
+- Documented file naming conventions (PascalCase for components, kebab-case for utilities)
+- Cross-referenced other documentation files
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+- docs/architecture.md (created) - Comprehensive architecture documentation with diagrams and examples
+- docs/folder-structure.md (created) - Detailed folder structure guide with decision trees
+- AGENTS.md (updated) - Added architecture and folder structure documentation patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- Architecture documentation should include visual diagrams (ASCII art) showing layer relationships and dependency direction
+- Documentation is most useful when it includes both good and bad examples to illustrate anti-patterns
+- Each layer should have clear "what belongs here" and "what does NOT belong here" sections
+- Folder structure docs should include decision trees to help developers choose where to put new code
+- File naming conventions should be explicit: PascalCase for React components, kebab-case for non-component files
+- Cross-reference related documentation files to create a cohesive documentation system
+- Documentation files should include realistic code examples, not just abstract descriptions
+- Testing strategy documentation should explain why each layer uses different test approaches
+- Always run Prettier after creating markdown files to ensure consistent formatting
+- Documentation should be comprehensive enough that a new developer can onboard without asking questions
 
 ---
