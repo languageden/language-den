@@ -157,3 +157,51 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Environment variable access must use bracket notation for TypeScript strict mode (avoids TS4111 error)
 - Note: The client initialization happens at module load time, so missing env vars will cause immediate errors
 - Note: Import the client in other files with: `import { supabase } from '../services/supabase'` or `import { supabase } from '../../services/supabase'` depending on location
+
+## Vitest Configuration
+
+### Dependencies
+
+- Pattern: Vitest is installed as a dev dependency along with `@vitest/ui` for the UI test runner
+- Pattern: No additional test libraries needed for pure TypeScript unit tests (domain layer)
+- Pattern: Use `vite` as a peer dependency (required by Vitest)
+
+### vitest.config.ts Setup
+
+- Pattern: Create `vitest.config.ts` at project root using `defineConfig` from `vitest/config`
+- Pattern: Set `test.environment: 'node'` for pure TypeScript tests (domain layer)
+- Pattern: Configure `test.setupFiles: ['./test/setup.ts']` to run setup before each test file
+- Pattern: Use `test.include: ['**/*.test.{ts,tsx}']` pattern to match test files
+- Pattern: Exclude `node_modules`, `dist`, `.expo` from test discovery
+- Pattern: Set `test.globals: false` to prefer explicit imports from vitest (better for TypeScript)
+- Pattern: Configure path aliases in `resolve.alias` to match tsconfig.json paths (e.g., `@: '/src'`)
+
+### test/setup.ts
+
+- Pattern: Create `test/setup.ts` file for global test configuration
+- Pattern: Pure TypeScript tests need minimal setup - file can be empty or contain only comments
+- Pattern: React component tests will extend this setup with React Testing Library configuration (future card)
+
+### Test File Patterns
+
+- Pattern: Place test files next to the code they test (e.g., `capitalize-words.test.ts` next to `capitalize-words.ts`)
+- Pattern: Use `.test.ts` extension for unit tests, `.test.tsx` for component tests
+- Pattern: Import test utilities explicitly: `import { describe, it, expect } from 'vitest'`
+- Pattern: Domain layer tests should be pure TypeScript with no React or external dependencies
+- Pattern: Use descriptive test names that document expected behavior
+- Pattern: Group related tests with `describe` blocks
+
+### Running Tests
+
+- Pattern: Use `pnpm test` (runs `vitest run`) for single-pass test execution (CI-friendly)
+- Pattern: Use `pnpm test:watch` (runs `vitest`) for watch mode during development
+- Pattern: Tests should complete in milliseconds for pure TypeScript functions
+- Pattern: Tests run without needing simulators, emulators, or network access
+
+### Domain Layer Testing
+
+- Pattern: Create simple pure functions in `src/domain/` as examples (e.g., `capitalize-words.ts`)
+- Pattern: Pure functions should have explicit input/output types and no side effects
+- Pattern: Include JSDoc comments with @example tags to document usage
+- Pattern: Test edge cases: empty strings, single characters, special characters, etc.
+- Note: Domain tests run in Node environment and are extremely fast (< 5ms typical)

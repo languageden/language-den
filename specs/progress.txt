@@ -25,6 +25,12 @@
 - Pattern: Supabase client is initialized in src/services/supabase.ts and exported as a singleton
 - Pattern: Use bracket notation for environment variable access: `process.env['VARIABLE_NAME']` (TypeScript strict mode requirement)
 - Pattern: Validate environment variables exist before initializing Supabase client with descriptive error messages
+- Pattern: Vitest configuration uses node environment for pure TypeScript tests (domain layer)
+- Pattern: Test files are placed next to the code they test with .test.ts or .test.tsx extension
+- Pattern: Import test utilities explicitly from vitest: `import { describe, it, expect } from 'vitest'`
+- Pattern: Domain layer tests should be pure TypeScript with no React or external dependencies
+- Pattern: Configure path aliases in vitest.config.ts to match tsconfig.json paths
+- Pattern: Use test/setup.ts for global test configuration (runs before each test file)
 
 ---
 
@@ -219,5 +225,41 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Installing @supabase/supabase-js may show peer dependency warnings about ESLint versions - these can be ignored as they don't affect functionality
 - The createClient function from @supabase/supabase-js takes two arguments: URL and anon key (both strings)
 - Client initialization happens at module load time, so any missing env vars will cause runtime errors immediately when the module is imported
+
+---
+---
+
+**Reached max iterations with 9 card(s) remaining**
+
+## [Tue Jan 13 11:21:51 AM +07 2026] - Card #57
+
+- Configured Vitest as the test runner for unit testing
+- Created vitest.config.ts with node environment for pure TypeScript tests
+- Created test/setup.ts for global test configuration (currently minimal for pure TypeScript tests)
+- Created src/domain/capitalize-words.ts as an example pure domain function
+- Created src/domain/capitalize-words.test.ts with comprehensive test coverage
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+- vitest.config.ts (created) - Vitest configuration with node environment and path aliases
+- test/setup.ts (created) - Global test setup file (minimal for now, will be extended for React tests)
+- src/domain/capitalize-words.ts (created) - Example pure domain function with JSDoc
+- src/domain/capitalize-words.test.ts (created) - Unit tests demonstrating testing patterns
+- AGENTS.md (updated) - Added comprehensive Vitest configuration patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- Vitest is already installed in package.json with @vitest/ui - no additional dependencies needed for basic unit tests
+- The vitest.config.ts should use `test.environment: 'node'` for pure TypeScript tests (domain layer)
+- Individual test files can override environment with `// @vitest-environment jsdom` comment for React components
+- Set `test.globals: false` to prefer explicit imports from vitest - better for TypeScript autocomplete
+- Path aliases in vitest.config.ts must match tsconfig.json paths configuration (`@: '/src'`)
+- Test files should be placed next to the code they test (colocation pattern)
+- Use explicit imports: `import { describe, it, expect } from 'vitest'` instead of global functions
+- Domain layer tests are extremely fast (< 5ms) because they're pure TypeScript with no React or external dependencies
+- The test/setup.ts file runs before each test file - currently minimal but will be extended for React Testing Library
+- Running `pnpm test` executes `vitest run` for single-pass execution (CI-friendly)
+- Running `pnpm test:watch` executes `vitest` for watch mode during development
+- Example domain functions should include JSDoc with @example tags to document usage patterns
 
 ---
