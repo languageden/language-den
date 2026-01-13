@@ -380,3 +380,22 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Use `if: always()` for artifact upload to capture results even if tests fail
 - Pattern: Set `if-no-files-found: ignore` for coverage upload since coverage is optional
 - Note: Fast CI feedback loop is critical - tests should complete in seconds, not minutes
+
+## Documentation
+
+### README.md Structure
+
+- Pattern: Create comprehensive README.md with Table of Contents for easy navigation
+- Pattern: Include Prerequisites section listing all required software with versions
+- Pattern: Provide step-by-step Getting Started instructions that a new developer can follow
+- Pattern: Document all available npm scripts grouped by category (development, testing, quality, building)
+- Pattern: Include complete Project Structure with explanations of each directory's purpose
+- Pattern: Document Technology Stack with brief descriptions of each technology
+- Pattern: Include high-level Architecture overview with dependency direction diagram
+- Pattern: Document all Environment Variables in a table with where to obtain them
+- Pattern: Include Platform Support section with commands for testing on each platform
+- Pattern: Provide Troubleshooting section with common issues and solutions
+- Pattern: Document Acceptance Criteria to define when the project is successful
+- Pattern: Reference additional documentation files in docs/ directory
+- Note: README should enable a new developer to get the project running without any other documentation
+- Note: Use Prettier to format README after creation - ensures consistent markdown formatting

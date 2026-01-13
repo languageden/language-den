@@ -50,6 +50,10 @@
 - Pattern: All quality gates must pass in CI: type-check, lint, format:check, test (in that order)
 - Pattern: Use --frozen-lockfile with pnpm install in CI to ensure reproducible builds
 - Pattern: Test against multiple Node.js versions (18.x, 20.x) using matrix strategy for compatibility
+- Pattern: README.md should be comprehensive with Table of Contents, Getting Started, and Troubleshooting sections
+- Pattern: Always run Prettier format after creating markdown files to ensure consistent formatting
+- Pattern: Document all npm scripts in README with clear categories (development, testing, quality, building)
+- Pattern: Include acceptance criteria in README to define project success
 
 ---
 
@@ -411,5 +415,46 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - CI workflow file requires no code changes in src/ - it's purely infrastructure
 - Fast feedback is critical - entire CI run should complete in under 2 minutes
 - Node.js 18.x is the minimum version (from package.json engines), 20.x tests future compatibility
+
+---
+
+## [Tue Jan 13 11:48:27 AM +07 2026] - Card #60
+
+- Created comprehensive README.md with complete project documentation
+- Included Table of Contents for easy navigation
+- Documented all prerequisites with specific version requirements
+- Provided step-by-step Getting Started instructions
+- Documented all available npm scripts grouped by category
+- Included complete project structure with directory explanations
+- Documented technology stack with descriptions
+- Added architecture overview with dependency direction
+- Documented environment variables with where to obtain them
+- Included platform support section with testing commands
+- Added troubleshooting section with common issues and solutions
+- Documented acceptance criteria for the infrastructure scaffold
+- Ran Prettier to format README after creation
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+
+- README.md (created) - Comprehensive project documentation with 400+ lines
+- AGENTS.md (updated) - Added Documentation section with README.md structure patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+
+- README.md is the first documentation file developers encounter - make it comprehensive and self-contained
+- Table of Contents with anchor links makes long README files navigable
+- Getting Started section should be step-by-step and assume no prior knowledge of the project
+- Document all npm scripts grouped by purpose (development, testing, quality, building)
+- Include both high-level architecture overview and reference to detailed docs
+- Environment variables should be documented in a table format for clarity
+- Platform support commands should be explicit (what to press, what happens)
+- Troubleshooting section addresses common issues before they become blockers
+- Acceptance criteria in README serves as a checklist for project completion
+- Always run Prettier after creating markdown files - ensures consistent formatting
+- README should enable a new developer to get the project running without asking questions
+- Reference additional documentation files (docs/architecture.md, docs/deployment.md) but don't depend on them
+- npm warnings about "node-linker" config are expected when running pnpm via npx - can be ignored
 
 ---
