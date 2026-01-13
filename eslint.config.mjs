@@ -69,6 +69,7 @@ export default [
       '*.config.mjs',
       'babel.config.js',
       'metro.config.js',
+      'supabase/**',
     ],
   },
   prettier,

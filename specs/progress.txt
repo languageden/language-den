@@ -41,6 +41,10 @@
 - Pattern: Auth helper functions return Promise<{success, error?}> instead of throwing exceptions
 - Pattern: Use `import type` for Supabase types (Session, User) to avoid ESLint consistent-type-imports errors
 - Pattern: Modules using React Native Platform API may not be unit-testable in Vitest due to Flow syntax parsing issues
+- Pattern: Supabase Edge Functions live in supabase/functions/ directory with each function in its own subdirectory
+- Pattern: Edge Functions use Deno runtime - import from https URLs (e.g., 'https://deno.land/std@0.168.0/http/server.ts')
+- Pattern: Exclude supabase/ directory from TypeScript compilation (tsconfig.json exclude array) and ESLint (eslint.config.mjs ignores array)
+- Pattern: Edge Functions cannot be tested with Vitest (Deno runtime vs Node.js) - test via HTTP invocation after deployment
 
 ---
 
@@ -342,5 +346,35 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Modules that depend on React Native Platform API cannot be easily unit-tested in Vitest - skip tests or test at integration level
 - Auth storage adapter functionality is tested by Supabase and Expo libraries themselves - integration tests are more appropriate
 - server.deps.inline in vitest.config.ts must include problematic modules like /expo-secure-store/ for transformation
+
+---
+
+## [Tue Jan 13 11:43:00 AM +07 2026] - Card #55
+
+- Created supabase/functions/hello/index.ts with basic hello world Edge Function
+- Updated tsconfig.json to exclude supabase directory from TypeScript compilation
+- Updated eslint.config.mjs to ignore supabase directory in linting
+- Added comprehensive Supabase Edge Functions patterns to AGENTS.md
+- All quality gates pass (type-check, lint, test, format:check)
+
+**Files changed:**
+- supabase/functions/hello/index.ts (created) - Hello world Edge Function returning JSON response
+- tsconfig.json (updated) - Added supabase to exclude array
+- eslint.config.mjs (updated) - Added supabase/** to ignores array
+- AGENTS.md (updated) - Added Supabase Edge Functions section with deployment patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- Supabase Edge Functions use Deno runtime, not Node.js - imports must use https URLs from Deno standard library
+- The supabase/ directory must be excluded from both TypeScript compilation and ESLint checking
+- TypeScript compiler will fail on Deno imports like 'https://deno.land/std@0.168.0/http/server.ts'
+- ESLint will fail on files not included in tsconfig.json - must add to ignores array
+- Edge Functions use serve() from Deno's http/server module to handle HTTP requests
+- Return new Response() with JSON.stringify() for JSON responses
+- Local testing with `supabase functions serve` requires Supabase CLI, but is not required for scaffold
+- Deployment uses `supabase functions deploy <function-name> --project-ref <ref>`
+- Edge Functions cannot be unit-tested with Vitest - they run in Deno, not Node.js
+- Each Edge Function gets its own subdirectory under supabase/functions/
+- The main function code goes in index.ts within the function's directory
 
 ---

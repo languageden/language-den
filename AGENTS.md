@@ -303,3 +303,44 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Note: Auth helper functions can be tested with mocked Supabase client at integration level
 - Pattern: Skip unit tests for modules with heavy React Native dependencies that cause parsing errors
 - Pattern: Test auth helpers indirectly through integration tests or E2E tests
+
+## Supabase Edge Functions
+
+### Directory Structure
+
+- Pattern: Place Edge Functions in `supabase/functions/` directory
+- Pattern: Each function gets its own subdirectory (e.g., `supabase/functions/hello/`)
+- Pattern: Main function code goes in `index.ts` within the function directory
+- Pattern: Keep the `supabase/functions/.gitkeep` file to ensure the directory is tracked in git
+
+### Edge Function Code Structure
+
+- Pattern: Import `serve` from Deno standard library: `import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'`
+- Pattern: Edge Functions use Deno runtime, not Node.js - use Deno imports (https URLs)
+- Pattern: Use `serve(async (req) => { ... })` to handle HTTP requests
+- Pattern: Return `new Response()` with JSON.stringify for JSON responses
+- Pattern: Set appropriate headers: `{ 'Content-Type': 'application/json' }`
+- Pattern: Include status code in response options (200 for success)
+- Pattern: Add JSDoc comments with deployment and invocation examples
+
+### Local Development
+
+- Pattern: Install Supabase CLI globally: `npm install -g supabase` or use `npx supabase`
+- Pattern: Test functions locally with: `supabase functions serve <function-name>`
+- Pattern: Functions run on `http://localhost:54321/functions/v1/<function-name>` when served locally
+- Note: Local testing requires Supabase CLI to be installed, but is not required for the scaffold
+
+### Deployment
+
+- Pattern: Deploy with: `supabase functions deploy <function-name> --project-ref your-project-id`
+- Pattern: Get project ref from Supabase Dashboard → Project Settings → General
+- Pattern: Deployed functions are available at: `https://your-project-id.supabase.co/functions/v1/<function-name>`
+- Pattern: Use `Authorization: Bearer YOUR_ANON_KEY` header when invoking Edge Functions
+- Note: Actual deployment is not required for the infrastructure scaffold - only the code needs to exist
+
+### Testing Edge Functions
+
+- Note: Edge Functions use Deno and cannot be tested with Vitest (which uses Node.js)
+- Pattern: Test Edge Functions by invoking them with HTTP requests (curl, fetch, etc.)
+- Pattern: For the scaffold, ensure the code exists and has correct structure
+- Pattern: Full testing happens at integration level after deployment
