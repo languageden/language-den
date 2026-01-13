@@ -66,6 +66,7 @@
 - Separate value imports (enums, functions) from type imports
 - Remove trivially inferred type annotations (rule: `@typescript-eslint/no-inferrable-types`)
 - Let TypeScript infer parameter types from default values (e.g., `greeting = 'Good morning'`)
+- Use `.toString()` when interpolating numbers in template literals to satisfy `@typescript-eslint/restrict-template-expressions`
 
 ### Mock Data Services
 
@@ -371,5 +372,36 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Pattern: Use `@vitest-environment node` for domain tests to avoid unnecessary DOM overhead
 - Note: Date objects use local timezone by default - ISO strings with 'Z' will be converted to local time
 - Note: Including emoji icons in return types adds visual polish and works cross-platform
+
+---
+
+## [Wed Jan 14 06:55:09 AM +0700 2026] - Card #89
+
+- Created ProgressBar component in src/ui/ProgressBar.tsx for visualizing completion percentage
+- Component displays horizontal progress bar with smooth animation transitions when progress changes
+- Implemented container + fill pattern using XStack (container) and YStack (fill bar)
+- Progress value is clamped between 0-100 internally using Math.max/Math.min
+- Optional height prop allows customization (defaults to 4px)
+- Uses semantic theme colors: $borderColor for background, $primary for fill
+- Applied 'normal' animation timing for smooth transitions
+- Created comprehensive tests in src/ui/ProgressBar.test.tsx (14 tests)
+- Created src/ui/AGENTS.md to document UI component patterns for future development
+- All quality gates pass: type-check, lint, and test (130 tests passing)
+- Files changed: src/ui/ProgressBar.tsx, src/ui/ProgressBar.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Progress indicators use container + fill pattern with XStack (container) and YStack/XStack (fill)
+- Pattern: Clamp numeric values to valid range using `Math.max(0, Math.min(100, value))` for robustness
+- Pattern: Tamagui's typed width/height props don't accept percentage strings - use style prop instead
+- Pattern: For percentage widths use: `style={{ width: \`${value.toString()}%\` }}` not `width={\`${value}%\`}`
+- Pattern: ESLint rule `@typescript-eslint/restrict-template-expressions` requires `.toString()` on numbers in template literals
+- Pattern: Avoid using string union types (`number | string`) for layout props if TypeScript rejects them - prefer single type
+- Pattern: Number-only types are safer and more predictable for dimensional props (width, height)
+- Pattern: Component tests don't need full DOM rendering - `React.createElement()` is sufficient for prop testing
+- Pattern: Test edge cases: boundary values (0, 100), out-of-range values (negative, >100), fractional values
+- Pattern: XStack container with `overflow: 'hidden'` clips fill bar to rounded corners for clean appearance
+- Pattern: Apply animation to the fill element (not container) for smooth width transitions
+- Pattern: Use `height: '100%'` on fill element to match container height dynamically
 
 ---
