@@ -32,6 +32,15 @@
 - Keep standard animations under 400ms for responsive feel; use 500ms+ for celebration animations
 - Use consistent easing: `cubic-bezier(0.4, 0.0, 0.2, 1)` for standard, bouncy curve for celebrations
 
+### Tamagui Styled Components
+
+- Use `styled(YStack, { ... })` to create reusable UI component primitives
+- Some style properties (like `borderRadius`) must be in variants, not base config due to TypeScript constraints
+- Styled components are objects, not functions, but work with React.createElement()
+- Define interactive states at same level as base styles: `hoverStyle`, `pressStyle`, `focusStyle`
+- Use variants pattern for conditional styling: `variants: { prop: { value: { styles } } }` + `defaultVariants`
+- Testing styled components requires matchMedia mock in test/setup.ts for Tamagui's media query support
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -129,3 +138,28 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 
 ---
 
+## [Mon Jan 13 10:24:45 PM +07 2026] - Card #85
+
+- Created reusable Card component in src/ui/Card.tsx using Tamagui's styled(YStack)
+- Card provides consistent visual container with elevation, rounded corners, and theme-aware styling
+- Implemented interactive states: hoverStyle, pressStyle, and focusStyle for accessibility
+- Used variants system for borderRadius styling (borderRadius in base config causes TypeScript errors)
+- Created comprehensive tests in src/ui/Card.test.tsx verifying component creation and prop acceptance
+- Added matchMedia mock to test/setup.ts for Tamagui components that use media queries
+- All quality gates pass: type-check, lint, and test (43 tests passing)
+- Files changed: src/ui/Card.tsx, src/ui/Card.test.tsx, test/setup.ts, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Tamagui styled components are objects (not plain functions), but work with React.createElement()
+- Some style properties like borderRadius must be defined in variants, not in base style config
+- The `borderWidth` property doesn't have a shorthand (`bw`) that TypeScript recognizes - use full name
+- Interactive states (hoverStyle, pressStyle, focusStyle) should be defined at the same level as base styles
+- matchMedia mock is required in test/setup.ts for Tamagui components that use @tamagui/select or similar
+- Use `globalThis as any` with appropriate eslint-disable comments to mock window.matchMedia in strict mode
+- Variants pattern: `variants: { propName: { value: { styles } } }` with `defaultVariants: { propName: value }`
+- Styled component tests don't need full DOM rendering - React.createElement() is sufficient for prop testing
+- The animation prop accepts token names like 'quick', 'normal', 'slow' defined in tamagui.config.ts
+- Shadow props work cross-platform: shadowColor, shadowOffset, shadowOpacity, shadowRadius (iOS/web) + elevation (Android)
+
+---

@@ -531,6 +531,35 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Verify lineHeight values are appropriate for their use cases (16-32px range)
 - Pattern: Confirm size tokens match spacing tokens for consistency
 
+## Tamagui Styled Components
+
+### Creating Reusable UI Components
+
+- Pattern: Use `styled(YStack, { ... })` from Tamagui to create reusable component primitives
+- Pattern: Define component name in config: `name: 'ComponentName'` for better debugging
+- Pattern: Use shorthand props where available: `bg` for backgroundColor, `p` for padding, `items` for alignItems
+- Pattern: Use full property names for some props that don't have shorthands: `borderWidth`, `borderColor`, `shadowColor`
+- Pattern: Define interactive states with `hoverStyle`, `pressStyle`, `focusStyle` for responsive feedback
+- Pattern: Use variants for conditional styling: `variants: { propName: { value: { styles } } }`
+- Pattern: Set `defaultVariants` to apply variants by default
+- Pattern: Styled components are objects, not functions - they can still be used with React.createElement()
+- Note: Some style properties like `borderRadius` need to be in variants, not in the base style object
+
+### Testing Styled Components
+
+- Pattern: Styled components from Tamagui are objects, not plain functions - verify with `expect(Component).toBeDefined()`
+- Pattern: Test that styled components can create valid React elements with `React.isValidElement()`
+- Pattern: Test prop acceptance by checking `element.props.propName` values
+- Pattern: Basic prop testing doesn't require full DOM rendering - use React.createElement() directly
+- Pattern: Add matchMedia mock in test/setup.ts for Tamagui components that use media queries
+
+### matchMedia Mock for Testing
+
+- Pattern: Add matchMedia mock to test/setup.ts for all Tamagui component tests
+- Pattern: Use `globalThis as any` with eslint-disable comments to work around strict TypeScript checking
+- Pattern: Implement deprecated methods (`addListener`, `removeListener`) as empty functions for compatibility
+- Pattern: Mock returns a MediaQueryList-like object with `matches: false` by default
+
 ## Tamagui Animation Tokens
 
 ### Animation Configuration in Tamagui v4
