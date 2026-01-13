@@ -75,6 +75,16 @@
 - Mock data should include all enum variants for comprehensive testing
 - Use JSDoc comments with `@example` tags to document usage patterns
 
+### Domain Layer Pure Functions
+
+- Domain functions must be pure TypeScript with no React imports or side effects
+- Functions that depend on time should accept optional Date parameter (default `new Date()`) for testability
+- Use `Date.getHours()` to extract hour in local timezone for time-based logic
+- Export interfaces for complex return types to enable type reuse
+- Use `@vitest-environment node` for domain tests to avoid DOM overhead
+- Document time ranges and behavior clearly in JSDoc comments
+- Test all boundaries, edge cases, default behavior, and consistency
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -334,3 +344,32 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 
 ---
 
+
+## [Tue Jan 14 06:51:00 AM +07 2026] - Card #98
+
+- Created getTimeBasedGreeting pure function in src/domain/get-time-based-greeting.ts
+- Function returns appropriate greeting based on hour of day with four time ranges
+- Time ranges: Morning (5-11), Afternoon (12-16), Evening (17-20), Night (21-4)
+- Returns TimeBasedGreeting interface with greeting text and icon emoji
+- Accepts optional Date parameter for testing, defaults to current time in production
+- Created comprehensive tests in src/domain/get-time-based-greeting.test.ts (16 tests)
+- Tests cover all time boundaries, edge cases, default behavior, and consistency
+- All quality gates pass: type-check, lint, and test (116 tests passing)
+- Files changed: src/domain/get-time-based-greeting.ts, src/domain/get-time-based-greeting.test.ts, src/domain/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Domain functions that depend on time should accept optional Date parameter with default `new Date()`
+- Pattern: Use `Date.getHours()` to extract hour in local timezone for time-based logic
+- Pattern: Export interfaces for function return types to enable type reuse across the codebase
+- Pattern: Time ranges should be clearly documented in JSDoc with specific hours (e.g., "5:00 AM - 11:59 AM")
+- Pattern: Test all time boundaries explicitly - start of range, middle of range, and end of range
+- Pattern: Test edge cases like midnight (hour 0), early morning (hour 3-4), and late evening (hour 21-23)
+- Pattern: Include consistency test to verify same input produces same output
+- Pattern: Test default behavior without parameter to ensure production code path works
+- Pattern: Pure domain functions should complete in milliseconds - no async, no network, no side effects
+- Pattern: Use `@vitest-environment node` for domain tests to avoid unnecessary DOM overhead
+- Note: Date objects use local timezone by default - ISO strings with 'Z' will be converted to local time
+- Note: Including emoji icons in return types adds visual polish and works cross-platform
+
+---
