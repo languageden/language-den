@@ -23,6 +23,15 @@
 - Tamagui transforms token references into Variable objects with `val`, `key`, `name`, `variable` properties
 - Access actual color values in tests via `theme.colorName.val`
 
+### Tamagui Animation System
+
+- Tamagui v4 uses CSS-based animation strings: `"cubic-bezier(x1, y1, x2, y2) duration"` format
+- Extend `defaultConfig.animations` by spreading it and overriding the nested `animations` property
+- There is NO `createAnimations()` function - use plain object with CSS animation strings
+- Access animations via `config.animations.animations` (nested structure)
+- Keep standard animations under 400ms for responsive feel; use 500ms+ for celebration animations
+- Use consistent easing: `cubic-bezier(0.4, 0.0, 0.2, 1)` for standard, bouncy curve for celebrations
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -94,3 +103,29 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Custom tokens automatically get TypeScript typing through the `TamaguiCustomConfig` module declaration
 
 ---
+## [Mon Jan 13 10:18:45 PM +07 2026] - Card #84
+
+- Implemented animation timing tokens in tamagui.config.ts for consistent motion across the app
+- Added four animation presets: quick (150ms), normal (250ms), slow (400ms), and celebration (500ms)
+- Used CSS-based animation strings with cubic-bezier easing functions
+- Quick/normal/slow use standard easeInOut curve; celebration uses bouncy curve for achievements
+- Extended defaultConfig.animations by spreading and overriding the nested animations property
+- Created comprehensive tests in tamagui.config.test.ts to verify animation timing and easing
+- All animation tests pass including duration verification and easing function validation
+- Files changed: tamagui.config.ts, tamagui.config.test.ts, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Tamagui v4 does NOT have a `createAnimations()` function - the card's example code was incorrect
+- Animations in Tamagui v4 are CSS strings in format: `"cubic-bezier(x1, y1, x2, y2) duration"`
+- Must extend `defaultConfig.animations` by spreading entire object and overriding nested `animations` property
+- Animation structure is nested: access via `config.animations.animations.quick`, not `config.animations.quick`
+- Testing animations requires parsing CSS strings with regex: `/(\d+)ms/.exec(animationString)`
+- Use optional chaining (`?.[1]`) when accessing regex match groups to satisfy TypeScript strict mode
+- ESLint prefers `RegExp.exec()` over `String.match()` for performance and consistency
+- Standard animations kept under 400ms for responsive feel; celebration animation can be longer (500ms+)
+- Reduced motion support should be implemented in components using `useReducedMotion()` hook from React Native
+- The cubic-bezier values define the animation curve: (0.4, 0.0, 0.2, 1) = easeInOut, (0.68, -0.55, 0.265, 1.55) = bouncy
+
+---
+

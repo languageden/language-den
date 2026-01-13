@@ -203,4 +203,85 @@ describe('Tamagui Configuration', () => {
       expect(size[8].val).toBe(32);
     });
   });
+
+  describe('Animation Tokens', () => {
+    it('should have animations defined', () => {
+      expect(config.animations).toBeDefined();
+      expect(typeof config.animations).toBe('object');
+    });
+
+    it('should have quick animation for micro-interactions (150ms)', () => {
+      const animations = config.animations.animations;
+
+      expect(animations.quick).toBeDefined();
+      expect(animations.quick).toContain('150ms');
+      // Verify it uses easeInOut cubic-bezier
+      expect(animations.quick).toContain('cubic-bezier(0.4, 0.0, 0.2, 1)');
+    });
+
+    it('should have normal animation for standard transitions (250ms)', () => {
+      const animations = config.animations.animations;
+
+      expect(animations.normal).toBeDefined();
+      expect(animations.normal).toContain('250ms');
+      // Verify it uses easeInOut cubic-bezier
+      expect(animations.normal).toContain('cubic-bezier(0.4, 0.0, 0.2, 1)');
+    });
+
+    it('should have slow animation for page transitions (400ms)', () => {
+      const animations = config.animations.animations;
+
+      expect(animations.slow).toBeDefined();
+      expect(animations.slow).toContain('400ms');
+      // Verify it uses easeInOut cubic-bezier
+      expect(animations.slow).toContain('cubic-bezier(0.4, 0.0, 0.2, 1)');
+    });
+
+    it('should have celebration animation for achievements', () => {
+      const animations = config.animations.animations;
+
+      expect(animations.celebration).toBeDefined();
+      expect(animations.celebration).toContain('500ms');
+      // Verify it uses bouncy cubic-bezier
+      expect(animations.celebration).toContain('cubic-bezier(0.68, -0.55, 0.265, 1.55)');
+    });
+
+    it('should have all standard animations under or equal to 400ms', () => {
+      const animations = config.animations.animations;
+
+      // Check timing animations are under 400ms
+      const quickMatch = /(\d+)ms/.exec(animations.quick);
+      const normalMatch = /(\d+)ms/.exec(animations.normal);
+      const slowMatch = /(\d+)ms/.exec(animations.slow);
+
+      expect(quickMatch).toBeTruthy();
+      expect(normalMatch).toBeTruthy();
+      expect(slowMatch).toBeTruthy();
+
+      if (quickMatch?.[1])
+        expect(parseInt(quickMatch[1])).toBeLessThanOrEqual(400);
+      if (normalMatch?.[1])
+        expect(parseInt(normalMatch[1])).toBeLessThanOrEqual(400);
+      if (slowMatch?.[1])
+        expect(parseInt(slowMatch[1])).toBeLessThanOrEqual(400);
+    });
+
+    it('should use consistent easing for standard animations', () => {
+      const animations = config.animations.animations;
+      const easeInOut = 'cubic-bezier(0.4, 0.0, 0.2, 1)';
+
+      // Verify all standard animations use easeInOut
+      expect(animations.quick).toContain(easeInOut);
+      expect(animations.normal).toContain(easeInOut);
+      expect(animations.slow).toContain(easeInOut);
+    });
+
+    it('should use bouncy easing for celebration animation', () => {
+      const animations = config.animations.animations;
+      const bouncy = 'cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+      // Verify celebration uses bouncy easing
+      expect(animations.celebration).toContain(bouncy);
+    });
+  });
 });

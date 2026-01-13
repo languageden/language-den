@@ -530,3 +530,42 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Test that fontSize scale follows expected progression (12, 14, 16, 18, 20, 24, 30, 36, 48, 64)
 - Pattern: Verify lineHeight values are appropriate for their use cases (16-32px range)
 - Pattern: Confirm size tokens match spacing tokens for consistency
+
+## Tamagui Animation Tokens
+
+### Animation Configuration in Tamagui v4
+
+- Pattern: Tamagui v4 uses CSS-based animation strings, not object configurations
+- Pattern: Animation format is: `"cubic-bezier(x1, y1, x2, y2) duration"` (e.g., `"cubic-bezier(0.4, 0.0, 0.2, 1) 150ms"`)
+- Pattern: Extend `defaultConfig.animations` by spreading it and overriding the nested `animations` property
+- Pattern: Access animations via `config.animations.animations` object (nested structure)
+- Note: There is NO `createAnimations()` function in Tamagui - use plain object with CSS animation strings
+
+### Animation Timing Guidelines
+
+- Pattern: Keep standard animations fast and subtle (under 400ms) for responsive feel
+- Pattern: Quick (150ms): Micro-interactions like button hover states
+- Pattern: Normal (250ms): Standard transitions like card appearance
+- Pattern: Slow (400ms): Page transitions and significant state changes
+- Pattern: Celebration (500ms+): Special animations for achievements with bouncy easing
+
+### Animation Easing Functions
+
+- Pattern: Use `cubic-bezier(0.4, 0.0, 0.2, 1)` for standard easeInOut transitions
+- Pattern: Use `cubic-bezier(0.68, -0.55, 0.265, 1.55)` for bouncy/celebration animations
+- Pattern: Keep easing consistent across related animations (all standard animations use same easing)
+- Note: CSS cubic-bezier format: `cubic-bezier(x1, y1, x2, y2)` where values control the curve shape
+
+### Testing Animation Tokens
+
+- Pattern: Test animations by checking for duration strings (e.g., `toContain('150ms')`)
+- Pattern: Test animations by checking for cubic-bezier strings (e.g., `toContain('cubic-bezier(0.4, 0.0, 0.2, 1)')`)
+- Pattern: Use regex to extract duration values: `/(\d+)ms/.exec(animationString)` with optional chaining (`?.[1]`)
+- Pattern: Verify all standard animations are under 400ms by parsing duration from CSS string
+- Pattern: Use `RegExp.exec()` instead of `String.match()` to satisfy ESLint rules
+
+### Reduced Motion Support
+
+- Note: Reduced motion support should be implemented in components using `useReducedMotion()` hook from React Native
+- Pattern: Components should check reduced motion preference and set animation duration to 0 when enabled
+- Example: `const shouldReduceMotion = useReducedMotion(); const duration = shouldReduceMotion ? 0 : 150;`

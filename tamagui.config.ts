@@ -128,6 +128,25 @@ const tokens = createTokens({
   lineHeight,
 });
 
+// Create animation timing definitions for consistent motion across the app
+// Animations are kept fast and subtle (under 400ms) for responsive feel
+// with special celebration animations for achievements
+// Using CSS-based animations for web compatibility
+const animations = {
+  ...defaultConfig.animations,
+  animations: {
+    ...defaultConfig.animations.animations,
+    // Quick (150ms): Micro-interactions like button hover states
+    quick: 'cubic-bezier(0.4, 0.0, 0.2, 1) 150ms',
+    // Normal (250ms): Standard transitions like card appearance
+    normal: 'cubic-bezier(0.4, 0.0, 0.2, 1) 250ms',
+    // Slow (400ms): Page transitions and significant state changes
+    slow: 'cubic-bezier(0.4, 0.0, 0.2, 1) 400ms',
+    // Celebration: Bouncy animation for streak achievements and completions
+    celebration: 'cubic-bezier(0.68, -0.55, 0.265, 1.55) 500ms',
+  },
+};
+
 // Create semantic color themes for light and dark modes
 // These themes map semantic names (background, text, primary, etc.) to our custom color tokens
 const themes = {
@@ -250,11 +269,12 @@ const themes = {
 };
 
 // Create Tamagui configuration merging default config with custom color tokens and themes
-// This provides a complete token system for colors, spacing, typography, etc.
+// This provides a complete token system for colors, spacing, typography, animations, etc.
 const tamaguiConfig = createTamagui({
   ...defaultConfig,
   tokens,
   themes,
+  animations,
 });
 
 export type AppConfig = typeof tamaguiConfig;
