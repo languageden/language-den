@@ -51,6 +51,30 @@
 - Text-based styled components (like Button) don't support: `textAlign`, `lineHeight`, `borderRadius` (use variants), `userSelect`
 - Use `aria-label` and `role` for accessibility instead of deprecated `accessibilityLabel` and `accessibilityHint`
 
+### TypeScript Type Definitions
+
+- Group related interfaces in a single file (e.g., dashboard.ts for all dashboard types)
+- Use enum for discriminated union types with snake_case string values for API compatibility
+- Use `Date` type for timestamps (serialized to/from ISO strings in API calls)
+- Use `Record<string, unknown>` for flexible metadata objects
+- Nest related data in structured objects rather than flat properties
+- Use JSDoc comments to document interface purpose
+
+### TypeScript Import Best Practices
+
+- Use `import type` for type-only imports to satisfy ESLint rule `@typescript-eslint/consistent-type-imports`
+- Separate value imports (enums, functions) from type imports
+- Remove trivially inferred type annotations (rule: `@typescript-eslint/no-inferrable-types`)
+- Let TypeScript infer parameter types from default values (e.g., `greeting = 'Good morning'`)
+
+### Mock Data Services
+
+- Export both synchronous and asynchronous versions for flexibility
+- Define mock data as module-level constants for consistency
+- Async functions should accept delay parameter (default 500ms) to simulate network latency
+- Mock data should include all enum variants for comprehensive testing
+- Use JSDoc comments with `@example` tags to document usage patterns
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -253,3 +277,60 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Testing pattern remains consistent: verify component definition, prop acceptance, and element creation
 
 ---
+## [Tue Jan 13 10:37:45 PM +0700 2026] - Card #95
+
+- Created TypeScript interfaces for all dashboard data structures in src/types/dashboard.ts
+- Defined UserInfo interface for user information (id, name, email, avatarUrl)
+- Defined LearningStats interface for tracking cards learned, streak, reviews, and accuracy
+- Defined ReviewQueue interface with breakdown by urgency (overdue, dueToday, upcoming, total)
+- Defined ActivityType enum for discriminated union (card_learned, streak_milestone, deck_completed, perfect_review)
+- Defined Activity interface for individual feed entries with type, description, timestamp, metadata
+- Defined DashboardData interface as the complete dashboard data structure with all nested types
+- Created AGENTS.md in src/types/ to document type definition patterns and conventions
+- All quality gates pass: type-check, lint, and test (82 tests passing)
+- Files changed: src/types/dashboard.ts, src/types/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Group related interfaces in a single file for cohesion (e.g., dashboard.ts for all dashboard types)
+- Pattern: Export all interfaces and enums for use across the application
+- Pattern: Use JSDoc comments to document the purpose of each interface
+- Pattern: Use enum for discriminated union types with snake_case string values for API compatibility
+- Pattern: Use `Date` type for timestamps (will be serialized to/from ISO strings in API calls)
+- Pattern: Use `Record<string, unknown>` for flexible metadata objects that may contain arbitrary data
+- Pattern: Use `?` for optional properties (e.g., avatarUrl, metadata)
+- Pattern: Nest related data in structured objects rather than flat properties for better organization
+- Pattern: Use descriptive interface names that indicate purpose (e.g., LearningStats, not Stats)
+- Pattern: Place enum definitions before interfaces that use them for logical ordering
+- Creating AGENTS.md in directories establishes patterns for future work in that module
+
+---
+
+## [Tue Jan 14 06:48:15 AM +07 2026] - Card #96
+
+- Created dashboard-mock-data.ts service in src/services/ with realistic mock data for dashboard development
+- Implemented getMockDashboardData() function returning complete DashboardData structure
+- Implemented fetchMockDashboardData() async function with configurable delay for simulating network latency
+- Mock data includes: user info, learning stats, review queue breakdown, and 5 recent activities
+- Activities include all ActivityType enum variants (card_learned, streak_milestone, deck_completed, perfect_review)
+- Created comprehensive tests in src/services/dashboard-mock-data.test.ts (18 tests)
+- All quality gates pass: type-check, lint, and test (100 tests passing)
+- Files changed: src/services/dashboard-mock-data.ts, src/services/dashboard-mock-data.test.ts, src/services/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Use `import type` for type-only imports to satisfy `@typescript-eslint/consistent-type-imports` rule
+- Pattern: Separate value imports (enums) from type imports in the same import statement block
+- Pattern: Remove explicit type annotations on function parameters with default values (e.g., `greeting = 'Good morning'` not `greeting: string = 'Good morning'`)
+- Pattern: ESLint rule `@typescript-eslint/no-inferrable-types` flags trivially inferred types that should be removed
+- Pattern: Mock data services should export both sync and async versions for flexibility in different use cases
+- Pattern: Async mock functions should accept delay parameter (default 500ms) to simulate realistic network latency
+- Pattern: Mock data should include all enum variants to enable comprehensive testing of components
+- Pattern: Add type guards in tests when accessing array elements to satisfy TypeScript strict mode (e.g., `if (!activity) throw new Error(...)`)
+- Pattern: For timing tests with delays, allow margin for test execution variance (e.g., expect >= 450ms for 500ms delay)
+- Pattern: Use `@vitest-environment node` for pure service tests without DOM dependencies
+- Pattern: Mock data should be defined as module-level constants for consistency across function calls
+- Pattern: Activities should be sorted by timestamp (most recent first) to match expected UI behavior
+
+---
+
