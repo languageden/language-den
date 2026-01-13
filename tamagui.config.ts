@@ -70,10 +70,62 @@ const customColors = {
   neutral950: '#0a0a0a',
 };
 
-// Create custom tokens including our brand colors
+// Define spacing scale for consistent layout rhythm
+// Uses 4px base unit (1 = 4px) for precise control
+const spacing = {
+  0: 0,
+  0.5: 2, // 2px
+  1: 4, // 4px
+  1.5: 6, // 6px
+  2: 8, // 8px
+  2.5: 10, // 10px
+  3: 12, // 12px
+  3.5: 14, // 14px
+  4: 16, // 16px
+  5: 20, // 20px
+  6: 24, // 24px
+  7: 28, // 28px
+  8: 32, // 32px
+  10: 40, // 40px
+  12: 48, // 48px
+  16: 64, // 64px
+  20: 80, // 80px
+  24: 96, // 96px
+  32: 128, // 128px
+};
+
+// Define typography scale with base size of 16px
+// Follows modular scale ratio of 1.25 (major third)
+const fontSize = {
+  1: 12, // xs - small labels, captions
+  2: 14, // sm - secondary text, metadata
+  3: 16, // base - body text (default)
+  4: 18, // lg - emphasized text
+  5: 20, // xl - small headings
+  6: 24, // 2xl - section headings
+  7: 30, // 3xl - page titles
+  8: 36, // 4xl - hero text
+  9: 48, // 5xl - large display text
+  10: 64, // 6xl - extra large display
+};
+
+// Define line heights for optimal readability
+const lineHeight = {
+  1: 16, // tight - for headings
+  2: 20, // snug - for emphasized text
+  3: 24, // normal - for body text (1.5x base font size)
+  4: 28, // relaxed - for larger text
+  5: 32, // loose - for display text
+};
+
+// Create custom tokens including our brand colors, spacing, and typography
 const tokens = createTokens({
   ...defaultConfig.tokens,
   color: customColors,
+  space: spacing,
+  size: spacing, // Use same values for sizes
+  fontSize,
+  lineHeight,
 });
 
 // Create semantic color themes for light and dark modes

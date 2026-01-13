@@ -502,3 +502,31 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Access actual color values via `theme.colorName.val` property (e.g., `lightTheme.background.val`)
 - Pattern: Tamagui transforms token references into objects, so use `.val` to check actual hex color values
 - Note: Theme colors are Variable objects, not plain strings or direct token references
+
+## Tamagui Spacing and Typography Tokens
+
+### Spacing Token System
+
+- Pattern: Define spacing tokens using 4px base unit (1 = 4px, 2 = 8px, 4 = 16px, etc.) for consistent layout rhythm
+- Pattern: Include fractional values (0.5, 1.5, 2.5) for fine-grained control over component spacing
+- Pattern: Include large values (12, 16, 24, 32) for major section spacing and page-level layout
+- Pattern: Set both `space` and `size` tokens to the same values for consistency across padding/margin and width/height
+- Pattern: Merge custom spacing with `defaultConfig.tokens` using spread operator in `createTokens()`
+- Note: Token values can be accessed in tests via `.val` property (e.g., `tokens.space[4].val`)
+
+### Typography Token System
+
+- Pattern: Define fontSize tokens following modular scale ratio of 1.25 (major third) starting from 16px base
+- Pattern: Use semantic scale names in comments: xs (12px), sm (14px), base (16px), lg (18px), xl (20px), 2xl (24px), etc.
+- Pattern: Define lineHeight tokens for optimal readability: tight (headings), snug (emphasized), normal (body), relaxed (large), loose (display)
+- Pattern: Line height for body text should be ~1.5x the base font size (24px for 16px text) for optimal readability
+- Pattern: Include wide range of sizes from 12px (small labels) to 64px (hero text) to support diverse UI needs
+- Note: Typography scale should create harmonious visual hierarchy without arbitrary intermediate sizes
+
+### Testing Spacing and Typography
+
+- Pattern: Create separate describe blocks in tests for spacing, typography, and size tokens
+- Pattern: Verify base values (0, 1, 2, 4, 8) and edge cases (fractional, large values)
+- Pattern: Test that fontSize scale follows expected progression (12, 14, 16, 18, 20, 24, 30, 36, 48, 64)
+- Pattern: Verify lineHeight values are appropriate for their use cases (16-32px range)
+- Pattern: Confirm size tokens match spacing tokens for consistency

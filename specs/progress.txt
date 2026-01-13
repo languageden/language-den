@@ -8,6 +8,10 @@
 - Custom colors should use semantic naming with standard scale increments (50-950)
 - The `defaultConfig.tokens` from v4 includes `radius`, `zIndex`, `space`, and `size` but NOT `color`
 - Import `createTokens` from `tamagui`, not from `@tamagui/config/v4`
+- Spacing tokens use 4px base unit (1 = 4px) for consistent layout rhythm
+- Typography tokens follow modular scale ratio of 1.25 (major third) starting from 16px base
+- Line height tokens provide optimal readability for different text sizes
+- Size tokens should match spacing tokens for consistency across components
 
 ### Tamagui Theme System
 
@@ -23,6 +27,30 @@
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
 Started: Tue Jan 13 10:05:35 PM +07 2026
+
+---
+
+## [Tue Jan 13 10:14:35 PM +0700 2026] - Card #83
+
+- Implemented spacing tokens in tamagui.config.ts using 4px base unit for consistent layout rhythm
+- Defined typography tokens (fontSize and lineHeight) following modular scale ratio of 1.25 starting from 16px base
+- Spacing scale includes fractional values (0.5, 1.5, 2.5) for fine control and large values (12, 16, 24, 32) for major sections
+- Typography scale ranges from 12px (xs) to 64px (6xl) with semantic names for different use cases
+- Line height tokens (tight, snug, normal, relaxed, loose) optimized for readability at different text sizes
+- Size tokens mirror spacing tokens for consistency across width/height and spacing properties
+- Created comprehensive tests in tamagui.config.test.ts to verify spacing, typography, and size tokens
+- Files changed: tamagui.config.ts, tamagui.config.test.ts, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Spacing and size tokens should use the same values to maintain consistency between width/height and padding/margin
+- The 4px base unit provides precise control while maintaining 8px grid alignment for major spacing values
+- Typography scale using modular scale ratio creates harmonious visual hierarchy without arbitrary sizes
+- Line heights should be optimized for each text size category: tight for headings, normal (1.5x) for body text, loose for display
+- Font sizes should be documented with semantic names (xs, sm, base, lg, xl, 2xl, etc.) in comments for clarity
+- Fractional spacing values (0.5, 1.5, 2.5) are essential for fine-tuning component layouts and alignment
+- Token values can be accessed in tests via `.val` property (e.g., `tokens.space[4].val`) just like theme colors
+- Custom tokens are merged with defaultConfig.tokens using spread operator to preserve default radius, zIndex, etc.
 
 ---
 
