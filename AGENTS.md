@@ -618,3 +618,18 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Text components work well for button-like components with proper padding, background, and interactive states
 - Note: Use `aria-label` instead of deprecated `accessibilityLabel`, and `role` instead of `accessibilityHint`
 - Pattern: Button components styled from Text should define `rounded` variant with default true for rounded corners
+
+## Activity Feed Components
+
+### ActivityItem Component Pattern
+
+- Pattern: Use XStack for horizontal layout with icon and content side-by-side
+- Pattern: Icon container should use fixed width/height (`width="$10" height="$10"`) for consistent alignment
+- Pattern: Use `flex={1}` on content container to allow description text to fill available space
+- Pattern: Description should use larger font size (`fontSize="$3"`) with medium weight (`fontWeight="500"`)
+- Pattern: Timestamp should use smaller font size (`fontSize="$2"`) with secondary color for visual hierarchy
+- Pattern: Use `gap="$1"` between description and timestamp for tight vertical spacing
+- Pattern: Use `gap="$3"` between icon and content for comfortable horizontal spacing
+- Pattern: Apply vertical padding (`py="$3"`) to ActivityItem for proper spacing between feed items
+- Pattern: Use semantic colors: `$color` for description text, `$secondary` for timestamp
+- Note: ActivityItem is a presentational component that accepts icon as ReactNode for flexibility

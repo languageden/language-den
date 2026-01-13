@@ -225,3 +225,31 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - All styled components (Text, YStack, XStack) share the same pattern: variants with defaultVariants
 
 ---
+
+## [Tue Jan 13 10:35:50 PM +0700 2026] - Card #88
+
+- Created ActivityItem component in src/ui/ActivityItem.tsx for displaying individual activity feed items
+- Component displays icon, description, and relative timestamp in horizontal layout
+- Icon container uses fixed size (40px x 40px) for consistent alignment across different activity types
+- Description and timestamp use proper typography hierarchy with semantic colors
+- Implemented proper spacing: vertical padding for list items, gaps for icon/content separation
+- Created comprehensive tests in src/ui/ActivityItem.test.tsx (13 tests)
+- All quality gates pass: type-check, lint, and test (82 tests passing)
+- Files changed: src/ui/ActivityItem.tsx, src/ui/ActivityItem.test.tsx, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- ActivityItem uses XStack for horizontal layout with icon and content side-by-side, unlike MetricCard which uses more complex nesting
+- Icon container should use fixed width/height (`width="$10" height="$10"`) for consistent alignment, same pattern as MetricCard
+- Use `flex={1}` on content container (YStack) to allow text content to fill remaining horizontal space
+- Description text uses `fontSize="$3"` with `fontWeight="500"` for readability, larger than timestamp
+- Timestamp uses `fontSize="$2"` with `$secondary` color for visual hierarchy, indicating less important information
+- Vertical gap between description and timestamp should be tight (`gap="$1"`) since they're closely related
+- Horizontal gap between icon and content should be comfortable (`gap="$3"`) for visual separation
+- Apply vertical padding (`py="$3"`) directly to ActivityItem for proper spacing when used in a list
+- Component accepts icon as ReactNode prop for maximum flexibility - can be SVG, emoji, or any React element
+- Use semantic colors (`$color`, `$secondary`) rather than hardcoded colors for theme-aware styling
+- ActivityItem is a pure presentational component with no state or interactivity - simpler than Button or Card
+- Testing pattern remains consistent: verify component definition, prop acceptance, and element creation
+
+---
