@@ -598,3 +598,14 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Note: Reduced motion support should be implemented in components using `useReducedMotion()` hook from React Native
 - Pattern: Components should check reduced motion preference and set animation duration to 0 when enabled
 - Example: `const shouldReduceMotion = useReducedMotion(); const duration = shouldReduceMotion ? 0 : 150;`
+
+## Tamagui Component Styling Constraints
+
+### Property Restrictions in Tamagui v4
+
+- Note: Tamagui v4 has `onlyAllowShorthands: true` which restricts which properties can be used directly in JSX
+- Pattern: Use `width` and `height` (not shorthands `w` and `h`) for sizing YStack/XStack components
+- Pattern: Properties like `borderRadius` cannot be used directly in YStack/XStack - they must be in styled component variants
+- Pattern: When creating complex styled components with borderRadius, define it in variants: `variants: { rounded: { true: { borderRadius: '$2' } } }`
+- Note: If borderRadius is needed dynamically, consider creating a styled component wrapper with variants instead of inline props
+- Pattern: For simple icon containers without rounded corners, omit borderRadius entirely to avoid TypeScript errors

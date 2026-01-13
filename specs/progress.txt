@@ -41,6 +41,14 @@
 - Use variants pattern for conditional styling: `variants: { prop: { value: { styles } } }` + `defaultVariants`
 - Testing styled components requires matchMedia mock in test/setup.ts for Tamagui's media query support
 
+### Tamagui Component Props
+
+- Use `width` and `height` for sizing (not shorthands `w`/`h`) on YStack/XStack components
+- Properties like `borderRadius` cannot be used inline on YStack/XStack - must be in styled component variants
+- Use `flex` property (not shorthand `f`) for flex layout properties
+- Tamagui v4 has `onlyAllowShorthands: true` which restricts available inline properties
+- When creating function components that wrap Tamagui primitives, avoid dynamic style props that TypeScript rejects
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -161,5 +169,31 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Styled component tests don't need full DOM rendering - React.createElement() is sufficient for prop testing
 - The animation prop accepts token names like 'quick', 'normal', 'slow' defined in tamagui.config.ts
 - Shadow props work cross-platform: shadowColor, shadowOffset, shadowOpacity, shadowRadius (iOS/web) + elevation (Android)
+
+---
+
+## [Mon Jan 13 10:28:45 PM +07 2026] - Card #86
+
+- Created MetricCard component in src/ui/MetricCard.tsx for displaying dashboard metrics
+- Component displays label, prominent value, optional icon, and optional trend indicator
+- Built on top of Card component for consistent elevation and styling
+- Implemented trend indicator with up/down arrows and color-coded text (success/error)
+- Icon container uses primary color background with fixed size (40px x 40px)
+- Created comprehensive tests in src/ui/MetricCard.test.tsx (11 tests)
+- All quality gates pass: type-check, lint, and test (54 tests passing)
+- Files changed: src/ui/MetricCard.tsx, src/ui/MetricCard.test.tsx, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Tamagui v4 requires `width` and `height` properties (not shorthands `w`/`h`) for YStack/XStack sizing
+- The `flex` property must be used instead of shorthand `f` for flex layout
+- Properties like `borderRadius` cannot be used inline on YStack/XStack - they must be in styled component variants
+- Tamagui v4 has `onlyAllowShorthands: true` setting which restricts which properties can be used directly in JSX
+- Dynamic color props (e.g., `color?: string`) cannot be passed directly to `bg` prop due to TypeScript type constraints
+- When TypeScript rejects a style prop, either use a fixed token value or create a styled component with variants
+- For simple icon containers, omitting borderRadius entirely is acceptable if rounded corners aren't critical
+- Function components wrapping Tamagui primitives should avoid dynamic style props that TypeScript cannot validate
+- MetricCard test pattern: verify all props render correctly, test optional props independently, test combined props
+- Component should use semantic color tokens ($primary, $success, $error) rather than hardcoded colors
 
 ---
