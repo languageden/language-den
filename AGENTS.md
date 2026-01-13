@@ -146,3 +146,14 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: `.env` and `.env.local` files must be in .gitignore to prevent credential leaks
 - Pattern: `.env.example` is committed to git as a template for other developers
 - Note: Ensure .env is gitignored before adding real credentials
+
+### Supabase Client Initialization
+
+- Pattern: Install `@supabase/supabase-js` package for Supabase client library
+- Pattern: Create `src/services/supabase.ts` to initialize and export the Supabase client
+- Pattern: Use bracket notation to access environment variables: `process.env['EXPO_PUBLIC_SUPABASE_URL']`
+- Pattern: Validate environment variables exist before initializing client - throw descriptive errors if missing
+- Pattern: Export a single `supabase` client instance created with `createClient(url, anonKey)`
+- Pattern: Environment variable access must use bracket notation for TypeScript strict mode (avoids TS4111 error)
+- Note: The client initialization happens at module load time, so missing env vars will cause immediate errors
+- Note: Import the client in other files with: `import { supabase } from '../services/supabase'` or `import { supabase } from '../../services/supabase'` depending on location

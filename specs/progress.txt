@@ -22,6 +22,9 @@
 - Pattern: Supabase environment variables must be prefixed with `EXPO_PUBLIC_` for client-side access
 - Pattern: Use .env.example (committed) as template and .env (gitignored) for actual credentials
 - Pattern: .env files should include comments explaining where to get credentials
+- Pattern: Supabase client is initialized in src/services/supabase.ts and exported as a singleton
+- Pattern: Use bracket notation for environment variable access: `process.env['VARIABLE_NAME']` (TypeScript strict mode requirement)
+- Pattern: Validate environment variables exist before initializing Supabase client with descriptive error messages
 
 ---
 
@@ -191,5 +194,30 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - .env was already in .gitignore from the initial project setup, which is correct
 - Include helpful comments in .env files pointing developers to where they can get credentials (Supabase Dashboard → Project Settings → API)
 - This card establishes the foundation for all Supabase integration - other cards (Auth, Client, Edge Functions) depend on these environment variables being configured
+
+---
+
+## [Mon Jan 13 06:21:00 AM +07 2026] - Card #56
+
+- Installed @supabase/supabase-js package (version 2.90.1)
+- Created src/services/supabase.ts with Supabase client initialization
+- Implemented environment variable validation with descriptive error messages
+- Used bracket notation for environment variable access to satisfy TypeScript strict mode
+- All quality gates pass (type-check, lint, format:check)
+
+**Files changed:**
+- package.json (updated) - Added @supabase/supabase-js dependency
+- src/services/supabase.ts (created) - Supabase client initialization with validation
+- AGENTS.md (updated) - Added Supabase client initialization patterns
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- TypeScript strict mode requires bracket notation for environment variable access: `process.env['VAR']` not `process.env.VAR` (prevents TS4111 error)
+- Validating environment variables at module initialization time provides immediate feedback if configuration is missing
+- The Supabase client should be initialized once and exported as a singleton from src/services/supabase.ts
+- Error messages should be descriptive and guide developers to the solution (mention .env file and which variable is missing)
+- Installing @supabase/supabase-js may show peer dependency warnings about ESLint versions - these can be ignored as they don't affect functionality
+- The createClient function from @supabase/supabase-js takes two arguments: URL and anon key (both strings)
+- Client initialization happens at module load time, so any missing env vars will cause runtime errors immediately when the module is imported
 
 ---
