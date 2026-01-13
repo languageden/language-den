@@ -466,3 +466,39 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Extend `TamaguiCustomConfig` interface with the exported config type in a module declaration
 - Pattern: Custom color tokens are automatically typed and available via autocomplete in components
 - Note: No additional type declarations needed for custom colors - they're inferred from the tokens object
+
+## Tamagui Semantic Theme Mappings
+
+### Creating Light and Dark Mode Themes
+
+- Pattern: Define separate `light` and `dark` theme objects with semantic color mappings
+- Pattern: Map semantic names (background, color, primary, etc.) directly to token values using `tokens.color.tokenName`
+- Pattern: Pass the themes object to `createTamagui()` alongside tokens configuration
+- Pattern: Use consistent naming for interactive states: base color, hover, press, and focus variants
+- Note: Tamagui automatically transforms token references into variable objects with `val`, `key`, `name`, and `variable` properties
+
+### Semantic Color Categories
+
+- Pattern: Organize theme colors into logical categories with inline comments for clarity:
+  - Backgrounds: `background`, `backgroundHover`, `backgroundPress`, `backgroundFocus`, `backgroundStrong`, `backgroundTransparent`
+  - Text colors: `color`, `colorHover`, `colorPress`, `colorFocus`, `colorTransparent`
+  - Borders: `borderColor`, `borderColorHover`, `borderColorPress`, `borderColorFocus`
+  - Shadows: `shadowColor` + state variants
+  - Interactive: `primary`, `secondary` + state variants
+  - Feedback: `success`, `warning`, `error` + state variants
+
+### Light vs Dark Theme Contrast
+
+- Pattern: Light theme uses light backgrounds (neutral50-200) with dark text (neutral900-800)
+- Pattern: Dark theme uses dark backgrounds (neutral950-800) with light text (neutral50-100)
+- Pattern: Interactive colors (primary, success, warning, error) remain consistent at 500 shade for both themes
+- Pattern: In dark mode, use lighter shades for hover/press states (primary400, primary300) vs darker shades in light mode (primary600, primary700)
+- Pattern: Border colors should be more subtle in dark mode (neutral700) vs light mode (neutral300)
+
+### Testing Theme Configuration
+
+- Pattern: Create tests for theme configuration in `tamagui.config.test.ts` at project root
+- Pattern: Test that both light and dark themes are defined and have all required semantic color mappings
+- Pattern: Access actual color values via `theme.colorName.val` property (e.g., `lightTheme.background.val`)
+- Pattern: Tamagui transforms token references into objects, so use `.val` to check actual hex color values
+- Note: Theme colors are Variable objects, not plain strings or direct token references

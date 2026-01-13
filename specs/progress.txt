@@ -9,10 +9,42 @@
 - The `defaultConfig.tokens` from v4 includes `radius`, `zIndex`, `space`, and `size` but NOT `color`
 - Import `createTokens` from `tamagui`, not from `@tamagui/config/v4`
 
+### Tamagui Theme System
+
+- Define separate `light` and `dark` theme objects with semantic color mappings
+- Map semantic names (background, color, primary, etc.) to token values using `tokens.color.tokenName`
+- Theme colors are organized into categories: backgrounds, text, borders, shadows, interactive, feedback
+- Light theme uses light backgrounds with dark text; dark theme uses dark backgrounds with light text
+- Include interactive state variants: base, hover, press, and focus for each color
+- Tamagui transforms token references into Variable objects with `val`, `key`, `name`, `variable` properties
+- Access actual color values in tests via `theme.colorName.val`
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
 Started: Tue Jan 13 10:05:35 PM +07 2026
+
+---
+
+## [Tue Jan 13 10:12:10 PM +0700 2026] - Card #82
+
+- Implemented semantic color mappings for light and dark mode themes in tamagui.config.ts
+- Created comprehensive theme objects with semantic names: background, color, borders, shadows, primary, secondary, success, warning, error
+- Added interactive state variants (hover, press, focus) for all color categories
+- Light theme uses neutral50 background with neutral900 text; dark theme uses neutral950 background with neutral50 text
+- Created comprehensive tests in tamagui.config.test.ts to verify theme configuration
+- Files changed: tamagui.config.ts, tamagui.config.test.ts, AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Theme objects map semantic property names to token values using `tokens.color.tokenName` syntax
+- Tamagui automatically transforms token references into Variable objects with properties: `val`, `key`, `name`, `variable`
+- To test theme colors, access the actual hex value via `theme.colorName.val` (e.g., `lightTheme.background.val`)
+- Interactive states should follow a consistent pattern: lighter shades for hover/press in dark mode vs darker shades in light mode
+- Border focus colors should use the primary color (primary500) in both themes for consistency
+- Organize theme colors into logical categories with inline comments: backgrounds, text, borders, shadows, interactive, feedback
+- Include transparent variants for backgrounds and text colors to support overlay and fade effects
+- The `themes` object is passed to `createTamagui()` alongside `tokens` to configure both color tokens and semantic theme mappings
 
 ---
 

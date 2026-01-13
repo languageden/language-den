@@ -62,6 +62,7 @@ This color represents growth, learning, and natural progress. It's calming yet e
 ### Color Usage
 
 The color system should include:
+
 - Full shade ranges (50-900) for each brand color
 - Light and dark mode variants
 - Neutral grays for text and backgrounds
@@ -71,6 +72,7 @@ The color system should include:
 ### Design Tokens
 
 Use Tamagui's token system to define:
+
 - Color scales with consistent naming
 - Semantic color mappings
 - Theme switching support (light/dark)
@@ -87,12 +89,14 @@ The dashboard is the daily hub for language learners - a place that motivates, i
 The dashboard consists of four main areas presented in a scrollable vertical layout:
 
 **1. Hero Section**
+
 - Personalized greeting with time-appropriate icon (sun/moon)
 - Prominent streak counter with flame icon to celebrate consistency
 - Large, inviting CTA button: "Start Review Session"
 - Purpose: Create immediate engagement and celebrate the learner's dedication
 
 **2. Stats Overview**
+
 - Grid of metric cards showing key learning indicators
 - Suggested metrics: Words learned, today's reviews due, study time, weekly progress
 - Visual design: Cards with icons, large numbers, and optional progress indicators
@@ -100,6 +104,7 @@ The dashboard consists of four main areas presented in a scrollable vertical lay
 - Purpose: Provide at-a-glance status of learning journey
 
 **3. Today's Review Queue**
+
 - Full-width card showing spaced repetition status
 - Display count of cards due with categorical breakdown (new, learning, review)
 - Optional visual: Stacked bar chart showing queue composition
@@ -108,6 +113,7 @@ The dashboard consists of four main areas presented in a scrollable vertical lay
 - Purpose: Focus attention on the primary learning activity
 
 **4. Recent Activity Feed**
+
 - Chronological list of recent learning achievements
 - Each item has colored icon, description, and timestamp
 - Examples: "Completed review session", "Learned 10 new words", "Achieved 7-day streak"
@@ -193,16 +199,19 @@ All interactive elements must be keyboard accessible with visible focus indicato
 ### Platform Considerations
 
 **iOS**
+
 - Respect safe area insets for notch and home indicator
 - Use haptic feedback for tactile responses
 - Follow iOS navigation patterns (swipe-to-go-back)
 
 **Android**
+
 - Respect system navigation insets
 - Use ripple effects for touch feedback (built into React Native)
 - Consider back button behavior
 
 **Web**
+
 - Support hover states for mouse users
 - Provide keyboard shortcuts where appropriate
 - Optimize for different screen sizes (mobile, tablet, desktop)
@@ -228,6 +237,7 @@ All interactive elements must be keyboard accessible with visible focus indicato
 ### Design-to-Code Workflow
 
 This document provides the vision and principles. Implementation details (exact pixel sizes, specific font weights, animation timing) should be determined during development based on:
+
 - Visual testing and iteration
 - Platform-specific best practices
 - User feedback and testing

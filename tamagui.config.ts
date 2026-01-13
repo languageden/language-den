@@ -76,11 +76,133 @@ const tokens = createTokens({
   color: customColors,
 });
 
-// Create Tamagui configuration merging default config with custom color tokens
+// Create semantic color themes for light and dark modes
+// These themes map semantic names (background, text, primary, etc.) to our custom color tokens
+const themes = {
+  light: {
+    // Backgrounds
+    background: tokens.color.neutral50,
+    backgroundHover: tokens.color.neutral100,
+    backgroundPress: tokens.color.neutral200,
+    backgroundFocus: tokens.color.neutral100,
+    backgroundStrong: tokens.color.neutral100,
+    backgroundTransparent: 'rgba(255,255,255,0)',
+
+    // Text colors
+    color: tokens.color.neutral900,
+    colorHover: tokens.color.neutral800,
+    colorPress: tokens.color.neutral900,
+    colorFocus: tokens.color.neutral900,
+    colorTransparent: 'rgba(0,0,0,0)',
+
+    // Borders
+    borderColor: tokens.color.neutral300,
+    borderColorHover: tokens.color.neutral400,
+    borderColorPress: tokens.color.neutral400,
+    borderColorFocus: tokens.color.primary500,
+
+    // Shadows
+    shadowColor: tokens.color.neutral900,
+    shadowColorHover: tokens.color.neutral900,
+    shadowColorPress: tokens.color.neutral900,
+    shadowColorFocus: tokens.color.neutral900,
+
+    // Primary (interactive elements)
+    primary: tokens.color.primary500,
+    primaryHover: tokens.color.primary600,
+    primaryPress: tokens.color.primary700,
+    primaryFocus: tokens.color.primary500,
+
+    // Secondary (muted interactive elements)
+    secondary: tokens.color.neutral600,
+    secondaryHover: tokens.color.neutral700,
+    secondaryPress: tokens.color.neutral800,
+    secondaryFocus: tokens.color.neutral600,
+
+    // Success (positive feedback)
+    success: tokens.color.success500,
+    successHover: tokens.color.success600,
+    successPress: tokens.color.success700,
+    successFocus: tokens.color.success500,
+
+    // Warning (cautionary messages)
+    warning: tokens.color.warning500,
+    warningHover: tokens.color.warning600,
+    warningPress: tokens.color.warning700,
+    warningFocus: tokens.color.warning500,
+
+    // Error (error states)
+    error: tokens.color.error500,
+    errorHover: tokens.color.error600,
+    errorPress: tokens.color.error700,
+    errorFocus: tokens.color.error500,
+  },
+  dark: {
+    // Backgrounds
+    background: tokens.color.neutral950,
+    backgroundHover: tokens.color.neutral900,
+    backgroundPress: tokens.color.neutral800,
+    backgroundFocus: tokens.color.neutral900,
+    backgroundStrong: tokens.color.neutral900,
+    backgroundTransparent: 'rgba(0,0,0,0)',
+
+    // Text colors
+    color: tokens.color.neutral50,
+    colorHover: tokens.color.neutral100,
+    colorPress: tokens.color.neutral50,
+    colorFocus: tokens.color.neutral50,
+    colorTransparent: 'rgba(255,255,255,0)',
+
+    // Borders
+    borderColor: tokens.color.neutral700,
+    borderColorHover: tokens.color.neutral600,
+    borderColorPress: tokens.color.neutral600,
+    borderColorFocus: tokens.color.primary500,
+
+    // Shadows
+    shadowColor: tokens.color.neutral950,
+    shadowColorHover: tokens.color.neutral950,
+    shadowColorPress: tokens.color.neutral950,
+    shadowColorFocus: tokens.color.neutral950,
+
+    // Primary (interactive elements)
+    primary: tokens.color.primary500,
+    primaryHover: tokens.color.primary400,
+    primaryPress: tokens.color.primary300,
+    primaryFocus: tokens.color.primary500,
+
+    // Secondary (muted interactive elements)
+    secondary: tokens.color.neutral400,
+    secondaryHover: tokens.color.neutral300,
+    secondaryPress: tokens.color.neutral200,
+    secondaryFocus: tokens.color.neutral400,
+
+    // Success (positive feedback)
+    success: tokens.color.success500,
+    successHover: tokens.color.success400,
+    successPress: tokens.color.success300,
+    successFocus: tokens.color.success500,
+
+    // Warning (cautionary messages)
+    warning: tokens.color.warning500,
+    warningHover: tokens.color.warning400,
+    warningPress: tokens.color.warning300,
+    warningFocus: tokens.color.warning500,
+
+    // Error (error states)
+    error: tokens.color.error500,
+    errorHover: tokens.color.error400,
+    errorPress: tokens.color.error300,
+    errorFocus: tokens.color.error500,
+  },
+};
+
+// Create Tamagui configuration merging default config with custom color tokens and themes
 // This provides a complete token system for colors, spacing, typography, etc.
 const tamaguiConfig = createTamagui({
   ...defaultConfig,
   tokens,
+  themes,
 });
 
 export type AppConfig = typeof tamaguiConfig;
