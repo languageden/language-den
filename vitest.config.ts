@@ -2,9 +2,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    // Test environment - use 'node' for pure TypeScript tests (domain layer)
-    // Individual test files can override with @vitest-environment comment
-    environment: 'node',
+    // Test environment - use 'jsdom' for React component tests
+    // Pure TypeScript tests can override with @vitest-environment node comment
+    environment: 'jsdom',
 
     // Setup files run before each test file
     setupFiles: ['./test/setup.ts'],
@@ -29,6 +29,14 @@ export default defineConfig({
 
     // Globals disabled - prefer explicit imports from vitest
     globals: false,
+
+    // Server configuration for dependency handling
+    server: {
+      deps: {
+        // Inline modules that need transformation
+        inline: [/tamagui/, /@tamagui/, /react-native/],
+      },
+    },
   },
 
   // Resolve aliases to match tsconfig.json paths

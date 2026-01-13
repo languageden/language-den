@@ -205,3 +205,44 @@ This file documents patterns, conventions, and gotchas discovered during impleme
 - Pattern: Include JSDoc comments with @example tags to document usage
 - Pattern: Test edge cases: empty strings, single characters, special characters, etc.
 - Note: Domain tests run in Node environment and are extremely fast (< 5ms typical)
+
+## React Component Testing
+
+### Testing Library Dependencies
+
+- Pattern: Install `@testing-library/react-native` for React Native component testing
+- Pattern: Install `jsdom` as a dev dependency to provide DOM environment for tests
+- Pattern: Install `react-test-renderer` matching your React version (e.g., 18.3.1 for React 18.3.1)
+- Note: @testing-library/jest-native is deprecated - matchers are built into react-native-testing-library v12.4+
+- Note: Peer dependency warnings about ESLint versions can be ignored
+
+### Vitest Configuration for React Tests
+
+- Pattern: Change `test.environment` from `'node'` to `'jsdom'` to support React component rendering
+- Pattern: Pure TypeScript tests can opt-out with `@vitest-environment node` comment at top of file
+- Pattern: Configure `server.deps.inline` with regex patterns for modules needing transformation
+- Pattern: Add patterns like `/tamagui/`, `/@tamagui/`, `/react-native/` to inline array
+- Note: Some complex UI libraries (Tamagui) may have transformation issues with Vitest
+
+### Test File Structure
+
+- Pattern: Use `@vitest-environment jsdom` comment at top of React component test files
+- Pattern: Place component tests next to components (e.g., `Button.test.tsx` next to `Button.tsx`)
+- Pattern: Import test utilities explicitly: `import { describe, it, expect } from 'vitest'`
+- Pattern: Use React.createElement for simple component tests without JSX complexity
+- Note: Full React Native Testing Library integration may require additional mocking for complex libraries
+
+### Testing React Components
+
+- Pattern: Simple React components can be tested with basic Vitest and jsdom environment
+- Pattern: Use React.createElement() for creating test components programmatically
+- Pattern: Test component props and basic rendering without needing full DOM rendering
+- Pattern: For complex UI libraries, consider mocking with `vi.mock()` or testing at integration level
+- Note: React Native Testing Library's `render()` and `screen` utilities may require extensive mocking setup
+
+### Known Limitations
+
+- Note: @testing-library/react-native may have compatibility issues with certain UI libraries in Vitest
+- Note: Tamagui and other libraries using advanced TypeScript features may cause "Unexpected token 'typeof'" errors
+- Note: When hitting transformation issues, consider testing at a higher level or mocking the UI library
+- Note: Basic React component testing works well; full React Native Testing Library integration is optional

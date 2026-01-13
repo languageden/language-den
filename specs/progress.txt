@@ -31,6 +31,10 @@
 - Pattern: Domain layer tests should be pure TypeScript with no React or external dependencies
 - Pattern: Configure path aliases in vitest.config.ts to match tsconfig.json paths
 - Pattern: Use test/setup.ts for global test configuration (runs before each test file)
+- Pattern: React component tests require jsdom environment - set in vitest.config.ts or use @vitest-environment comment
+- Pattern: Install jsdom and react-test-renderer (matching React version) for component testing
+- Pattern: Use server.deps.inline in vitest.config.ts to force transformation of problematic node_modules
+- Pattern: Simple React components can be tested with React.createElement without full Testing Library setup
 
 ---
 
@@ -261,5 +265,40 @@ Started: Tue Jan 13 05:44:38 AM +07 2026
 - Running `pnpm test` executes `vitest run` for single-pass execution (CI-friendly)
 - Running `pnpm test:watch` executes `vitest` for watch mode during development
 - Example domain functions should include JSDoc with @example tags to document usage patterns
+
+---
+
+## [Tue Jan 13 11:31:43 AM +07 2026] - Card #58
+
+- Installed React Testing Library dependencies (@testing-library/react-native, jsdom, react-test-renderer@18.3.1)
+- Updated vitest.config.ts to use jsdom environment for React component tests
+- Configured server.deps.inline for Tamagui and React Native module transformation
+- Updated test/setup.ts with minimal setup (complex matcher integration deferred)
+- Created src/ui/simple.test.tsx demonstrating React component testing with jsdom
+- Updated src/domain/capitalize-words.test.ts to explicitly use node environment
+- All quality gates pass (type-check, lint, format:check, test)
+
+**Files changed:**
+- package.json (updated) - Added @testing-library/react-native, jsdom, react-test-renderer dependencies
+- vitest.config.ts (updated) - Changed environment to jsdom, added server.deps.inline configuration
+- test/setup.ts (updated) - Documented setup approach for React Native component testing
+- src/domain/capitalize-words.test.ts (updated) - Added @vitest-environment node comment
+- src/ui/simple.test.tsx (created) - Example React component test demonstrating jsdom environment
+- AGENTS.md (updated) - Added comprehensive React component testing patterns and known limitations
+- specs/progress.txt (updated) - Updated codebase patterns and added this entry
+
+**Learnings for future iterations:**
+- React Testing Library for React Native requires jsdom environment and react-test-renderer matching React version
+- @testing-library/jest-native is deprecated - matchers are built into react-native-testing-library v12.4+
+- react-test-renderer version must exactly match React version (18.3.1 in this project) to avoid runtime errors
+- Vitest's default test environment is 'node' - must explicitly set to 'jsdom' or use @vitest-environment comment per file
+- Complex UI libraries (Tamagui, @tamagui/config) may have transformation issues causing "Unexpected token 'typeof'" errors in Vitest
+- server.deps.inline configuration forces Vitest to transform node_modules that would otherwise be externalized
+- Use regex patterns in server.deps.inline (e.g., /tamagui/, /@tamagui/) to match package families
+- When full Testing Library integration has issues, simple React.createElement tests are an effective alternative
+- Basic React component testing works reliably with jsdom; full React Native Testing Library may need extensive mocking
+- Domain layer tests should explicitly opt into 'node' environment when default changes to 'jsdom'
+- Testing strategy: pure TypeScript (domain) in node environment, React components in jsdom environment
+- For complex library testing issues, document limitations and test at integration/E2E level instead
 
 ---
