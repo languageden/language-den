@@ -108,6 +108,18 @@
 - Dashboard sections accept callback props (e.g., `onStartReview: () => void`) for user interactions
 - Test with React.createElement pattern to verify prop acceptance without full DOM rendering
 
+### React Custom Hooks
+
+- Custom hooks start with `use` prefix and are placed in `src/hooks/` directory
+- Hooks return objects with named properties (not arrays) for clarity: `{ data, isLoading, error }`
+- Use explicit return type annotations on hook functions for type safety
+- For async data fetching: initialize loading=true, data=null, error=null, then update in useEffect
+- Call async functions in useEffect with `void` operator to satisfy ESLint no-floating-promises rule
+- Empty dependency array `[]` ensures effect runs only once on mount
+- Always use try-catch-finally for async operations: set loading in finally block
+- Testing hooks requires React context - test the underlying service layer and type structure instead
+- React hooks using React Native dependencies cannot be tested with renderHook due to Flow type syntax issues
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -559,5 +571,35 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Pattern: Removed unused imports (ScrollView) to pass TypeScript strict mode compilation
 - Note: ActivityItem component handles its own vertical spacing, so parent YStack doesn't need gap prop
 - Note: Tests verify all scenarios: empty arrays, single items, exact maxVisible, more than maxVisible, various timestamp formats
+
+---
+
+## [Wed Jan 14 10:18:26 AM +0700 2026] - Card #97
+
+- Created useDashboardData custom React hook in src/hooks/useDashboardData.ts for managing dashboard state
+- Hook implements standard async data fetching pattern with loading, data, and error states
+- Uses fetchMockDashboardData service with 500ms simulated network delay
+- Hook automatically fetches data on mount using useEffect with empty dependency array
+- Created comprehensive tests in src/hooks/useDashboardData.test.ts (10 tests)
+- Tests focus on hook definition, service layer integration, type structure, and error handling
+- All quality gates pass: type-check, lint, and test (216 tests passing total)
+- Created src/hooks/AGENTS.md documenting custom hook patterns for future development
+- Files changed: src/hooks/useDashboardData.ts, src/hooks/useDashboardData.test.ts, src/hooks/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: React hooks must be called within React component context - cannot be tested directly outside React
+- Pattern: renderHook from @testing-library/react-native fails with "Unexpected token 'typeof'" error due to React Native Flow syntax
+- Pattern: Testing strategy for hooks should focus on: (1) hook definition exists, (2) underlying service layer works, (3) type structure is correct
+- Pattern: Use `void asyncFunction()` in useEffect to satisfy ESLint @typescript-eslint/no-floating-promises rule
+- Pattern: Always set loading state in finally block to ensure it's updated even when errors occur
+- Pattern: Clear error state on successful fetch to prevent stale errors from previous attempts
+- Pattern: Clear data state when errors occur for consistency and to avoid showing stale data
+- Pattern: Use `import type` for DashboardData since it's only used in type annotations
+- Pattern: Type assertion with `as Error` is needed when catching errors since catch clause variable has unknown type
+- Pattern: Use interface (not type alias) for test type definitions to satisfy @typescript-eslint/consistent-type-definitions
+- Pattern: Hooks directory needs AGENTS.md to document patterns: state management, useEffect, error handling, testing strategies
+- Note: Full hook lifecycle testing (mount, update, loading states) should be done at integration or E2E level
+- Note: The hook is ready to be used in the Dashboard screen component (next card #94)
 
 ---
