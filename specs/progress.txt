@@ -41,6 +41,14 @@
 - Use variants pattern for conditional styling: `variants: { prop: { value: { styles } } }` + `defaultVariants`
 - Testing styled components requires matchMedia mock in test/setup.ts for Tamagui's media query support
 
+### Dashboard Layout Patterns
+
+- Grid layouts use nested XStack (rows) within YStack with equal `flex={1}` on grid cells for responsive equal widths
+- Wrap grid children in YStack with `flex={1}` to ensure proper flex behavior in XStack rows
+- Use consistent `gap="$3"` for spacing between grid cells for balanced layouts
+- Dashboard sections can omit Card wrapper when they don't need unified container styling (e.g., when composing multiple Cards)
+- Section headers use Text with `fontSize="$5"` and `fontWeight="600"` to label major content areas
+
 ### Tamagui Component Props
 
 - Use `width` and `height` for sizing (not shorthands `w`/`h`) on YStack/XStack components
@@ -454,3 +462,35 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 
 ---
 
+
+## [Wed Jan 14 07:02:55 AM +0700 2026] - Card #91
+
+- Created StatsOverviewSection component in src/ui/dashboard/StatsOverviewSection.tsx for displaying key learning metrics
+- Component displays 4 metrics in a responsive 2x2 grid layout: Cards Learned, Current Streak, Total Reviews, Accuracy Rate
+- Implemented section header ("Your Progress") using Text with semantic sizing and weight
+- Grid uses nested XStack rows within YStack container with `flex={1}` on cells for equal widths
+- Each metric wrapped in YStack with `flex={1}` to ensure proper flex behavior
+- Uses MetricCard component for consistent metric display with emoji icons
+- Created comprehensive tests in src/ui/dashboard/StatsOverviewSection.test.tsx (14 tests)
+- Tests verify component definition, realistic stats, edge cases (zero, low, high values), milestone values, and fractional accuracy
+- Updated src/ui/AGENTS.md with StatsOverviewSection patterns for grid layouts and section headers
+- Updated specs/progress.txt Codebase Patterns section with Dashboard Layout Patterns
+- All quality gates pass: type-check, lint, and test (165 tests passing)
+- Files changed: src/ui/dashboard/StatsOverviewSection.tsx, src/ui/dashboard/StatsOverviewSection.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Dashboard sections don't always need Card wrapper - sections that compose multiple Cards can use YStack as root
+- Pattern: Section headers should use Text with `fontSize="$5"` and `fontWeight="600"` to create visual hierarchy
+- Pattern: Responsive grid layouts use nested XStack (horizontal rows) within YStack with `gap="$3"` for spacing
+- Pattern: Grid cells need YStack wrapper with `flex={1}` to achieve equal column widths in XStack rows
+- Pattern: Emoji icons work well when passed as `<Text fontSize="$5">📚</Text>` to MetricCard icon prop
+- Pattern: Convert numbers to strings with `.toString()` to satisfy `@typescript-eslint/restrict-template-expressions`
+- Pattern: For percentage displays, concatenate with `%` symbol: `${stats.accuracyRate.toString()}%`
+- Pattern: Remove unused imports to satisfy TypeScript strict mode (e.g., Card import was initially added but not used)
+- Pattern: Grid layouts are more flexible than wrapping everything in a single Card - allows for better visual hierarchy
+- Pattern: Test dashboard sections with various data scenarios: zero values, beginner stats, advanced stats, milestone values
+- Pattern: Section-level components should accept typed props (e.g., `stats: LearningStats`) for type safety
+- Pattern: Dashboard sections that compose existing components have simpler test patterns than interactive components
+
+---

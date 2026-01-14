@@ -110,3 +110,14 @@ This file documents patterns and conventions for UI component development in the
 - Pattern: Icons should use larger font sizes for visual hierarchy (e.g., `fontSize="$8"` for greeting, `fontSize="$6"` for streak)
 - Pattern: Dashboard sections should accept callback props (e.g., `onStartReview: () => void`) for user interactions
 - Pattern: Test dashboard sections with React.createElement pattern to verify prop acceptance without full DOM rendering
+
+### StatsOverviewSection Pattern
+
+- Pattern: Section-level components can omit Card wrapper when they don't need unified container styling
+- Pattern: Use YStack as root container with gap for section header and content separation
+- Pattern: Use section headers (Text with `fontSize="$5"` and `fontWeight="600"`) to label major content areas
+- Pattern: Grid layouts use nested XStack (rows) within YStack with equal `flex={1}` on cells for equal widths
+- Pattern: Use `gap="$3"` for consistent spacing between grid cells
+- Pattern: Wrap MetricCard in YStack with `flex={1}` to ensure proper flex layout in grids
+- Pattern: Emoji icons passed as ReactNode children of Text component work well in MetricCard icons
+- Pattern: Dashboard sections that primarily compose other components don't need their own Card wrapper
