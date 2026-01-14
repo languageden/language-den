@@ -527,3 +527,37 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Note: All card counts use `.toString()` to convert numbers to strings in JSX for ESLint `restrict-template-expressions` compliance
 
 ---
+
+## [Wed Jan 14 10:12:32 AM +0700 2026] - Card #93
+
+- Created ActivityFeedSection component in src/ui/dashboard/ActivityFeedSection.tsx for displaying recent learning activities
+- Component displays chronological list of activities with configurable maxVisible limit (default: 7)
+- Implemented conditional rendering: empty state when no activities vs. scrollable list when activities exist
+- Empty state displays seedling emoji (🌱), "No recent activity yet" heading, and encouraging message
+- Activity list maps over activities array and renders ActivityItem components with key prop
+- Implemented "See all activity →" link that appears when activities.length exceeds maxVisible
+- Used Card wrapper with consistent padding ($6) and section header ("Recent Activity")
+- Created comprehensive tests in src/ui/dashboard/ActivityFeedSection.test.tsx (25 tests)
+- Tests verify component definition, prop acceptance, activities display, maxVisible limit, empty state, see all link, and combined scenarios
+- Updated src/ui/AGENTS.md with ActivityFeedSection patterns for future dashboard sections
+- All quality gates pass: type-check, lint, and test (206 tests passing)
+- Files changed: src/ui/dashboard/ActivityFeedSection.tsx, src/ui/dashboard/ActivityFeedSection.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Use `Array.slice(0, maxVisible)` to limit visible items without modifying the original array
+- Pattern: Conditional rendering for empty vs. populated states keeps components simple and focused
+- Pattern: Map over filtered array with `.map((item) => <Component key={item.id} ... />)` for list rendering
+- Pattern: Empty states follow consistent pattern: Card > centered YStack > emoji + heading + message
+- Pattern: "See all" links use centered YStack wrapper with primary color text ($primary) for consistency
+- Pattern: Activity list renders directly in YStack without explicit gaps since ActivityItem has built-in py="$3" padding
+- Pattern: Export both data interfaces (Activity) and component props interfaces (ActivityFeedSectionProps) for external reuse
+- Pattern: maxVisible prop with default value pattern: `maxVisible = 7` provides flexibility without requiring prop
+- Pattern: Conditional display logic: `{activities.length > maxVisible && (<link>)}` ensures link only shows when needed
+- Pattern: Activity icons as ReactNode allow flexible icon types (emoji Text, SVG components, etc.)
+- Pattern: Section headers consistently use Text with fontSize="$5" and fontWeight="600" across all dashboard sections
+- Pattern: Removed unused imports (ScrollView) to pass TypeScript strict mode compilation
+- Note: ActivityItem component handles its own vertical spacing, so parent YStack doesn't need gap prop
+- Note: Tests verify all scenarios: empty arrays, single items, exact maxVisible, more than maxVisible, various timestamp formats
+
+---

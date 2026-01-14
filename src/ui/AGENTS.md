@@ -133,3 +133,16 @@ This file documents patterns and conventions for UI component development in the
 - Pattern: For fixed-width labels in lists, wrap Text in YStack with explicit `width` prop instead of using minWidth
 - Pattern: Use consistent padding (`p="$6"`) for dashboard sections wrapped in Card for visual consistency
 - Pattern: Queue breakdown lists should use YStack with `gap="$2"` for tight vertical spacing between related items
+
+### ActivityFeedSection Pattern
+
+- Pattern: Use `Array.slice()` to limit visible items while preserving full data array in props
+- Pattern: Conditional rendering for empty state vs. content list based on array length check
+- Pattern: Map over activities array with unique `key` prop for React list rendering
+- Pattern: Empty states use centered YStack with emoji, heading, and descriptive message pattern
+- Pattern: "See all" link uses centered YStack wrapper with primary color text for consistency
+- Pattern: Activity items render in parent YStack without explicit gaps (ActivityItem has built-in vertical padding)
+- Pattern: Export both data interfaces (Activity) and component props interfaces for type reuse
+- Pattern: maxVisible prop provides flexible control over list length without UI changes
+- Pattern: When activity list exceeds maxVisible, show "See all" link with arrow indicator (→)
+- Pattern: Activity icon passed as ReactNode allows flexible emoji, SVG, or component icons
