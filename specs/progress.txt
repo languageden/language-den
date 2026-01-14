@@ -134,6 +134,16 @@
 - Screen-level components with React Native hooks cannot be unit tested - focus on testing underlying pieces
 - Use TODO comments for placeholder navigation logic instead of console.log (ESLint restriction)
 
+### EmptyState Component Pattern
+
+- EmptyState is a reusable functional component for displaying empty states with icon, title, message, and optional action
+- Icon prop accepts both string emojis and ReactNode using `typeof icon === 'string'` type checking
+- Optional action button requires both `actionLabel` AND `onAction` props to render (&&& pattern)
+- Centered layout uses YStack with `items="center"` and generous vertical padding (`py="$6"`)
+- Text components don't support `textAlign` - wrap Text in YStack with `items="center"` for centered text
+- Use `fontSize="$8"` for emoji icons, `fontSize="$6"` for title, `fontSize="$3"` for message
+- Gap spacing: `gap="$4"` for main sections, `gap="$2"` for related content (title + message)
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -656,5 +666,43 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Pattern: Removed screen-level unit tests - component assembly is verified by underlying component tests
 - Note: Dashboard screen successfully integrates all previously built sections (Cards #89-93, #95-98)
 - Note: Manual testing on devices/simulators is more valuable than unit tests for screen-level integration
+
+---
+
+## [Wed Jan 14 11:08:22 AM +0700 2026] - Card #99
+
+- Created EmptyState component in src/ui/EmptyState.tsx for displaying empty states across the app
+- Component accepts icon (string emoji or ReactNode), title, message, and optional action button props
+- Implemented type checking with `typeof icon === 'string'` to conditionally render emoji vs. custom icon components
+- Optional action button appears only when both `actionLabel` AND `onAction` props are provided using && operator
+- Used centered YStack layout with `items="center"` and generous vertical padding (`py="$6"`)
+- Wrapped message text in nested YStack containers to achieve centered text alignment (Text doesn't support textAlign)
+- Applied semantic sizing: `fontSize="$8"` for emoji icons, `fontSize="$6"` for title, `fontSize="$3"` for message
+- Used semantic colors: `$color` for title, `$secondary` for message text
+- Gap spacing follows dashboard patterns: `gap="$4"` for main sections, `gap="$2"` for title/message grouping
+- Created comprehensive tests in src/ui/EmptyState.test.tsx (25 tests covering all scenarios)
+- Tests verify: component definition, required props, optional props, icon variants, message variations, action button behavior, real-world use cases
+- All quality gates pass: type-check ✓, lint ✓, test ✓ (241 tests passing)
+- Updated src/ui/AGENTS.md with EmptyState component patterns for future development
+- Updated specs/progress.txt Codebase Patterns section with EmptyState Component Pattern
+- Files changed: src/ui/EmptyState.tsx, src/ui/EmptyState.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Icon prop with union type `ReactNode` accepts both string emojis and custom React components
+- Pattern: Use `typeof prop === 'string'` type guard to conditionally render string emoji vs. ReactNode component
+- Pattern: Optional button rendering requires both label AND callback props: `{actionLabel && onAction && (<Button>)}`
+- Pattern: Text components in Tamagui v4 do NOT support `textAlign` property - must wrap in YStack with `items="center"`
+- Pattern: Nested YStack containers provide reliable centering: outer YStack for main layout, inner YStack with `items="center"` for text
+- Pattern: Empty state component should work standalone OR wrapped in Card depending on context (provides flexibility)
+- Pattern: Icon sizing `fontSize="$8"` provides good visual presence without overwhelming the message
+- Pattern: Gap spacing `gap="$4"` between major sections (icon, content, button) creates comfortable visual rhythm
+- Pattern: Gap spacing `gap="$2"` for closely related content (title and message) indicates relationship
+- Pattern: EmptyState is a pure presentational component - no state, no side effects, just props in, JSX out
+- Pattern: Test coverage should include edge cases: string vs ReactNode icons, with/without action, short/long messages
+- Pattern: Real-world use case tests document component usage patterns (empty lists, search results, error states)
+- Pattern: Component should be in src/ui/ directory (not src/ui/dashboard/) since it's reusable across entire app
+- Note: This component can replace inline empty state implementations in ReviewQueueSection and ActivityFeedSection
+- Note: EmptyState follows same testing pattern as other functional components (HeroSection, ActivityItem)
 
 ---

@@ -146,3 +146,17 @@ This file documents patterns and conventions for UI component development in the
 - Pattern: maxVisible prop provides flexible control over list length without UI changes
 - Pattern: When activity list exceeds maxVisible, show "See all" link with arrow indicator (→)
 - Pattern: Activity icon passed as ReactNode allows flexible emoji, SVG, or component icons
+
+### EmptyState Pattern
+
+- Pattern: EmptyState is a reusable functional component for displaying empty states throughout the app
+- Pattern: Icon prop accepts both string emojis and ReactNode for maximum flexibility
+- Pattern: Use type checking with `typeof icon === 'string'` to conditionally render emoji vs. custom icon
+- Pattern: Optional action button appears only when both `actionLabel` and `onAction` props are provided
+- Pattern: Empty states use centered YStack with `items="center"` and generous vertical padding (`py="$6"`)
+- Pattern: Wrap message text in nested YStack containers to achieve centered text alignment (Text doesn't support textAlign)
+- Pattern: Title uses `fontSize="$6"` and `fontWeight="700"` for visual hierarchy
+- Pattern: Message uses `fontSize="$3"` and `$secondary` color for supporting text
+- Pattern: Gap spacing follows dashboard patterns: `gap="$4"` for main sections, `gap="$2"` for related content
+- Pattern: Component should work standalone or wrapped in Card component depending on context
+- Pattern: Test coverage should include required props, optional props, icon variants, message variations, action button behavior, and real-world use cases
