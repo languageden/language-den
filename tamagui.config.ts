@@ -82,6 +82,7 @@ const spacing = {
   3: 12, // 12px
   3.5: 14, // 14px
   4: 16, // 16px
+  true: 16, // Default size (same as 4)
   5: 20, // 20px
   6: 24, // 24px
   7: 28, // 28px
