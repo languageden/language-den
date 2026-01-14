@@ -86,6 +86,17 @@
 - Document time ranges and behavior clearly in JSDoc comments
 - Test all boundaries, edge cases, default behavior, and consistency
 
+### Dashboard Section Components
+
+- Dashboard sections are functional components that compose Card and other UI primitives (not styled components)
+- Export props interface for each section component for external type reuse
+- Use Card as outer container with custom padding (e.g., `p="$6"`) for consistent dashboard styling
+- Use `gap` props on YStack/XStack for spacing between elements within sections
+- For prominent headings, use H2 with explicit fontSize and fontWeight
+- Icons should use large font sizes for visual hierarchy (e.g., `fontSize="$8"` for main icon)
+- Dashboard sections accept callback props (e.g., `onStartReview: () => void`) for user interactions
+- Test with React.createElement pattern to verify prop acceptance without full DOM rendering
+
 ---
 
 Board ID: 03fe9lj5hgoq1bllqhi2fsabi
@@ -405,3 +416,41 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Pattern: Use `height: '100%'` on fill element to match container height dynamically
 
 ---
+
+## [Wed Jan 14 06:59:09 AM +0700 2026] - Card #90
+
+- Created HeroSection component in src/ui/dashboard/HeroSection.tsx for dashboard hero area
+- Component displays personalized greeting with time-based icon, streak counter with motivational message, and primary CTA button
+- Implemented as functional component that composes Card, Button, H2, Text, YStack, and XStack primitives
+- Used Card with custom padding ($6) as outer container for consistent dashboard section styling
+- Greeting section uses XStack with large emoji icon ($8 fontSize) and H2 heading with explicit sizing
+- Streak counter uses XStack layout with fire emoji and YStack for text hierarchy
+- Primary CTA button uses existing Button component with onPress callback
+- Created comprehensive tests in src/ui/dashboard/HeroSection.test.tsx (21 tests)
+- Tests verify component definition, all props acceptance, greeting variants, streak counts, and button interaction
+- Updated src/ui/AGENTS.md with dashboard section component patterns
+- All quality gates pass: type-check, lint, and test (151 tests passing)
+- Files changed: src/ui/dashboard/HeroSection.tsx, src/ui/dashboard/HeroSection.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Dashboard sections are functional components (not styled components) that compose existing UI primitives
+- Pattern: Export props interface for each dashboard section component for external type reuse
+- Pattern: Use Card component as outer container with custom padding (e.g., `p="$6"`) for dashboard sections
+- Pattern: Dashboard sections need higher padding than default Card (`p="$6"` vs `p="$4"`) for breathing room
+- Pattern: Use `gap` props on YStack/XStack containers for consistent spacing between child elements within sections
+- Pattern: For prominent headings in dashboard, use H2 with explicit fontSize and fontWeight (e.g., `fontSize="$7" fontWeight="700"`)
+- Pattern: Icons should use large font sizes to create visual hierarchy (e.g., `fontSize="$8"` for main icon, `fontSize="$6"` for secondary)
+- Pattern: Convert numeric props to strings with `.toString()` when rendering in JSX to satisfy ESLint `restrict-template-expressions` rule
+- Pattern: Use semantic color tokens: `$color` for primary text, `$secondary` for supporting/meta text
+- Pattern: Dashboard sections should accept callback props (e.g., `onStartReview: () => void`) for handling user interactions
+- Pattern: Use `flex={1}` on YStack content containers to allow text to fill available space in horizontal layouts
+- Pattern: Test dashboard sections with React.createElement pattern - verify component definition, prop acceptance, and combined props
+- Pattern: Group tests by feature area: component definition, props acceptance, greeting display, streak counter, button interaction
+- Pattern: Test all time-based greeting variants (morning, afternoon, evening, night) to ensure component handles all cases
+- Pattern: Test edge cases for numeric props: 0, 1, milestone values (7, 30, 100), and large values (365+)
+- Note: Dashboard section tests focus on prop acceptance and component structure, not full DOM rendering or visual appearance
+- Note: Removed unused `ComponentProps` import to satisfy ESLint `no-unused-vars` rule
+
+---
+

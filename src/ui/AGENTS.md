@@ -95,3 +95,18 @@ This file documents patterns and conventions for UI component development in the
 - Pattern: Styled components are objects, not functions, but work with `React.createElement()`
 - Pattern: Text-based components have more restrictions than YStack/XStack components
 - Pattern: Properties that don't work on `styled(Text)`: `textAlign`, `lineHeight` (base), `userSelect`, `borderRadius` (base)
+
+## Dashboard Section Components
+
+### HeroSection Pattern
+
+- Pattern: Dashboard sections are functional components (not styled components) that compose Card and other primitives
+- Pattern: Export props interface for external type reuse and documentation
+- Pattern: Use Card component as the outer container with custom padding (`p="$6"`) for dashboard sections
+- Pattern: Use `gap` props on YStack/XStack for consistent spacing between elements within sections
+- Pattern: For prominent headings, use H2 with explicit fontSize and fontWeight instead of relying on defaults
+- Pattern: Convert numbers to strings in JSX with `.toString()` to satisfy `@typescript-eslint/restrict-template-expressions`
+- Pattern: Use semantic color tokens for text: `$color` for primary text, `$secondary` for supporting text
+- Pattern: Icons should use larger font sizes for visual hierarchy (e.g., `fontSize="$8"` for greeting, `fontSize="$6"` for streak)
+- Pattern: Dashboard sections should accept callback props (e.g., `onStartReview: () => void`) for user interactions
+- Pattern: Test dashboard sections with React.createElement pattern to verify prop acceptance without full DOM rendering
