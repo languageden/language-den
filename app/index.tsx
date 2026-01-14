@@ -1,9 +1,10 @@
-import { ScrollView, YStack, Text, H1 } from 'tamagui';
+import { ScrollView, YStack, XStack, Text, H1 } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeroSection } from '../src/ui/dashboard/HeroSection';
 import { StatsOverviewSection } from '../src/ui/dashboard/StatsOverviewSection';
 import { ReviewQueueSection } from '../src/ui/dashboard/ReviewQueueSection';
 import { ActivityFeedSection } from '../src/ui/dashboard/ActivityFeedSection';
+import { MetricCard } from '../src/ui/MetricCard';
 import type { Activity as ActivityFeedActivity } from '../src/ui/dashboard/ActivityFeedSection';
 import { useDashboardData } from '../src/hooks/useDashboardData';
 import { getTimeBasedGreeting } from '../src/domain/get-time-based-greeting';
@@ -154,31 +155,84 @@ export default function DashboardScreen(): React.JSX.Element {
       <ScrollView
         pt={insets.top + 16}
         pb={insets.bottom + 16}
-        px={16}
       >
-        <YStack gap="$4">
-          {/* Hero Section with greeting and streak */}
-          <HeroSection
-            userName={data.user.name}
-            greeting={timeGreeting.greeting}
-            greetingIcon={timeGreeting.icon}
-            streakCount={data.stats.currentStreak}
-            onStartReview={handleStartReview}
-          />
+        {/* Centered content wrapper */}
+        <YStack width="100%" maxWidth={1600} alignSelf="center" px="$4">
+          {/* 4-column grid layout */}
+          <XStack
+            gap="$4"
+            alignItems="flex-start"
+            flexWrap="wrap"
+          >
+            {/* Column 1 - Welcome & Greeting */}
+            <YStack
+              flexBasis="23%"
+              flexGrow={1}
+              flexShrink={1}
+              minWidth={280}
+              gap="$4"
+            >
+              <HeroSection
+                userName={data.user.name}
+                greeting={timeGreeting.greeting}
+                greetingIcon={timeGreeting.icon}
+                streakCount={data.stats.currentStreak}
+                onStartReview={handleStartReview}
+              />
+            </YStack>
 
-          {/* Stats Overview Grid */}
-          <StatsOverviewSection
-            stats={{
-              ...data.stats,
-              accuracyRate: Math.round(data.stats.accuracyRate * 100),
-            }}
-          />
+            {/* Column 2 - Individual Stats Cards */}
+            <YStack
+              flexBasis="23%"
+              flexGrow={1}
+              flexShrink={1}
+              minWidth={280}
+              gap="$4"
+            >
+              <MetricCard
+                label="Cards Learned"
+                value={data.stats.cardsLearned.toString()}
+                icon={<Text fontSize="$5">📚</Text>}
+              />
+              <MetricCard
+                label="Current Streak"
+                value={data.stats.currentStreak.toString()}
+                icon={<Text fontSize="$5">🔥</Text>}
+              />
+            </YStack>
 
-          {/* Review Queue Status */}
-          <ReviewQueueSection queue={reviewQueue} onStartReview={handleStartReview} />
+            {/* Column 3 - More Stats */}
+            <YStack
+              flexBasis="23%"
+              flexGrow={1}
+              flexShrink={1}
+              minWidth={280}
+              gap="$4"
+            >
+              <MetricCard
+                label="Total Reviews"
+                value={data.stats.totalReviews.toString()}
+                icon={<Text fontSize="$5">✅</Text>}
+              />
+              <MetricCard
+                label="Accuracy Rate"
+                value={`${Math.round(data.stats.accuracyRate * 100).toString()}%`}
+                icon={<Text fontSize="$5">🎯</Text>}
+              />
+              <ReviewQueueSection queue={reviewQueue} onStartReview={handleStartReview} />
+            </YStack>
 
-          {/* Recent Activity Feed */}
-          <ActivityFeedSection activities={activities} />
+            {/* Column 4 - Activity Feed */}
+            <YStack
+              flexBasis="23%"
+              flexGrow={1}
+              flexShrink={1}
+              minWidth={280}
+              gap="$4"
+            >
+              <ActivityFeedSection activities={activities} />
+            </YStack>
+          </XStack>
         </YStack>
       </ScrollView>
     </YStack>

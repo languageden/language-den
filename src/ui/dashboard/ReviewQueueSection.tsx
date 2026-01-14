@@ -1,5 +1,4 @@
-import { YStack, XStack, Text, H2 } from 'tamagui';
-import { Card } from '../Card';
+import { YStack, XStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
 
 /**
@@ -60,7 +59,7 @@ export function ReviewQueueSection({
   // Empty state when no cards are due
   if (total === 0) {
     return (
-      <Card p="$6" gap="$4">
+      <Card p="$6" gap="$4" borderRadius="$6">
         <YStack gap="$3" items="center" py="$4">
           <Text fontSize="$8">🎉</Text>
           <H2 fontSize="$6" fontWeight="700" color="$color">
@@ -78,7 +77,7 @@ export function ReviewQueueSection({
 
   // Queue display with categories
   return (
-    <Card p="$6" gap="$5">
+    <Card p="$6" gap="$5" borderRadius="$6">
       {/* Section Header */}
       <Text fontSize="$5" fontWeight="600" color="$color">
         Review Queue

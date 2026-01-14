@@ -31,16 +31,16 @@ export function StatsOverviewSection({
   stats,
 }: StatsOverviewSectionProps): React.JSX.Element {
   return (
-    <YStack gap="$4">
+    <YStack gap="$5">
       {/* Section Header */}
       <Text fontSize="$5" fontWeight="600" color="$color">
         Your Progress
       </Text>
 
       {/* Responsive 2x2 Grid */}
-      <YStack gap="$3">
+      <YStack gap="$4">
         {/* First Row */}
-        <XStack gap="$3">
+        <XStack gap="$4">
           <YStack flex={1}>
             <MetricCard
               label="Cards Learned"
@@ -58,7 +58,7 @@ export function StatsOverviewSection({
         </XStack>
 
         {/* Second Row */}
-        <XStack gap="$3">
+        <XStack gap="$4">
           <YStack flex={1}>
             <MetricCard
               label="Total Reviews"

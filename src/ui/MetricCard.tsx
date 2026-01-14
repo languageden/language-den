@@ -1,5 +1,4 @@
-import { XStack, YStack, Text } from 'tamagui';
-import { Card } from './Card';
+import { XStack, YStack, Text, Card } from 'tamagui';
 
 /**
  * Props for the MetricCard component
@@ -51,7 +50,7 @@ export function MetricCard({
   trend,
 }: MetricCardProps): React.JSX.Element {
   return (
-    <Card p="$4" gap="$3">
+    <Card p="$4" gap="$3" borderRadius="$6">
       <XStack gap="$3" items="center" justify="space-between">
         {/* Icon container (if icon provided) */}
         {icon && (

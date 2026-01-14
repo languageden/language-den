@@ -1,6 +1,5 @@
-import { YStack, XStack, Text, H2 } from 'tamagui';
+import { YStack, XStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
-import { Card } from '../Card';
 
 /**
  * HeroSection - Top section of the dashboard with personalized greeting and primary CTA
@@ -41,7 +40,7 @@ export function HeroSection({
   onStartReview,
 }: HeroSectionProps): React.JSX.Element {
   return (
-    <Card p="$6" gap="$5">
+    <Card p="$6" gap="$5" borderRadius="$6">
       {/* Greeting Section */}
       <YStack gap="$2">
         <XStack gap="$3" items="center">

@@ -1,5 +1,4 @@
-import { YStack, Text } from 'tamagui';
-import { Card } from '../Card';
+import { YStack, Text, Card } from 'tamagui';
 import { ActivityItem } from '../ActivityItem';
 
 /**
@@ -68,7 +67,7 @@ export function ActivityFeedSection({
   // Empty state when no activities exist
   if (activities.length === 0) {
     return (
-      <Card p="$6" gap="$4">
+      <Card p="$6" gap="$4" borderRadius="$6">
         <YStack gap="$3" items="center" py="$4">
           <Text fontSize="$8">🌱</Text>
           <YStack width="100%" items="center">
@@ -88,7 +87,7 @@ export function ActivityFeedSection({
 
   // Activity list with optional "See all" link
   return (
-    <Card p="$6" gap="$4">
+    <Card p="$6" gap="$4" borderRadius="$6">
       {/* Section Header */}
       <Text fontSize="$5" fontWeight="600" color="$color">
         Recent Activity
