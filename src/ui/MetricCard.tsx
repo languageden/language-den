@@ -1,4 +1,4 @@
-import { XStack, YStack, Text, Card } from 'tamagui';
+import { XStack, Text, Card } from 'tamagui';
 
 /**
  * Props for the MetricCard component
@@ -46,47 +46,27 @@ export interface MetricCardProps {
 export function MetricCard({
   label,
   value,
-  icon,
   trend,
 }: MetricCardProps): React.JSX.Element {
   return (
-    <Card p="$4" gap="$3" borderRadius="$6">
-      <XStack gap="$3" items="center" justify="space-between">
-        {/* Icon container (if icon provided) */}
-        {icon && (
-          <YStack
-            width="$10"
-            height="$10"
-            items="center"
-            justify="center"
-            bg="$primary"
-          >
-            {icon}
-          </YStack>
-        )}
-
-        {/* Value */}
-        <YStack flex={1}>
-          <Text fontSize="$8" fontWeight="700" color="$color">
-            {value}
-          </Text>
-        </YStack>
-      </XStack>
-
+    <Card p="$5" gap="$3" borderRadius="$6">
       {/* Label */}
-      <YStack>
-        <Text fontSize="$2" color="$secondary" fontWeight="500">
-          {label}
-        </Text>
-      </YStack>
+      <Text fontSize="$3" color="$color" opacity={0.7} fontWeight="500" textTransform="uppercase" letterSpacing={0.5}>
+        {label}
+      </Text>
+
+      {/* Value - Big and Bold */}
+      <Text fontSize="$10" fontWeight="800" color="$color" lineHeight="$1">
+        {value}
+      </Text>
 
       {/* Trend indicator (if provided) */}
       {trend && (
         <XStack items="center" gap="$1">
           <Text
-            fontSize="$2"
+            fontSize="$3"
             fontWeight="600"
-            color={trend.direction === 'up' ? '$success' : '$error'}
+            color={trend.direction === 'up' ? '$green10' : '$red10'}
           >
             {trend.direction === 'up' ? '↑' : '↓'} {trend.value}
           </Text>

@@ -69,14 +69,13 @@ export function ActivityFeedSection({
     return (
       <Card p="$6" gap="$4" borderRadius="$6">
         <YStack gap="$3" items="center" py="$4">
-          <Text fontSize="$8">🌱</Text>
           <YStack width="100%" items="center">
             <Text fontSize="$5" fontWeight="600" color="$color">
               No recent activity yet
             </Text>
           </YStack>
           <YStack width="100%" items="center">
-            <Text fontSize="$3" color="$secondary">
+            <Text fontSize="$3" color="$color" opacity={0.7}>
               Complete your first review to see your progress here
             </Text>
           </YStack>

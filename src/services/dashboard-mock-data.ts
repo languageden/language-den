@@ -4,6 +4,10 @@ import type {
   UserInfo,
   LearningStats,
   ReviewQueue,
+  StudyGoal,
+  ProgressTrends,
+  WeakArea,
+  DataPoint,
 } from '../types/dashboard';
 import { ActivityType } from '../types/dashboard';
 
@@ -25,6 +29,19 @@ const mockStats: LearningStats = {
   currentStreak: 12,
   totalReviews: 1834,
   accuracyRate: 0.87,
+  vocabularySize: 1456,
+  cardsMastered: 189,
+  cardsLearning: 58,
+  cardsNew: 45,
+  studyTimeToday: 45,
+  studyTimeWeek: 312,
+  studyTimeMonth: 1248,
+  wordsLearnedToday: 12,
+  wordsLearnedWeek: 87,
+  wordsLearnedMonth: 324,
+  practiceSessionsCompleted: 156,
+  fluencyScore: 68,
+  nextReviewIn: 45,
 };
 
 /**
@@ -36,6 +53,116 @@ const mockReviewQueue: ReviewQueue = {
   upcoming: 67,
   total: 95,
 };
+
+/**
+ * Mock study goals
+ */
+const mockStudyGoals: StudyGoal[] = [
+  {
+    id: 'goal-1',
+    title: 'Daily Study Time',
+    target: 60,
+    current: 45,
+    unit: 'minutes',
+  },
+  {
+    id: 'goal-2',
+    title: 'Weekly Words Learned',
+    target: 100,
+    current: 87,
+    unit: 'words',
+  },
+  {
+    id: 'goal-3',
+    title: 'Master 200 Cards',
+    target: 200,
+    current: 189,
+    unit: 'cards',
+    deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days from now
+  },
+];
+
+/**
+ * Generate mock progress trends
+ */
+function generateMockProgressTrends(): ProgressTrends {
+  const now = new Date();
+
+  // Generate last 30 days of study time
+  const dailyStudyTime: DataPoint[] = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - (29 - i));
+    const dateStr = date.toISOString().split('T')[0];
+    return {
+      date: dateStr || '',
+      value: Math.floor(Math.random() * 40) + 20, // 20-60 minutes
+    };
+  });
+
+  // Generate last 30 days of words learned
+  const dailyWordsLearned: DataPoint[] = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - (29 - i));
+    const dateStr = date.toISOString().split('T')[0];
+    return {
+      date: dateStr || '',
+      value: Math.floor(Math.random() * 15) + 5, // 5-20 words
+    };
+  });
+
+  // Generate last 12 weeks of accuracy
+  const weeklyAccuracy: DataPoint[] = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - (11 - i) * 7);
+    const dateStr = date.toISOString().split('T')[0];
+    return {
+      date: dateStr || '',
+      value: Math.floor(Math.random() * 15) + 80, // 80-95%
+    };
+  });
+
+  // Generate last 7 days of reviews
+  const dailyReviews: DataPoint[] = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - (6 - i));
+    const dateStr = date.toISOString().split('T')[0];
+    return {
+      date: dateStr || '',
+      value: Math.floor(Math.random() * 40) + 10, // 10-50 reviews
+    };
+  });
+
+  return {
+    dailyStudyTime,
+    dailyWordsLearned,
+    weeklyAccuracy,
+    dailyReviews,
+  };
+}
+
+/**
+ * Mock weak areas
+ */
+const mockWeakAreas: WeakArea[] = [
+  {
+    id: 'weak-1',
+    category: 'Past Tense Conjugations',
+    accuracy: 0.62,
+    cardsNeedingReview: 23,
+  },
+  {
+    id: 'weak-2',
+    category: 'Food Vocabulary',
+    accuracy: 0.71,
+    cardsNeedingReview: 15,
+  },
+  {
+    id: 'weak-3',
+    category: 'Subjunctive Mood',
+    accuracy: 0.58,
+    cardsNeedingReview: 31,
+  },
+];
 
 /**
  * Mock recent activity entries
@@ -106,6 +233,9 @@ export function getMockDashboardData(
     stats: mockStats,
     reviewQueue: mockReviewQueue,
     recentActivity: mockActivities,
+    studyGoals: mockStudyGoals,
+    progressTrends: generateMockProgressTrends(),
+    weakAreas: mockWeakAreas,
     lastUpdated: new Date(),
   };
 }

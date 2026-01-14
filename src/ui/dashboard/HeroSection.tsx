@@ -24,8 +24,6 @@ export interface HeroSectionProps {
   userName: string;
   /** Time-based greeting text (e.g., "Good morning", "Good evening") */
   greeting: string;
-  /** Emoji icon for the greeting (e.g., "🌅", "🌙") */
-  greetingIcon: string;
   /** Number of consecutive days the user has been active */
   streakCount: number;
   /** Callback fired when user clicks the "Start Review Session" button */
@@ -35,7 +33,6 @@ export interface HeroSectionProps {
 export function HeroSection({
   userName,
   greeting,
-  greetingIcon,
   streakCount,
   onStartReview,
 }: HeroSectionProps): React.JSX.Element {
@@ -43,26 +40,23 @@ export function HeroSection({
     <Card p="$6" gap="$5" borderRadius="$6">
       {/* Greeting Section */}
       <YStack gap="$2">
-        <XStack gap="$3" items="center">
-          <Text fontSize="$8">{greetingIcon}</Text>
-          <H2 fontSize="$7" fontWeight="700" color="$color">
-            {greeting}, {userName}!
-          </H2>
-        </XStack>
+        <H2 fontSize="$7" fontWeight="700" color="$color">
+          {greeting}, {userName}!
+        </H2>
       </YStack>
 
       {/* Streak Counter */}
-      <XStack gap="$3" items="center">
-        <Text fontSize="$6">🔥</Text>
-        <YStack gap="$1" flex={1}>
-          <Text fontSize="$5" fontWeight="600" color="$color">
-            {streakCount.toString()} Day Streak
-          </Text>
-          <Text fontSize="$3" color="$secondary">
-            Keep the momentum going!
-          </Text>
-        </YStack>
-      </XStack>
+      <YStack gap="$2">
+        <Text fontSize="$8" fontWeight="800" color="$color">
+          {streakCount}
+        </Text>
+        <Text fontSize="$3" color="$color" fontWeight="600">
+          Day Streak
+        </Text>
+        <Text fontSize="$2" color="$color" opacity={0.7}>
+          Keep the momentum going!
+        </Text>
+      </YStack>
 
       {/* Primary CTA */}
       <Button onPress={onStartReview}>Start Review Session</Button>

@@ -61,12 +61,11 @@ export function ReviewQueueSection({
     return (
       <Card p="$6" gap="$4" borderRadius="$6">
         <YStack gap="$3" items="center" py="$4">
-          <Text fontSize="$8">🎉</Text>
           <H2 fontSize="$6" fontWeight="700" color="$color">
             All caught up!
           </H2>
           <YStack width="100%" items="center">
-            <Text fontSize="$3" color="$secondary">
+            <Text fontSize="$3" color="$color" opacity={0.7}>
               No reviews due right now. Great work!
             </Text>
           </YStack>

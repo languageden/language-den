@@ -1,10 +1,14 @@
 import { ScrollView, YStack, XStack, Text, H1 } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeroSection } from '../src/ui/dashboard/HeroSection';
-import { StatsOverviewSection } from '../src/ui/dashboard/StatsOverviewSection';
 import { ReviewQueueSection } from '../src/ui/dashboard/ReviewQueueSection';
 import { ActivityFeedSection } from '../src/ui/dashboard/ActivityFeedSection';
+import { WeakAreasSection } from '../src/ui/dashboard/WeakAreasSection';
 import { MetricCard } from '../src/ui/MetricCard';
+import { LineChart } from '../src/ui/charts/LineChart';
+import { BarChart } from '../src/ui/charts/BarChart';
+import { ProgressRing } from '../src/ui/charts/ProgressRing';
+import { ProgressBarCard } from '../src/ui/charts/ProgressBarCard';
 import type { Activity as ActivityFeedActivity } from '../src/ui/dashboard/ActivityFeedSection';
 import { useDashboardData } from '../src/hooks/useDashboardData';
 import { getTimeBasedGreeting } from '../src/domain/get-time-based-greeting';
@@ -95,19 +99,9 @@ export default function DashboardScreen(): React.JSX.Element {
   const timeGreeting = getTimeBasedGreeting();
 
   // Map activity type to icon
-  const getActivityIcon = (type: ActivityType): React.ReactNode => {
-    switch (type) {
-      case ActivityType.CARD_LEARNED:
-        return <Text fontSize="$5">📚</Text>;
-      case ActivityType.STREAK_MILESTONE:
-        return <Text fontSize="$5">🔥</Text>;
-      case ActivityType.DECK_COMPLETED:
-        return <Text fontSize="$5">🎉</Text>;
-      case ActivityType.PERFECT_REVIEW:
-        return <Text fontSize="$5">⭐</Text>;
-      default:
-        return <Text fontSize="$5">✨</Text>;
-    }
+  const getActivityIcon = (_type: ActivityType): React.ReactNode => {
+    // No icons for now - will be replaced with proper visual indicators
+    return null;
   };
 
   // Format timestamp to relative time
@@ -164,7 +158,7 @@ export default function DashboardScreen(): React.JSX.Element {
             alignItems="flex-start"
             flexWrap="wrap"
           >
-            {/* Column 1 - Welcome & Greeting */}
+            {/* Column 1 - Welcome & Key Stats */}
             <YStack
               flexBasis="23%"
               flexGrow={1}
@@ -175,13 +169,28 @@ export default function DashboardScreen(): React.JSX.Element {
               <HeroSection
                 userName={data.user.name}
                 greeting={timeGreeting.greeting}
-                greetingIcon={timeGreeting.icon}
                 streakCount={data.stats.currentStreak}
                 onStartReview={handleStartReview}
               />
+
+              <MetricCard
+                label="Fluency Score"
+                value={data.stats.fluencyScore.toString()}
+                trend={{ direction: 'up', value: '+3 pts' }}
+              />
+
+              <MetricCard
+                label="Vocabulary Size"
+                value={data.stats.vocabularySize.toLocaleString()}
+              />
+
+              <MetricCard
+                label="Next Review"
+                value={`${data.stats.nextReviewIn}m`}
+              />
             </YStack>
 
-            {/* Column 2 - Individual Stats Cards */}
+            {/* Column 2 - Study Time & Progress */}
             <YStack
               flexBasis="23%"
               flexGrow={1}
@@ -190,18 +199,81 @@ export default function DashboardScreen(): React.JSX.Element {
               gap="$4"
             >
               <MetricCard
-                label="Cards Learned"
-                value={data.stats.cardsLearned.toString()}
-                icon={<Text fontSize="$5">📚</Text>}
+                label="Study Time Today"
+                value={`${data.stats.studyTimeToday}m`}
               />
+
               <MetricCard
-                label="Current Streak"
-                value={data.stats.currentStreak.toString()}
-                icon={<Text fontSize="$5">🔥</Text>}
+                label="Study Time This Week"
+                value={`${Math.round(data.stats.studyTimeWeek / 60)}h ${data.stats.studyTimeWeek % 60}m`}
+              />
+
+              <MetricCard
+                label="Study Time This Month"
+                value={`${Math.round(data.stats.studyTimeMonth / 60)}h`}
+              />
+
+              {data.studyGoals[0] && (
+                <ProgressRing
+                  title={data.studyGoals[0].title}
+                  current={data.studyGoals[0].current}
+                  target={data.studyGoals[0].target}
+                  unit={data.studyGoals[0].unit}
+                />
+              )}
+
+              <BarChart
+                title="Daily Reviews (Last 7 Days)"
+                data={data.progressTrends.dailyReviews}
+                yAxisLabel="Reviews"
               />
             </YStack>
 
-            {/* Column 3 - More Stats */}
+            {/* Column 3 - Learning Stats & Cards */}
+            <YStack
+              flexBasis="23%"
+              flexGrow={1}
+              flexShrink={1}
+              minWidth={280}
+              gap="$4"
+            >
+              <MetricCard
+                label="Words Learned Today"
+                value={data.stats.wordsLearnedToday.toString()}
+              />
+
+              <MetricCard
+                label="Words This Week"
+                value={data.stats.wordsLearnedWeek.toString()}
+              />
+
+              <MetricCard
+                label="Words This Month"
+                value={data.stats.wordsLearnedMonth.toString()}
+              />
+
+              <MetricCard
+                label="Practice Sessions"
+                value={data.stats.practiceSessionsCompleted.toString()}
+              />
+
+              <MetricCard
+                label="Cards Mastered"
+                value={data.stats.cardsMastered.toString()}
+              />
+
+              <MetricCard
+                label="Cards Learning"
+                value={data.stats.cardsLearning.toString()}
+              />
+
+              <MetricCard
+                label="New Cards"
+                value={data.stats.cardsNew.toString()}
+              />
+            </YStack>
+
+            {/* Column 4 - Charts & Activity */}
             <YStack
               flexBasis="23%"
               flexGrow={1}
@@ -211,28 +283,53 @@ export default function DashboardScreen(): React.JSX.Element {
             >
               <MetricCard
                 label="Total Reviews"
-                value={data.stats.totalReviews.toString()}
-                icon={<Text fontSize="$5">✅</Text>}
+                value={data.stats.totalReviews.toLocaleString()}
               />
+
               <MetricCard
                 label="Accuracy Rate"
-                value={`${Math.round(data.stats.accuracyRate * 100).toString()}%`}
-                icon={<Text fontSize="$5">🎯</Text>}
+                value={`${Math.round(data.stats.accuracyRate * 100)}%`}
+                trend={{ direction: 'up', value: '+2%' }}
               />
-              <ReviewQueueSection queue={reviewQueue} onStartReview={handleStartReview} />
-            </YStack>
 
-            {/* Column 4 - Activity Feed */}
-            <YStack
-              flexBasis="23%"
-              flexGrow={1}
-              flexShrink={1}
-              minWidth={280}
-              gap="$4"
-            >
+              {data.studyGoals[1] && (
+                <ProgressBarCard
+                  title={data.studyGoals[1].title}
+                  current={data.studyGoals[1].current}
+                  target={data.studyGoals[1].target}
+                  unit={data.studyGoals[1].unit}
+                />
+              )}
+
+              <ReviewQueueSection queue={reviewQueue} onStartReview={handleStartReview} />
+
+              <WeakAreasSection weakAreas={data.weakAreas} />
+
               <ActivityFeedSection activities={activities} />
             </YStack>
           </XStack>
+
+          {/* Full-width charts section */}
+          <YStack gap="$4" mt="$4">
+            <XStack gap="$4" flexWrap="wrap">
+              <YStack flex={1} minWidth={300}>
+                <LineChart
+                  title="Study Time Trend (Last 30 Days)"
+                  data={data.progressTrends.dailyStudyTime}
+                  yAxisLabel="Minutes"
+                  color="#0ea5e9"
+                />
+              </YStack>
+              <YStack flex={1} minWidth={300}>
+                <LineChart
+                  title="Words Learned (Last 30 Days)"
+                  data={data.progressTrends.dailyWordsLearned}
+                  yAxisLabel="Words"
+                  color="#22c55e"
+                />
+              </YStack>
+            </XStack>
+          </YStack>
         </YStack>
       </ScrollView>
     </YStack>
