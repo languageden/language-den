@@ -121,3 +121,15 @@ This file documents patterns and conventions for UI component development in the
 - Pattern: Wrap MetricCard in YStack with `flex={1}` to ensure proper flex layout in grids
 - Pattern: Emoji icons passed as ReactNode children of Text component work well in MetricCard icons
 - Pattern: Dashboard sections that primarily compose other components don't need their own Card wrapper
+
+### ReviewQueueSection Pattern
+
+- Pattern: Conditional rendering based on data state (empty vs. populated queue) within the same component
+- Pattern: Text components do NOT support `textAlign` prop - wrap Text in YStack with `items="center"` for centered text
+- Pattern: Text components do NOT support `minWidth` prop - wrap Text in YStack with fixed `width` for minimum width
+- Pattern: Dynamic `color` prop (string type) not allowed on Text - use semantic tokens only (`$color`, `$secondary`, etc.)
+- Pattern: Helper components (like QueueItem) should be internal to file when only used in one section component
+- Pattern: Empty states should use Card wrapper with centered content, celebration emoji, and reassuring message
+- Pattern: For fixed-width labels in lists, wrap Text in YStack with explicit `width` prop instead of using minWidth
+- Pattern: Use consistent padding (`p="$6"`) for dashboard sections wrapped in Card for visual consistency
+- Pattern: Queue breakdown lists should use YStack with `gap="$2"` for tight vertical spacing between related items

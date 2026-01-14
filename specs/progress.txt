@@ -56,7 +56,10 @@
 - Use `flex` property (not shorthand `f`) for flex layout properties
 - Tamagui v4 has `onlyAllowShorthands: true` which restricts available inline properties
 - When creating function components that wrap Tamagui primitives, avoid dynamic style props that TypeScript rejects
-- Text-based styled components (like Button) don't support: `textAlign`, `lineHeight`, `borderRadius` (use variants), `userSelect`
+- Text-based styled components (like Button) don't support: `textAlign`, `lineHeight`, `borderRadius` (use variants), `userSelect`, `minWidth`
+- Text components do NOT support `textAlign` - wrap Text in YStack with `items="center"` for centered text
+- Text components do NOT support `minWidth` - wrap Text in YStack with fixed `width` for minimum width
+- Dynamic `color` prop (string type) not allowed on Text - use semantic tokens only (`$color`, `$secondary`, etc.)
 - Use `aria-label` and `role` for accessibility instead of deprecated `accessibilityLabel` and `accessibilityHint`
 
 ### TypeScript Type Definitions
@@ -492,5 +495,35 @@ Started: Tue Jan 13 10:05:35 PM +07 2026
 - Pattern: Test dashboard sections with various data scenarios: zero values, beginner stats, advanced stats, milestone values
 - Pattern: Section-level components should accept typed props (e.g., `stats: LearningStats`) for type safety
 - Pattern: Dashboard sections that compose existing components have simpler test patterns than interactive components
+
+---
+
+## [Wed Jan 14 07:07:00 AM +0700 2026] - Card #92
+
+- Created ReviewQueueSection component in src/ui/dashboard/ReviewQueueSection.tsx for displaying review queue status
+- Implemented conditional rendering: empty state when no cards due vs. queue breakdown when cards are due
+- Empty state displays celebration emoji (🎉), "All caught up!" heading, and reassuring message
+- Queue display shows total cards due, breakdown by category (New/Learning/Review), and "Start Reviewing" CTA button
+- Created internal QueueItem helper component for displaying individual queue categories with label and count
+- Implemented comprehensive tests in src/ui/dashboard/ReviewQueueSection.test.tsx (16 tests)
+- Tests verify component definition, props acceptance, queue display, empty state, button interaction, and combined scenarios
+- All quality gates pass: type-check, lint, and test (181 tests passing)
+- Files changed: src/ui/dashboard/ReviewQueueSection.tsx, src/ui/dashboard/ReviewQueueSection.test.tsx, src/ui/AGENTS.md, specs/progress.txt
+
+**Learnings for future iterations:**
+
+- Pattern: Text component does NOT support `textAlign` prop - wrap Text in YStack with `items="center"` for centered text alignment
+- Pattern: Text component does NOT support `minWidth` prop - wrap Text in YStack with fixed `width` property for minimum width
+- Pattern: Dynamic `color` prop (string type parameter) not allowed on Text component - use semantic tokens only (`$color`, `$secondary`)
+- Pattern: Conditional rendering (empty vs. populated state) can be handled within single component using early return pattern
+- Pattern: Helper components (like QueueItem) should be internal to file (not exported) when only used by one section component
+- Pattern: Empty states should use Card wrapper with centered YStack content, celebration emoji, heading, and reassuring message
+- Pattern: For fixed-width labels in lists, wrap Text in YStack with explicit `width` prop instead of using minWidth directly
+- Pattern: Queue breakdown lists should use YStack with `gap="$2"` for tight vertical spacing between related items
+- Pattern: Dashboard sections with Card wrapper should use consistent padding (`p="$6"`) for visual consistency across sections
+- Pattern: Export both data interfaces (ReviewQueueData) and component props interfaces (ReviewQueueSectionProps) for type reuse
+- Pattern: Helper components don't need separate props interfaces - inline type definitions work well for internal use
+- Note: Removed `color` parameter from QueueItem helper since dynamic color strings are not allowed on Text components
+- Note: All card counts use `.toString()` to convert numbers to strings in JSX for ESLint `restrict-template-expressions` compliance
 
 ---
