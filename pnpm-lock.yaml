@@ -11,6 +11,9 @@ dependencies:
   '@tamagui/config':
     specifier: ^1.144.1
     version: 1.144.1(react-dom@18.3.1)(react-native-reanimated@4.2.1)(react-native@0.76.5)(react@18.3.1)
+  '@tamagui/lucide-icons':
+    specifier: ^1.144.1
+    version: 1.144.1(react-dom@18.3.1)(react-native-svg@15.15.1)(react-native@0.76.5)(react@18.3.1)
   expo:
     specifier: ^52.0.0
     version: 52.0.48(@babel/core@7.28.6)(@babel/preset-env@7.28.6)(react-native@0.76.5)(react@18.3.1)
@@ -4004,6 +4007,20 @@ packages:
       - react-dom
     dev: false
 
+  /@tamagui/helpers-icon@1.144.1(react-dom@18.3.1)(react-native-svg@15.15.1)(react-native@0.76.5)(react@18.3.1):
+    resolution: {integrity: sha512-hY+YpCi6kbSdstKvotgt+Jjw1n33rn5IYEu9rhVv4r1+8z6MyeVXu7An7f65RVMCVMad7qGlvp4JF8ik/Ehp/Q==}
+    peerDependencies:
+      react: '*'
+      react-native-svg: '>=12'
+    dependencies:
+      '@tamagui/core': 1.144.1(react-dom@18.3.1)(react-native@0.76.5)(react@18.3.1)
+      react: 18.3.1
+      react-native-svg: 15.15.1(react-native@0.76.5)(react@18.3.1)
+    transitivePeerDependencies:
+      - react-dom
+      - react-native
+    dev: false
+
   /@tamagui/helpers-tamagui@1.144.1(react-dom@18.3.1)(react-native@0.76.5)(react@18.3.1):
     resolution: {integrity: sha512-17Hib3zvjiI09CGPVlfhevMsLpO2TyhBd9+R7oqpJyUjzloL87NWCP8+Z6/azc0w7AfZsR3lKytS7PuERWf/Mw==}
     peerDependencies:
@@ -4100,6 +4117,21 @@ packages:
       '@tamagui/text': 1.144.1(react-dom@18.3.1)(react-native@0.76.5)(react@18.3.1)
       '@tamagui/web': 1.144.1(react-dom@18.3.1)(react-native@0.76.5)(react@18.3.1)
       react: 18.3.1
+    transitivePeerDependencies:
+      - react-dom
+      - react-native
+    dev: false
+
+  /@tamagui/lucide-icons@1.144.1(react-dom@18.3.1)(react-native-svg@15.15.1)(react-native@0.76.5)(react@18.3.1):
+    resolution: {integrity: sha512-ELa2Not6q+VgTDtH4BiwvNGA9+wVgB6ktN+Tk/74yPbnwSSrP20R0N9T71Eql/DTgJUvl2gAa6jafEhafRE2KQ==}
+    peerDependencies:
+      react: '*'
+      react-native-svg: '>=12'
+    dependencies:
+      '@tamagui/core': 1.144.1(react-dom@18.3.1)(react-native@0.76.5)(react@18.3.1)
+      '@tamagui/helpers-icon': 1.144.1(react-dom@18.3.1)(react-native-svg@15.15.1)(react-native@0.76.5)(react@18.3.1)
+      react: 18.3.1
+      react-native-svg: 15.15.1(react-native@0.76.5)(react@18.3.1)
     transitivePeerDependencies:
       - react-dom
       - react-native

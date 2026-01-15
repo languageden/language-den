@@ -25,23 +25,23 @@ const mockUser: UserInfo = {
  * Mock learning statistics
  */
 const mockStats: LearningStats = {
-  cardsLearned: 247,
-  currentStreak: 12,
-  totalReviews: 1834,
-  accuracyRate: 0.87,
-  vocabularySize: 1456,
-  cardsMastered: 189,
-  cardsLearning: 58,
-  cardsNew: 45,
-  studyTimeToday: 45,
-  studyTimeWeek: 312,
-  studyTimeMonth: 1248,
-  wordsLearnedToday: 12,
-  wordsLearnedWeek: 87,
-  wordsLearnedMonth: 324,
-  practiceSessionsCompleted: 156,
-  fluencyScore: 68,
-  nextReviewIn: 45,
+  cardsLearned: 892,
+  currentStreak: 30,
+  totalReviews: 4567,
+  accuracyRate: 0.94,
+  vocabularySize: 3247,
+  cardsMastered: 678,
+  cardsLearning: 145,
+  cardsNew: 89,
+  studyTimeToday: 67,
+  studyTimeWeek: 445,
+  studyTimeMonth: 1876,
+  wordsLearnedToday: 28,
+  wordsLearnedWeek: 156,
+  wordsLearnedMonth: 687,
+  practiceSessionsCompleted: 342,
+  fluencyScore: 82,
+  nextReviewIn: 23,
 };
 
 /**
@@ -146,21 +146,27 @@ function generateMockProgressTrends(): ProgressTrends {
 const mockWeakAreas: WeakArea[] = [
   {
     id: 'weak-1',
-    category: 'Past Tense Conjugations',
-    accuracy: 0.62,
-    cardsNeedingReview: 23,
+    category: 'Medical Terminology',
+    accuracy: 0.74,
+    cardsNeedingReview: 18,
   },
   {
     id: 'weak-2',
-    category: 'Food Vocabulary',
-    accuracy: 0.71,
-    cardsNeedingReview: 15,
+    category: 'Business Negotiations',
+    accuracy: 0.81,
+    cardsNeedingReview: 12,
   },
   {
     id: 'weak-3',
-    category: 'Subjunctive Mood',
-    accuracy: 0.58,
-    cardsNeedingReview: 31,
+    category: 'Legal Vocabulary',
+    accuracy: 0.68,
+    cardsNeedingReview: 25,
+  },
+  {
+    id: 'weak-4',
+    category: 'Technical Writing',
+    accuracy: 0.77,
+    cardsNeedingReview: 9,
   },
 ];
 
@@ -171,37 +177,58 @@ const mockActivities: Activity[] = [
   {
     id: 'activity-1',
     type: ActivityType.CARD_LEARNED,
-    description: 'Learned 5 new vocabulary words',
+    description: 'Mastered 15 advanced vocabulary words',
     timestamp: new Date(Date.now() - 1000 * 60 * 15), // 15 minutes ago
-    metadata: { cardCount: 5, deckName: 'Spanish Basics' },
+    metadata: { cardCount: 15, deckName: 'Advanced Spanish' },
   },
   {
     id: 'activity-2',
     type: ActivityType.STREAK_MILESTONE,
-    description: 'Reached a 12-day learning streak!',
+    description: '🔥 30-day learning streak achieved! New personal record!',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-    metadata: { streakDays: 12 },
+    metadata: { streakDays: 30 },
   },
   {
     id: 'activity-3',
     type: ActivityType.PERFECT_REVIEW,
-    description: 'Perfect score on 10 card review session',
+    description: 'Perfect score on 25 card speed review session ⚡',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), // 5 hours ago
-    metadata: { cardCount: 10, accuracy: 1.0 },
+    metadata: { cardCount: 25, accuracy: 1.0 },
   },
   {
     id: 'activity-4',
     type: ActivityType.DECK_COMPLETED,
-    description: 'Completed French Grammar deck',
+    description: '🎉 Completed "Business Spanish" deck! Certificate earned',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    metadata: { deckName: 'French Grammar', cardCount: 50 },
+    metadata: { deckName: 'Business Spanish', cardCount: 120 },
   },
   {
     id: 'activity-5',
     type: ActivityType.CARD_LEARNED,
-    description: 'Learned 8 new phrases',
+    description: 'Learned 12 travel phrases for upcoming trip',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
-    metadata: { cardCount: 8, deckName: 'Travel Phrases' },
+    metadata: { cardCount: 12, deckName: 'Travel Essentials' },
+  },
+  {
+    id: 'activity-6',
+    type: ActivityType.PERFECT_REVIEW,
+    description: 'Lightning round: 50 cards in 5 minutes with 98% accuracy',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
+    metadata: { cardCount: 50, accuracy: 0.98 },
+  },
+  {
+    id: 'activity-7',
+    type: ActivityType.CARD_LEARNED,
+    description: 'Started "Medical Spanish" specialization course',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 4), // 4 days ago
+    metadata: { cardCount: 8, deckName: 'Medical Spanish' },
+  },
+  {
+    id: 'activity-8',
+    type: ActivityType.DECK_COMPLETED,
+    description: '🏆 Achieved B2 level certification!',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5), // 5 days ago
+    metadata: { deckName: 'B2 Certification', cardCount: 200 },
   },
 ];
 
@@ -224,9 +251,7 @@ const mockActivities: Activity[] = [
  * console.log(dashboardData.greeting); // "Good evening"
  * ```
  */
-export function getMockDashboardData(
-  greeting = 'Good morning',
-): DashboardData {
+export function getMockDashboardData(greeting = 'Good morning'): DashboardData {
   return {
     user: mockUser,
     greeting,
@@ -255,7 +280,7 @@ export function getMockDashboardData(
  */
 export async function fetchMockDashboardData(
   delayMs = 500,
-  greeting?: string,
+  greeting?: string
 ): Promise<DashboardData> {
   await new Promise((resolve) => setTimeout(resolve, delayMs));
   return getMockDashboardData(greeting);

@@ -1,4 +1,5 @@
-import { XStack, Text, Card } from 'tamagui';
+import { XStack, YStack, Text, Card } from 'tamagui';
+import { ArrowUp, ArrowDown } from '@tamagui/lucide-icons';
 
 /**
  * Props for the MetricCard component
@@ -46,29 +47,45 @@ export interface MetricCardProps {
 export function MetricCard({
   label,
   value,
+  icon,
   trend,
 }: MetricCardProps): React.JSX.Element {
   return (
     <Card p="$5" gap="$3" borderRadius="$6">
-      {/* Label */}
-      <Text fontSize="$3" color="$color" opacity={0.7} fontWeight="500" textTransform="uppercase" letterSpacing={0.5}>
-        {label}
-      </Text>
+      {/* Label and Icon */}
+      <XStack gap="$1" items="center">
+        <Text
+          fontSize="$3"
+          color="$color"
+          opacity={0.7}
+          fontWeight="500"
+          textTransform="uppercase"
+          letterSpacing={0.5}
+          flex={1}
+        >
+          {label}
+        </Text>
+        {icon && (
+          <YStack width="$2" height="$2" items="flex-start" justify="flex-start">
+            {icon}
+          </YStack>
+        )}
+      </XStack>
 
       {/* Value - Big and Bold */}
-      <Text fontSize="$10" fontWeight="800" color="$color" lineHeight="$1">
+      <Text fontSize="$10" fontWeight="800" color="$color" lineHeight="$8">
         {value}
       </Text>
 
       {/* Trend indicator (if provided) */}
       {trend && (
-        <XStack items="center" gap="$1">
+        <XStack items="flex-end" gap="$2">
           <Text
             fontSize="$3"
             fontWeight="600"
             color={trend.direction === 'up' ? '$green10' : '$red10'}
           >
-            {trend.direction === 'up' ? '↑' : '↓'} {trend.value}
+            {trend.value}
           </Text>
         </XStack>
       )}
