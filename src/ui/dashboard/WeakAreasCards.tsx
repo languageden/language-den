@@ -16,7 +16,7 @@ export function WeakAreasCards({
 }: WeakAreasCardsProps): React.JSX.Element {
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
-      <CardHeader title="Areas to Focus On" icon={<Target size={20} />} />
+      <CardHeader title="Areas to Focus On" icon={<Target size={28} />} />
 
       <YStack gap="$4">
         {weakAreas.map((area) => (

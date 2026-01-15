@@ -1,14 +1,14 @@
 import { YStack, Text, Card } from 'tamagui';
 import { ActivityItem } from '../ActivityItem';
+import { CardHeader } from '../CardHeader';
+import { Clock } from '@tamagui/lucide-icons';
 
 /**
  * Activity - Individual activity item data structure
  */
 export interface Activity {
-  /** Unique identifier for the activity */
+  /** Unique identifier for activity */
   id: string;
-  /** Icon element representing the activity type */
-  icon: React.ReactNode;
   /** Description of the activity */
   description: string;
   /** Relative timestamp (e.g., "2 hours ago", "Just now") */
@@ -33,7 +33,6 @@ export interface Activity {
  *   activities={[
  *     {
  *       id: '1',
- *       icon: <Text>📚</Text>,
  *       description: 'Completed lesson: Basic Greetings',
  *       timestamp: '2 hours ago'
  *     }
@@ -87,17 +86,13 @@ export function ActivityFeedCards({
   // Activity list with optional "See all" link
   return (
     <Card p="$6" gap="$4" borderRadius="$6">
-      {/* Section Header */}
-      <Text fontSize="$5" fontWeight="600" color="$color">
-        Recent Activity
-      </Text>
+      <CardHeader title="Recent Activity" icon={<Clock size={28} />} />
 
       {/* Activity List */}
       <YStack>
         {visibleActivities.map((activity) => (
           <ActivityItem
             key={activity.id}
-            icon={activity.icon}
             description={activity.description}
             timestamp={activity.timestamp}
           />

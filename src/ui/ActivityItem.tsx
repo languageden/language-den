@@ -81,11 +81,6 @@ export function ActivityItem({
 
   return (
     <XStack gap="$3" items="center" py="$3">
-      {/* Icon container */}
-      <YStack width="$10" height="$10" items="center" justify="center">
-        {displayIcon}
-      </YStack>
-
       {/* Description and timestamp */}
       <YStack flex={1} gap="$1">
         <Text fontSize="$3" fontWeight="500" color="$color">

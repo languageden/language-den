@@ -158,14 +158,6 @@ export default function DashboardScreen(): React.JSX.Element {
       <ScrollView pt={insets.top + 16} pb={insets.bottom + 16}>
         {/* Content wrapper with better layout */}
         <YStack width="100%" px="$4" gap="$6">
-          {/* Hero Section */}
-          <HeroCards
-            userName={data.user.name}
-            greeting={timeGreeting.greeting}
-            streakCount={data.stats.currentStreak}
-            onStartReview={handleStartReview}
-          />
-
           {/* 4-column grid layout */}
           <XStack gap="$4" flexWrap="wrap">
             {/* Column 1 - Key Stats */}
@@ -269,15 +261,6 @@ export default function DashboardScreen(): React.JSX.Element {
 
             {/* Column 4 - Queue & Activity */}
             <YStack width={340} gap="$5" p="$4">
-              {data.studyGoals[1] && (
-                <ProgressBarCard
-                  title={data.studyGoals[1].title}
-                  current={data.studyGoals[1].current}
-                  target={data.studyGoals[1].target}
-                  unit={data.studyGoals[1].unit}
-                />
-              )}
-
               <WeakAreasCards weakAreas={data.weakAreas} />
 
               <ActivityFeedCards activities={activities} />
