@@ -1,13 +1,14 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
 import React from 'react';
-import { StatsOverviewSection } from './StatsOverviewSection';
+import { StatsOverviewCards } from './StatsOverviewCards';
+import type { StatsOverviewCardsProps } from './StatsOverviewCards';
 import type { LearningStats } from '../../types/dashboard';
 
-describe('StatsOverviewSection', () => {
+describe('StatsOverviewCards', () => {
   // Test component definition and basic rendering
   it('should be defined', () => {
-    expect(StatsOverviewSection).toBeDefined();
+    expect(StatsOverviewCards).toBeDefined();
   });
 
   it('should create a valid React element with stats prop', () => {
@@ -18,7 +19,9 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 87,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, {
+      stats,
+    } as StatsOverviewCardsProps);
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -29,9 +32,80 @@ describe('StatsOverviewSection', () => {
       currentStreak: 5,
       totalReviews: 328,
       accuracyRate: 87,
+      vocabularySize: 0,
+      cardsMastered: 0,
+      cardsLearning: 0,
+      cardsNew: 0,
+      studyTimeToday: 0,
+      studyTimeWeek: 0,
+      studyTimeMonth: 0,
+      wordsLearnedToday: 0,
+      wordsLearnedWeek: 0,
+      wordsLearnedMonth: 0,
+      practiceSessionsCompleted: 0,
+      fluencyScore: 0,
+      nextReviewIn: 0,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, {
+      stats,
+    } as StatsOverviewCardsProps);
+    expect(React.isValidElement(element)).toBe(true);
+  });
+
+  // Test with zero values
+  it('should accept zero values for all stats', () => {
+    const stats: LearningStats = {
+      cardsLearned: 0,
+      currentStreak: 0,
+      totalReviews: 0,
+      accuracyRate: 0,
+      vocabularySize: 0,
+      cardsMastered: 0,
+      cardsLearning: 0,
+      cardsNew: 0,
+      studyTimeToday: 0,
+      studyTimeWeek: 0,
+      studyTimeMonth: 0,
+      wordsLearnedToday: 0,
+      wordsLearnedWeek: 0,
+      wordsLearnedMonth: 0,
+      practiceSessionsCompleted: 0,
+      fluencyScore: 0,
+      nextReviewIn: 0,
+    };
+
+    const element = React.createElement(StatsOverviewCards, {
+      stats,
+    } as StatsOverviewCardsProps);
+    expect(React.isValidElement(element)).toBe(true);
+  });
+
+  // Test with high values
+  it('should accept high values for all stats', () => {
+    const stats: LearningStats = {
+      cardsLearned: 9999,
+      currentStreak: 365,
+      totalReviews: 99999,
+      accuracyRate: 100,
+      vocabularySize: 9999,
+      cardsMastered: 9999,
+      cardsLearning: 9999,
+      cardsNew: 9999,
+      studyTimeToday: 9999,
+      studyTimeWeek: 9999,
+      studyTimeMonth: 9999,
+      wordsLearnedToday: 9999,
+      wordsLearnedWeek: 9999,
+      wordsLearnedMonth: 9999,
+      practiceSessionsCompleted: 9999,
+      fluencyScore: 100,
+      nextReviewIn: 9999,
+    };
+
+    const element = React.createElement(StatsOverviewCards, {
+      stats,
+    } as StatsOverviewCardsProps);
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -44,7 +118,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 0,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -57,7 +131,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 1,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -70,7 +144,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 100,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -83,7 +157,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 100,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -96,7 +170,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 92,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -109,7 +183,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 95,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -122,7 +196,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 60,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -135,7 +209,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 98,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -148,7 +222,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 87.5,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -161,7 +235,7 @@ describe('StatsOverviewSection', () => {
       accuracyRate: 100,
     };
 
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 
@@ -175,7 +249,7 @@ describe('StatsOverviewSection', () => {
     };
 
     // Should compile without errors
-    const element = React.createElement(StatsOverviewSection, { stats });
+    const element = React.createElement(StatsOverviewCards, { stats });
     expect(React.isValidElement(element)).toBe(true);
   });
 });

@@ -1,5 +1,7 @@
 import { YStack, Text, Card } from 'tamagui';
 import Svg, { Circle } from 'react-native-svg';
+import { CardHeader } from '../CardHeader';
+import { TrendingUp } from '@tamagui/lucide-icons';
 
 export interface ProgressRingCardsProps {
   title: string;
@@ -31,9 +33,7 @@ export function ProgressRingCards({
 
   return (
     <Card p="$5" gap="$4" borderRadius="$6" alignItems="center">
-      <Text fontSize="$4" fontWeight="600" color="$color">
-        {title}
-      </Text>
+      <CardHeader title={title} icon={<TrendingUp size={20} />} />
 
       <YStack position="relative" items="center" justify="center">
         <Svg width={size} height={size}>

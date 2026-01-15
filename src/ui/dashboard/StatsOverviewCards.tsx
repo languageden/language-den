@@ -1,9 +1,11 @@
 import { XStack, YStack, Text } from 'tamagui';
 import { MetricCard } from '../MetricCard';
 import type { LearningStats } from '../../types/dashboard';
+import { CardHeader } from '../CardHeader';
+import { BarChart } from '@tamagui/lucide-icons';
 
 /**
- * StatsOverviewSection - Responsive grid displaying key learning metrics
+ * StatsOverviewCards - Responsive grid displaying key learning metrics
  *
  * Displays four key metrics in a 2x2 grid layout:
  * - Cards Learned: Total number of cards the user has learned
@@ -12,7 +14,7 @@ import type { LearningStats } from '../../types/dashboard';
  * - Accuracy Rate: Percentage of correct answers
  *
  * @example
- * <StatsOverviewSection
+ * <StatsOverviewCards
  *   stats={{
  *     cardsLearned: 142,
  *     currentStreak: 5,
@@ -22,20 +24,18 @@ import type { LearningStats } from '../../types/dashboard';
  * />
  */
 
-export interface StatsOverviewSectionProps {
+export interface StatsOverviewCardsProps {
   /** Learning statistics to display */
   stats: LearningStats;
 }
 
-export function StatsOverviewSection({
+export function StatsOverviewCards({
   stats,
-}: StatsOverviewSectionProps): React.JSX.Element {
+}: StatsOverviewCardsProps): React.JSX.Element {
   return (
     <YStack gap="$5">
       {/* Section Header */}
-      <Text fontSize="$5" fontWeight="600" color="$color">
-        Your Progress
-      </Text>
+      <CardHeader title="Your Progress" icon={<BarChart size={20} />} />
 
       {/* Responsive 2x2 Grid */}
       <YStack gap="$4">

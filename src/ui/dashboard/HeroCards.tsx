@@ -1,5 +1,7 @@
 import { YStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
+import { CardHeader } from '../CardHeader';
+import { Target } from '@tamagui/lucide-icons';
 
 /**
  * HeroCards - Top section of the dashboard with personalized greeting and primary CTA
@@ -38,6 +40,9 @@ export function HeroCards({
 }: HeroCardsProps): React.JSX.Element {
   return (
     <Card p="$6" gap="$5" borderRadius="$6">
+      {/* Header */}
+      <CardHeader title="Learning Dashboard" icon={<Target size={20} />} />
+
       {/* Greeting Section */}
       <YStack gap="$2">
         <H2 fontSize="$7" fontWeight="700" color="$color">

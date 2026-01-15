@@ -1,6 +1,8 @@
 import { YStack, XStack, Text, Card } from 'tamagui';
 import { ProgressBar } from '../ProgressBar';
 import type { WeakArea } from '../../types/dashboard';
+import { CardHeader } from '../CardHeader';
+import { Target } from '@tamagui/lucide-icons';
 
 export interface WeakAreasCardsProps {
   weakAreas: WeakArea[];
@@ -14,9 +16,7 @@ export function WeakAreasCards({
 }: WeakAreasCardsProps): React.JSX.Element {
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
-      <Text fontSize="$4" fontWeight="600" color="$color">
-        Areas to Focus On
-      </Text>
+      <CardHeader title="Areas to Focus On" icon={<Target size={20} />} />
 
       <YStack gap="$4">
         {weakAreas.map((area) => (

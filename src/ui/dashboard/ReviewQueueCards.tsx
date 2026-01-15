@@ -1,5 +1,7 @@
 import { YStack, XStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
+import { CardHeader } from '../CardHeader';
+import { BookOpen } from '@tamagui/lucide-icons';
 
 /**
  * ReviewQueueCards - Dashboard section showing review queue status
@@ -77,10 +79,7 @@ export function ReviewQueueCards({
   // Queue display with categories
   return (
     <Card p="$6" gap="$5" borderRadius="$6">
-      {/* Section Header */}
-      <Text fontSize="$5" fontWeight="600" color="$color">
-        Review Queue
-      </Text>
+      <CardHeader title="Review Queue" icon={<BookOpen size={20} />} />
 
       {/* Total Cards Due */}
       <YStack gap="$3">

@@ -1,5 +1,5 @@
 import { YStack, Text, Card, XStack } from 'tamagui';
-import { Award, Zap, Target } from '@tamagui/lucide-icons';
+import { Award, Target } from '@tamagui/lucide-icons';
 
 /**
  * Achievement data structure

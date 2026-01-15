@@ -1,7 +1,8 @@
 import { YStack, Text, Card, XStack } from 'tamagui';
-import { BookOpen, TrendingUp } from '@tamagui/lucide-icons';
+import { BookOpen } from '@tamagui/lucide-icons';
 import { LineChart } from '../charts/LineChart';
 import type { DataPoint } from '../../types/dashboard';
+import { CardHeader } from '../CardHeader';
 
 /**
  * Props for VocabularyProgressCard component
@@ -49,15 +50,7 @@ export function VocabularyProgressCard({
 
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
-      {/* Header */}
-      <YStack gap="$2">
-        <XStack gap="$2" items="center">
-          <BookOpen size={20} />
-          <Text fontSize="$4" fontWeight="600" color="$color">
-            Vocabulary Progress
-          </Text>
-        </XStack>
-      </YStack>
+      <CardHeader title="Vocabulary Progress" icon={<BookOpen size={20} />} />
 
       {/* Words Metrics */}
       <YStack gap="$3">

@@ -1,5 +1,4 @@
 import { XStack, YStack, Text, Card } from 'tamagui';
-import { ArrowUp, ArrowDown } from '@tamagui/lucide-icons';
 
 /**
  * Props for the MetricCard component
@@ -51,7 +50,7 @@ export function MetricCard({
   trend,
 }: MetricCardProps): React.JSX.Element {
   return (
-    <Card p="$5" gap="$3" borderRadius="$6">
+    <Card padding="$5" gap="$3" borderRadius="$6">
       {/* Label and Icon */}
       <XStack gap="$1" items="center">
         <Text
@@ -66,7 +65,12 @@ export function MetricCard({
           {label}
         </Text>
         {icon && (
-          <YStack width="$2" height="$2" items="flex-start" justify="flex-start">
+          <YStack
+            width="$2"
+            height="$2"
+            items="flex-start"
+            justify="flex-start"
+          >
             {icon}
           </YStack>
         )}

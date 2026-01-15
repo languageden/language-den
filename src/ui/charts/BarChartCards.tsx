@@ -1,6 +1,8 @@
 import { YStack, XStack, Text, Card } from 'tamagui';
 import Svg, { Rect } from 'react-native-svg';
 import type { DataPoint } from '../../types/dashboard';
+import { CardHeader } from '../CardHeader';
+import { BarChart } from '@tamagui/lucide-icons';
 
 export interface BarChartCardsProps {
   title: string;
@@ -30,9 +32,7 @@ export function BarChartCards({
 
   return (
     <Card p="$5" gap="$3" borderRadius="$6">
-      <Text fontSize="$4" fontWeight="600" color="$color">
-        {title}
-      </Text>
+      <CardHeader title={title} icon={<BarChart size={20} />} />
 
       <YStack>
         <Svg width={width} height={height}>
