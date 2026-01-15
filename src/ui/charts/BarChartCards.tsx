@@ -2,7 +2,7 @@ import { YStack, XStack, Text, Card } from 'tamagui';
 import Svg, { Rect } from 'react-native-svg';
 import type { DataPoint } from '../../types/dashboard';
 
-export interface BarChartProps {
+export interface BarChartCardsProps {
   title: string;
   data: DataPoint[];
   color?: string;
@@ -10,13 +10,13 @@ export interface BarChartProps {
 }
 
 /**
- * BarChart - Display data as vertical bars
+ * BarChartCards - Display data as vertical bars
  */
-export function BarChart({
+export function BarChartCards({
   title,
   data,
   color = '#22c55e',
-}: BarChartProps): React.JSX.Element {
+}: BarChartCardsProps): React.JSX.Element {
   // Last 7 days only
   const recentData = data.slice(-7);
 
@@ -37,8 +37,9 @@ export function BarChart({
       <YStack>
         <Svg width={width} height={height}>
           {recentData.map((point, index) => {
-            const barHeight = ((point.value / maxValue) * (height - padding * 2));
-            const x = padding + index * ((width - padding * 2) / recentData.length) + 4;
+            const barHeight = (point.value / maxValue) * (height - padding * 2);
+            const x =
+              padding + index * ((width - padding * 2) / recentData.length) + 4;
             const y = height - padding - barHeight;
 
             return (
@@ -56,7 +57,7 @@ export function BarChart({
         </Svg>
 
         {/* Day labels */}
-        <XStack justifyContent="space-around" mt="$2">
+        <XStack justify="space-around" mt="$2">
           {recentData.map((point, index) => {
             const date = new Date(point.date);
             const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

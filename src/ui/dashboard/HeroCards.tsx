@@ -1,8 +1,8 @@
-import { YStack, XStack, Text, H2, Card } from 'tamagui';
+import { YStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
 
 /**
- * HeroSection - Top section of the dashboard with personalized greeting and primary CTA
+ * HeroCards - Top section of the dashboard with personalized greeting and primary CTA
  *
  * Displays:
  * - Time-based personalized greeting with emoji icon
@@ -10,7 +10,7 @@ import { Button } from '../Button';
  * - Primary "Start Review Session" call-to-action button
  *
  * @example
- * <HeroSection
+ * <HeroCards
  *   userName="Sarah"
  *   greeting="Good morning"
  *   greetingIcon="🌅"
@@ -19,7 +19,7 @@ import { Button } from '../Button';
  * />
  */
 
-export interface HeroSectionProps {
+export interface HeroCardsProps {
   /** User's display name for personalized greeting */
   userName: string;
   /** Time-based greeting text (e.g., "Good morning", "Good evening") */
@@ -30,12 +30,12 @@ export interface HeroSectionProps {
   onStartReview: () => void;
 }
 
-export function HeroSection({
+export function HeroCards({
   userName,
   greeting,
   streakCount,
   onStartReview,
-}: HeroSectionProps): React.JSX.Element {
+}: HeroCardsProps): React.JSX.Element {
   return (
     <Card p="$6" gap="$5" borderRadius="$6">
       {/* Greeting Section */}

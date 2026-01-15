@@ -2,16 +2,16 @@ import { YStack, XStack, Text, Card } from 'tamagui';
 import { ProgressBar } from '../ProgressBar';
 import type { WeakArea } from '../../types/dashboard';
 
-export interface WeakAreasSectionProps {
+export interface WeakAreasCardsProps {
   weakAreas: WeakArea[];
 }
 
 /**
- * WeakAreasSection - Display areas that need more practice
+ * WeakAreasCards - Display areas that need more practice
  */
-export function WeakAreasSection({
+export function WeakAreasCards({
   weakAreas,
-}: WeakAreasSectionProps): React.JSX.Element {
+}: WeakAreasCardsProps): React.JSX.Element {
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
       <Text fontSize="$4" fontWeight="600" color="$color">
@@ -21,7 +21,7 @@ export function WeakAreasSection({
       <YStack gap="$4">
         {weakAreas.map((area) => (
           <YStack key={area.id} gap="$2">
-            <XStack justifyContent="space-between" alignItems="center">
+            <XStack justify="space-between" items="center">
               <Text fontSize="$3" fontWeight="500" color="$color">
                 {area.category}
               </Text>
@@ -30,11 +30,7 @@ export function WeakAreasSection({
               </Text>
             </XStack>
 
-            <ProgressBar
-              progress={area.accuracy * 100}
-              height={8}
-              color={area.accuracy < 0.7 ? '#ef4444' : '#f59e0b'}
-            />
+            <ProgressBar progress={area.accuracy * 100} height={8} />
 
             <Text fontSize="$2" color="$color" opacity={0.6}>
               {area.cardsNeedingReview} cards need review

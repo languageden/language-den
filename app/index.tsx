@@ -1,15 +1,15 @@
 import { ScrollView, YStack, XStack, Text, H1 } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { HeroSection } from '../src/ui/dashboard/HeroSection';
-import { ReviewQueueSection } from '../src/ui/dashboard/ReviewQueueSection';
-import { ActivityFeedSection } from '../src/ui/dashboard/ActivityFeedSection';
-import { WeakAreasSection } from '../src/ui/dashboard/WeakAreasSection';
+import { HeroCards } from '../src/ui/dashboard/HeroCards';
+import { ReviewQueueCards } from '../src/ui/dashboard/ReviewQueueCards';
+import { ActivityFeedCards } from '../src/ui/dashboard/ActivityFeedCards';
+import { WeakAreasCards } from '../src/ui/dashboard/WeakAreasCards';
 import { MetricCard } from '../src/ui/MetricCard';
 import { StudySummaryCard } from '../src/ui/dashboard/StudySummaryCard';
 import { VocabularyProgressCard } from '../src/ui/dashboard/VocabularyProgressCard';
 import { AchievementCard } from '../src/ui/dashboard/AchievementCard';
-import { BarChart } from '../src/ui/charts/BarChart';
-import { ProgressRing } from '../src/ui/charts/ProgressRing';
+import { BarChartCards } from '../src/ui/charts/BarChartCards';
+import { ProgressRingCards } from '../src/ui/charts/ProgressRingCards';
 import { ProgressBarCard } from '../src/ui/charts/ProgressBarCard';
 import {
   BookOpen,
@@ -20,7 +20,7 @@ import {
   Clock,
   TrendingUp,
 } from '@tamagui/lucide-icons';
-import type { Activity as ActivityFeedActivity } from '../src/ui/dashboard/ActivityFeedSection';
+import type { Activity as ActivityFeedActivity } from '../src/ui/dashboard/ActivityFeedCards';
 import { useDashboardData } from '../src/hooks/useDashboardData';
 import { getTimeBasedGreeting } from '../src/domain/get-time-based-greeting';
 
@@ -159,7 +159,7 @@ export default function DashboardScreen(): React.JSX.Element {
         {/* Content wrapper with better layout */}
         <YStack width="100%" px="$4" gap="$6">
           {/* Hero Section */}
-          <HeroSection
+          <HeroCards
             userName={data.user.name}
             greeting={timeGreeting.greeting}
             streakCount={data.stats.currentStreak}
@@ -211,7 +211,7 @@ export default function DashboardScreen(): React.JSX.Element {
               />
 
               {data.studyGoals[0] && (
-                <ProgressRing
+                <ProgressRingCards
                   title={data.studyGoals[0].title}
                   current={data.studyGoals[0].current}
                   target={data.studyGoals[0].target}
@@ -219,7 +219,7 @@ export default function DashboardScreen(): React.JSX.Element {
                 />
               )}
 
-              <BarChart
+              <BarChartCards
                 title="Daily Reviews (Last 7 Days)"
                 data={data.progressTrends.dailyReviews}
                 yAxisLabel="Reviews"
@@ -274,14 +274,14 @@ export default function DashboardScreen(): React.JSX.Element {
                 />
               )}
 
-              <ReviewQueueSection
+              <ReviewQueueCards
                 queue={reviewQueue}
                 onStartReview={handleStartReview}
               />
 
-              <WeakAreasSection weakAreas={data.weakAreas} />
+              <WeakAreasCards weakAreas={data.weakAreas} />
 
-              <ActivityFeedSection activities={activities} />
+              <ActivityFeedCards activities={activities} />
             </YStack>
           </XStack>
         </YStack>

@@ -1,7 +1,7 @@
 import { YStack, Text, Card } from 'tamagui';
 import Svg, { Circle } from 'react-native-svg';
 
-export interface ProgressRingProps {
+export interface ProgressRingCardsProps {
   title: string;
   current: number;
   target: number;
@@ -12,9 +12,9 @@ export interface ProgressRingProps {
 }
 
 /**
- * ProgressRing - Circular progress indicator
+ * ProgressRingCards - Circular progress indicator
  */
-export function ProgressRing({
+export function ProgressRingCards({
   title,
   current,
   target,
@@ -22,7 +22,7 @@ export function ProgressRing({
   size = 120,
   strokeWidth = 12,
   color = '#0ea5e9',
-}: ProgressRingProps): React.JSX.Element {
+}: ProgressRingCardsProps): React.JSX.Element {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const progress = Math.min(current / target, 1);
@@ -31,11 +31,11 @@ export function ProgressRing({
 
   return (
     <Card p="$5" gap="$4" borderRadius="$6" alignItems="center">
-      <Text fontSize="$4" fontWeight="600" color="$color" textAlign="center">
+      <Text fontSize="$4" fontWeight="600" color="$color">
         {title}
       </Text>
 
-      <YStack position="relative" alignItems="center" justifyContent="center">
+      <YStack position="relative" items="center" justify="center">
         <Svg width={size} height={size}>
           {/* Background circle */}
           <Circle
@@ -62,14 +62,14 @@ export function ProgressRing({
         </Svg>
 
         {/* Center text */}
-        <YStack position="absolute" alignItems="center" justifyContent="center">
+        <YStack position="absolute" items="center" justify="center">
           <Text fontSize="$8" fontWeight="800" color="$color">
             {percentage}%
           </Text>
         </YStack>
       </YStack>
 
-      <YStack alignItems="center" gap="$1">
+      <YStack items="center" gap="$1">
         <Text fontSize="$6" fontWeight="700" color="$color">
           {current}
         </Text>

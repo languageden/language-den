@@ -4,32 +4,31 @@
 
 import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
-import { HeroSection } from './HeroSection';
-import type { HeroSectionProps } from './HeroSection';
+import { HeroCards } from './HeroCards';
+import type { HeroCardsProps } from './HeroCards';
 
-describe('HeroSection', () => {
-  const defaultProps: HeroSectionProps = {
+describe('HeroCards', () => {
+  const defaultProps: HeroCardsProps = {
     userName: 'Sarah',
     greeting: 'Good morning',
-    greetingIcon: '🌅',
     streakCount: 5,
     onStartReview: vi.fn(),
   };
 
   describe('component definition', () => {
     it('should be defined', () => {
-      expect(HeroSection).toBeDefined();
+      expect(HeroCards).toBeDefined();
     });
 
     it('should create a valid React element', () => {
-      const element = React.createElement(HeroSection, defaultProps);
+      const element = React.createElement(HeroCards, defaultProps);
       expect(React.isValidElement(element)).toBe(true);
     });
   });
 
   describe('props acceptance', () => {
     it('should accept userName prop', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         userName: 'Alex',
       });
@@ -37,23 +36,15 @@ describe('HeroSection', () => {
     });
 
     it('should accept greeting prop', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         greeting: 'Good evening',
       });
       expect(element.props.greeting).toBe('Good evening');
     });
 
-    it('should accept greetingIcon prop', () => {
-      const element = React.createElement(HeroSection, {
-        ...defaultProps,
-        greetingIcon: '🌙',
-      });
-      expect(element.props.greetingIcon).toBe('🌙');
-    });
-
     it('should accept streakCount prop', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 30,
       });
@@ -62,7 +53,7 @@ describe('HeroSection', () => {
 
     it('should accept onStartReview callback', () => {
       const mockHandler = vi.fn();
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         onStartReview: mockHandler,
       });
@@ -72,7 +63,7 @@ describe('HeroSection', () => {
 
   describe('greeting display', () => {
     it('should render greeting and user name together', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         userName: 'Jordan',
         greeting: 'Good afternoon',
@@ -81,58 +72,42 @@ describe('HeroSection', () => {
       expect(element.props.greeting).toBe('Good afternoon');
     });
 
-    it('should render greeting icon', () => {
-      const element = React.createElement(HeroSection, {
-        ...defaultProps,
-        greetingIcon: '☀️',
-      });
-      expect(element.props.greetingIcon).toBe('☀️');
-    });
-
     it('should handle morning greeting', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         greeting: 'Good morning',
-        greetingIcon: '🌅',
       });
       expect(element.props.greeting).toBe('Good morning');
-      expect(element.props.greetingIcon).toBe('🌅');
     });
 
     it('should handle afternoon greeting', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         greeting: 'Good afternoon',
-        greetingIcon: '☀️',
       });
       expect(element.props.greeting).toBe('Good afternoon');
-      expect(element.props.greetingIcon).toBe('☀️');
     });
 
     it('should handle evening greeting', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         greeting: 'Good evening',
-        greetingIcon: '🌆',
       });
       expect(element.props.greeting).toBe('Good evening');
-      expect(element.props.greetingIcon).toBe('🌆');
     });
 
     it('should handle night greeting', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         greeting: 'Good night',
-        greetingIcon: '🌙',
       });
       expect(element.props.greeting).toBe('Good night');
-      expect(element.props.greetingIcon).toBe('🌙');
     });
   });
 
   describe('streak counter', () => {
     it('should display streak count of 0', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 0,
       });
@@ -140,7 +115,7 @@ describe('HeroSection', () => {
     });
 
     it('should display single day streak', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 1,
       });
@@ -148,7 +123,7 @@ describe('HeroSection', () => {
     });
 
     it('should display milestone streak of 7 days', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 7,
       });
@@ -156,7 +131,7 @@ describe('HeroSection', () => {
     });
 
     it('should display milestone streak of 30 days', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 30,
       });
@@ -164,7 +139,7 @@ describe('HeroSection', () => {
     });
 
     it('should display milestone streak of 100 days', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 100,
       });
@@ -172,7 +147,7 @@ describe('HeroSection', () => {
     });
 
     it('should display large streak count', () => {
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         streakCount: 365,
       });
@@ -183,7 +158,7 @@ describe('HeroSection', () => {
   describe('button interaction', () => {
     it('should accept onPress handler', () => {
       const mockHandler = vi.fn();
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         ...defaultProps,
         onStartReview: mockHandler,
       });
@@ -195,17 +170,15 @@ describe('HeroSection', () => {
   describe('combined props', () => {
     it('should accept all props together', () => {
       const mockHandler = vi.fn();
-      const element = React.createElement(HeroSection, {
+      const element = React.createElement(HeroCards, {
         userName: 'Taylor',
         greeting: 'Good evening',
-        greetingIcon: '🌆',
         streakCount: 42,
         onStartReview: mockHandler,
       });
 
       expect(element.props.userName).toBe('Taylor');
       expect(element.props.greeting).toBe('Good evening');
-      expect(element.props.greetingIcon).toBe('🌆');
       expect(element.props.streakCount).toBe(42);
       expect(element.props.onStartReview).toBe(mockHandler);
     });

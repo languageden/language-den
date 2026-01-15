@@ -16,7 +16,7 @@ export interface Activity {
 }
 
 /**
- * ActivityFeedSection - Dashboard section displaying recent learning activities
+ * ActivityFeedCards - Dashboard section displaying recent learning activities
  *
  * Displays a chronological list of recent learning achievements and milestones.
  * Shows up to a configurable number of activities with an indicator when more exist.
@@ -29,7 +29,7 @@ export interface Activity {
  * - Consistent card styling with other dashboard sections
  *
  * @example
- * <ActivityFeedSection
+ * <ActivityFeedCards
  *   activities={[
  *     {
  *       id: '1',
@@ -42,26 +42,26 @@ export interface Activity {
  *
  * @example
  * // With custom maxVisible
- * <ActivityFeedSection
+ * <ActivityFeedCards
  *   activities={activities}
  *   maxVisible={5}
  * />
  *
  * @example
  * // Empty state
- * <ActivityFeedSection activities={[]} />
+ * <ActivityFeedCards activities={[]} />
  */
-export interface ActivityFeedSectionProps {
+export interface ActivityFeedCardsProps {
   /** List of activities to display */
   activities: Activity[];
   /** Maximum number of visible activities (default: 7) */
   maxVisible?: number;
 }
 
-export function ActivityFeedSection({
+export function ActivityFeedCards({
   activities,
   maxVisible = 7,
-}: ActivityFeedSectionProps): React.JSX.Element {
+}: ActivityFeedCardsProps): React.JSX.Element {
   const visibleActivities = activities.slice(0, maxVisible);
 
   // Empty state when no activities exist
@@ -107,7 +107,7 @@ export function ActivityFeedSection({
       {/* "See all" link when more activities exist */}
       {activities.length > maxVisible && (
         <YStack width="100%" items="center" pt="$2">
-          <Text fontSize="$3" color="$primary" fontWeight="500">
+          <Text fontSize="$3" color="$color" fontWeight="500">
             See all activity →
           </Text>
         </YStack>

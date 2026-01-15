@@ -2,7 +2,7 @@ import { YStack, XStack, Text, H2, Card } from 'tamagui';
 import { Button } from '../Button';
 
 /**
- * ReviewQueueSection - Dashboard section showing review queue status
+ * ReviewQueueCards - Dashboard section showing review queue status
  *
  * Displays the spaced repetition review queue with categorized breakdown:
  * - New cards to learn
@@ -13,7 +13,7 @@ import { Button } from '../Button';
  * when no cards are due for review.
  *
  * @example
- * <ReviewQueueSection
+ * <ReviewQueueCards
  *   queue={{
  *     newCards: 5,
  *     learningCards: 12,
@@ -24,7 +24,7 @@ import { Button } from '../Button';
  *
  * @example
  * // Empty state
- * <ReviewQueueSection
+ * <ReviewQueueCards
  *   queue={{
  *     newCards: 0,
  *     learningCards: 0,
@@ -43,17 +43,17 @@ export interface ReviewQueueData {
   reviewCards: number;
 }
 
-export interface ReviewQueueSectionProps {
+export interface ReviewQueueCardsProps {
   /** Queue data with breakdown by category */
   queue: ReviewQueueData;
   /** Callback fired when user clicks the "Start Reviewing" button */
   onStartReview: () => void;
 }
 
-export function ReviewQueueSection({
+export function ReviewQueueCards({
   queue,
   onStartReview,
-}: ReviewQueueSectionProps): React.JSX.Element {
+}: ReviewQueueCardsProps): React.JSX.Element {
   const total = queue.newCards + queue.learningCards + queue.reviewCards;
 
   // Empty state when no cards are due
@@ -85,28 +85,19 @@ export function ReviewQueueSection({
       {/* Total Cards Due */}
       <YStack gap="$3">
         <XStack gap="$3" items="center">
-          <H2 fontSize="$8" fontWeight="700" color="$primary">
+          <H2 fontSize="$8" fontWeight="700" color="$color">
             {total.toString()}
           </H2>
-          <Text fontSize="$4" color="$secondary">
+          <Text fontSize="$4" color="$color">
             cards due
           </Text>
         </XStack>
 
         {/* Queue Breakdown */}
         <YStack gap="$2">
-          <QueueItem
-            label="New"
-            count={queue.newCards}
-          />
-          <QueueItem
-            label="Learning"
-            count={queue.learningCards}
-          />
-          <QueueItem
-            label="Review"
-            count={queue.reviewCards}
-          />
+          <QueueItem label="New" count={queue.newCards} />
+          <QueueItem label="Learning" count={queue.learningCards} />
+          <QueueItem label="Review" count={queue.reviewCards} />
         </YStack>
       </YStack>
 
@@ -132,7 +123,7 @@ function QueueItem({
   return (
     <XStack gap="$3" items="center">
       <YStack width={80}>
-        <Text fontSize="$3" color="$secondary">
+        <Text fontSize="$3" color="$color">
           {label}
         </Text>
       </YStack>

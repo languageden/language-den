@@ -1,6 +1,6 @@
 import { YStack, Text, Card, XStack } from 'tamagui';
 import { Clock } from '@tamagui/lucide-icons';
-import { BarChart } from '../charts/BarChart';
+import { BarChartCards } from '../charts/BarChartCards';
 import type { DataPoint } from '../../types/dashboard';
 
 /**
@@ -94,7 +94,7 @@ export function StudySummaryCard({
         <Text fontSize="$2" color="$color" opacity={0.7}>
           Last 7 Days
         </Text>
-        <BarChart
+        <BarChartCards
           title=""
           data={dailyData.slice(-7)} // Last 7 days
           color="#0ea5e9"
