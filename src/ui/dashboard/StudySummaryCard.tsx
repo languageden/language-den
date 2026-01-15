@@ -1,6 +1,6 @@
 import { YStack, Text, Card, XStack } from 'tamagui';
 import { Clock } from '@tamagui/lucide-icons';
-import { BarChartCards } from '../charts/BarChartCards';
+import { BarChart } from '../charts/BarChart';
 import type { DataPoint } from '../../types/dashboard';
 import { CardHeader } from '../CardHeader';
 
@@ -50,7 +50,7 @@ export function StudySummaryCard({
 
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
-      <CardHeader title="Study Time" icon={<Clock size={20} />} />
+      <CardHeader title="Study Time" icon={<Clock size={28} />} />
 
       {/* Time Metrics */}
       <YStack gap="$3">
@@ -84,11 +84,7 @@ export function StudySummaryCard({
 
       {/* Mini Chart */}
       <YStack gap="$2">
-        <Text fontSize="$2" color="$color" opacity={0.7}>
-          Last 7 Days
-        </Text>
-        <BarChartCards
-          title=""
+        <BarChart
           data={dailyData.slice(-7)} // Last 7 days
           color="#0ea5e9"
         />

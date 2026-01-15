@@ -1,74 +1,27 @@
-import { YStack, XStack, Text, Card } from 'tamagui';
-import Svg, { Rect } from 'react-native-svg';
+import { Card } from 'tamagui';
 import type { DataPoint } from '../../types/dashboard';
 import { CardHeader } from '../CardHeader';
-import { BarChart } from '@tamagui/lucide-icons';
+import { BarChart } from './BarChart';
+import { BarChart as BarChartIcon } from '@tamagui/lucide-icons';
 
 export interface BarChartCardsProps {
   title: string;
   data: DataPoint[];
   color?: string;
-  yAxisLabel?: string;
 }
 
 /**
- * BarChartCards - Display data as vertical bars
+ * BarChartCards - Card wrapper for BarChart component
  */
 export function BarChartCards({
   title,
   data,
   color = '#22c55e',
 }: BarChartCardsProps): React.JSX.Element {
-  // Last 7 days only
-  const recentData = data.slice(-7);
-
-  const width = 300;
-  const height = 150;
-  const padding = 20;
-  const barWidth = (width - padding * 2) / recentData.length - 8;
-
-  // Get max value for scaling
-  const maxValue = Math.max(...recentData.map((d) => d.value));
-
   return (
-    <Card p="$5" gap="$3" borderRadius="$6">
-      <CardHeader title={title} icon={<BarChart size={20} />} />
-
-      <YStack>
-        <Svg width={width} height={height}>
-          {recentData.map((point, index) => {
-            const barHeight = (point.value / maxValue) * (height - padding * 2);
-            const x =
-              padding + index * ((width - padding * 2) / recentData.length) + 4;
-            const y = height - padding - barHeight;
-
-            return (
-              <Rect
-                key={index}
-                x={x}
-                y={y}
-                width={barWidth}
-                height={barHeight}
-                fill={color}
-                rx="4"
-              />
-            );
-          })}
-        </Svg>
-
-        {/* Day labels */}
-        <XStack justify="space-around" mt="$2">
-          {recentData.map((point, index) => {
-            const date = new Date(point.date);
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            return (
-              <Text key={index} fontSize="$1" color="$color" opacity={0.6}>
-                {days[date.getDay()]}
-              </Text>
-            );
-          })}
-        </XStack>
-      </YStack>
+    <Card p="$5" gap="$4" borderRadius="$6">
+      <CardHeader title={title} icon={<BarChartIcon size={20} />} />
+      <BarChart data={data} color={color} />
     </Card>
   );
 }

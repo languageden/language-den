@@ -32,8 +32,8 @@ export function ProgressRingCards({
   const percentage = Math.round((current / target) * 100);
 
   return (
-    <Card p="$5" gap="$4" borderRadius="$6" alignItems="center">
-      <CardHeader title={title} icon={<TrendingUp size={20} />} />
+    <Card p="$5" gap="$4" borderRadius="$6">
+      <CardHeader title={title} icon={<TrendingUp size={28} />} />
 
       <YStack position="relative" items="center" justify="center">
         <Svg width={size} height={size}>
