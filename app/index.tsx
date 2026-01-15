@@ -222,7 +222,6 @@ export default function DashboardScreen(): React.JSX.Element {
               <BarChartCards
                 title="Daily Reviews (Last 7 Days)"
                 data={data.progressTrends.dailyReviews}
-                yAxisLabel="Reviews"
               />
             </YStack>
 

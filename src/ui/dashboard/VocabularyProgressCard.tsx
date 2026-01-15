@@ -1,6 +1,6 @@
 import { YStack, Text, Card, XStack } from 'tamagui';
 import { BookOpen } from '@tamagui/lucide-icons';
-import { LineChart } from '../charts/LineChart';
+import { LineChartPure } from '../charts/LineChartPure';
 import type { DataPoint } from '../../types/dashboard';
 import { CardHeader } from '../CardHeader';
 
@@ -50,7 +50,7 @@ export function VocabularyProgressCard({
 
   return (
     <Card p="$5" gap="$4" borderRadius="$6">
-      <CardHeader title="Vocabulary Progress" icon={<BookOpen size={20} />} />
+      <CardHeader title="Vocabulary Progress" icon={<BookOpen size={28} />} />
 
       {/* Words Metrics */}
       <YStack gap="$3">
@@ -95,11 +95,7 @@ export function VocabularyProgressCard({
 
       {/* Mini Chart */}
       <YStack gap="$2">
-        <Text fontSize="$2" color="$color" opacity={0.7}>
-          Last 7 Days
-        </Text>
-        <LineChart
-          title=""
+        <LineChartPure
           data={dailyData.slice(-7)} // Last 7 days
           color="#22c55e"
         />

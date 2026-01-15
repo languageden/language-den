@@ -59,11 +59,10 @@ export function AchievementCard({
           height="$6"
           items="center"
           justify="center"
-          borderRadius="$3"
-          bg={unlocked ? '$green10' : '$gray8'}
+          bg="$background"
           opacity={unlocked ? 1 : 0.6}
         >
-          <Text color={unlocked ? '$color' : '$gray11'}>{icon}</Text>
+          <Text color="$color">{icon}</Text>
         </YStack>
 
         <YStack flex={1} gap="$1">
@@ -85,13 +84,8 @@ export function AchievementCard({
       {/* Progress Bar for incomplete achievements */}
       {!unlocked && progress !== undefined && (
         <YStack gap="$1">
-          <YStack height="$2" borderRadius="$1" bg="$gray6" overflow="hidden">
-            <YStack
-              height="100%"
-              borderRadius="$1"
-              bg="$primary"
-              width={`${progress}%`}
-            />
+          <YStack height="$2" bg="$background" overflow="hidden">
+            <YStack height="100%" bg="$background" width={`${progress}%`} />
           </YStack>
         </YStack>
       )}
@@ -108,8 +102,8 @@ export function AchievementCard({
 
       {!unlocked && (
         <XStack gap="$2" items="center">
-          <Target size={16} color="$gray10" />
-          <Text fontSize="$2" color="$gray10" fontWeight="600">
+          <Target size={16} color="$color" />
+          <Text fontSize="$2" color="$color" fontWeight="600">
             In Progress
           </Text>
         </XStack>
