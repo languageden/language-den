@@ -1,5 +1,4 @@
-import { YStack, Text } from 'tamagui';
-import { Button } from './Button';
+import { YStack, Text, Button } from 'tamagui';
 import type { ReactNode } from 'react';
 
 /**
@@ -54,11 +53,7 @@ export function EmptyState({
   return (
     <YStack gap="$4" items="center" py="$6">
       {/* Icon */}
-      {typeof icon === 'string' ? (
-        <Text fontSize="$8">{icon}</Text>
-      ) : (
-        icon
-      )}
+      {typeof icon === 'string' ? <Text fontSize="$8">{icon}</Text> : icon}
 
       {/* Title */}
       <YStack gap="$2" items="center" width="100%">
@@ -68,7 +63,7 @@ export function EmptyState({
 
         {/* Message */}
         <YStack width="100%" items="center">
-          <Text fontSize="$3" color="$secondary">
+          <Text fontSize="$3" color="$color">
             {message}
           </Text>
         </YStack>

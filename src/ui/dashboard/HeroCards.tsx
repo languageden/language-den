@@ -1,5 +1,4 @@
-import { YStack, Text, H2, Card } from 'tamagui';
-import { Button } from '../Button';
+import { YStack, Text, H2, Card, Button } from 'tamagui';
 import { CardHeader } from '../CardHeader';
 import { Target } from '@tamagui/lucide-icons';
 

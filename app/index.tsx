@@ -170,6 +170,11 @@ export default function DashboardScreen(): React.JSX.Element {
           <XStack gap="$4" flexWrap="wrap">
             {/* Column 1 - Key Stats */}
             <YStack width={340} gap="$5" p="$4">
+              <ReviewQueueCards
+                queue={reviewQueue}
+                onStartReview={handleStartReview}
+              />
+
               {/* Enhanced Metrics with better spacing */}
               <MetricCard
                 label="Fluency Score"
@@ -272,11 +277,6 @@ export default function DashboardScreen(): React.JSX.Element {
                   unit={data.studyGoals[1].unit}
                 />
               )}
-
-              <ReviewQueueCards
-                queue={reviewQueue}
-                onStartReview={handleStartReview}
-              />
 
               <WeakAreasCards weakAreas={data.weakAreas} />
 
